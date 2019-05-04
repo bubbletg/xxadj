@@ -35,7 +35,10 @@ Page({
    */
   sousuoxiangxi:function(e){
     let sousuoid=e.currentTarget.dataset.sousuoid;
-    //测试
+    //跳转编辑信息页面
+    wx.navigateTo({
+      url: '/information/information?informationid=' + sousuoid,
+    })
 
   },
 
