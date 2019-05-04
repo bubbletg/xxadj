@@ -10,7 +10,9 @@
     "pages/user/orderForm/orderFormDetail/orderFormDetail",
     "pages/user/redact/redact",
     "pages/user/collect/collect",
+    "pages/index/information/information",
     "pages/user/FAQ/FAQ"
+    
   ],
   "tabBar": {
     "selectedColor": "#FCE35F",
