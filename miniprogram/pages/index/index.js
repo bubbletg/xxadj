@@ -6,13 +6,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-    shouyearray:[1,1], //首页数组，用于展示首页信息
+    shouyearray:[], //首页数组，用于展示首页信息
     xianshi:'shouye',
     sousuoValue:null,  //搜索框默认
     avatarUrl: '../../images/user-unlogin.png',
     qishiweizhiqiehuan:'cur',//起始位置切换
     zhongdianweizhiqiehuan:'',//终点位置切换
   },
+
+  /**
+   * 
+   * 查询发布的代驾信息
+   */
+
+   chaxundaijia:function(e){
+     //查询数据库   起始位置
+     db.collection("daijiadingdan").where({
+      isaccept:false,  //没有被接单
+    }).get().then(res => {
+      this.setData({
+        shouyearray: res.data,
+      })
+    })
+   },
 
   /**
    * 
@@ -76,7 +92,9 @@ Page({
           isopenid: res.result.openid,
         })
       }
-    })
+    }),
+    //查询代驾信息
+    this.chaxundaijia();
 
   },
 

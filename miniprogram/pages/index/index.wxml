@@ -45,7 +45,7 @@
     <view class="zhanshi-quanju" wx:if="{{xianshi=='shouye'}}">
         <scroll-view class="zhanshi-scroll-view" scroll-y="true">
             <view wx:for="{{shouyearray}}" wx:key="index" wx:for-item="item">
-                    {{index}}{{item}}
+                    {{index}}{{item._id}}
             </view>
         </scroll-view>
     </view>
