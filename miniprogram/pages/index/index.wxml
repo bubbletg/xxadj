@@ -28,10 +28,15 @@
         </view>
         <view class="sousuo-view2">
             <scroll-view class="sousuo-huadong" scroll-y="true">
-                <view class="sousuo" wx:if="{{qishiweizhi.length>0&&qishiweizhiqiehuan!=''}}" wx:for="{{qishiweizhi}}" wx:key="index" wx:for-item="item">
+                <view class="sousuo" wx:if="{{qishiweizhi.length>0&&qishiweizhiqiehuan!=''}}" 
+                    wx:for="{{qishiweizhi}}" wx:key="index" wx:for-item="item"
+                    catchtap="sousuoxiangxi" data-sousuoid='{{item._id}}'
+                    >
                     {{item.qishiweizhi}}
                 </view>
-                <view class="sousuo" wx:if="{{zhongdianweizhi.length>0&&zhongdianweizhiqiehuan!=''}}" wx:for="{{zhongdianweizhi}}" wx:key="index" wx:for-item="item">
+                <view class="sousuo" wx:if="{{zhongdianweizhi.length>0&&zhongdianweizhiqiehuan!=''}}"
+                     wx:for="{{zhongdianweizhi}}" wx:key="index" wx:for-item="item"
+                     catchtap="sousuoxiangxi" data-sousuoid='{{item._id}}'>
                     {{item.zhongdianweizhi}}
                 </view>
             </scroll-view>

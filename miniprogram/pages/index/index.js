@@ -31,6 +31,14 @@ Page({
   },
 
   /**
+   * 进入搜索详细页面
+   */
+  sousuoxiangxi:function(e){
+    let sousuoid=e.currentTarget.dataset.sousuoid;
+    
+  },
+
+  /**
    * 点击搜索叉叉，删除缓存
    */
   shanchusousuo:function(){
