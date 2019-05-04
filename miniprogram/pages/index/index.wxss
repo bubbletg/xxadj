@@ -1,5 +1,17 @@
+.leirong{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.bar-success-tuo{
+    position: fixed;
+    width: 100%;
+    background-color:#FCE35F;
+}
+.bar-success-zhan{
+    height: 90rpx;
+}
 .sousuo-view1{
-    position:fixed;
     border-radius:5pt/5pt;
     margin-top:-5px;
     margin-left:13rpx;
@@ -34,6 +46,10 @@
     background-color:#ebdede;
     margin-top:2rpx;
     border-radius:5pt/5pt;
+}
 
-
+.zhanshi-scroll-view{
+    position: fixed;
+    background-color: #f0f7f3;
+    height:1000rpx;
 }

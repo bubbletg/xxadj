@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    shouyearray:[1,1], //首页数组，用于展示首页信息
+    xianshi:'shouye',
     sousuoValue:null,  //搜索框默认
     avatarUrl: '../../images/user-unlogin.png',
     qishiweizhiqiehuan:'cur',//起始位置切换
@@ -57,8 +59,8 @@ Page({
       sousuoValue:null,
       zhongdianweizhi:null,
       qishiweizhi:null,
+        xianshi:'shouye',
     })
-
   },
 
   /**
@@ -169,6 +171,7 @@ Page({
   shurushichufa: function (e) {
     let sousuo = e.detail.value.trim();
     this.setData({
+      xianshi:'sousuoxianshi',
       sousuoValue:sousuo,
     })
     //为空则不进行操作
@@ -206,5 +209,13 @@ Page({
       return;
     }
 
+  },
+  /**
+   * 全局点击触发
+   */
+  quanjudianji:function(e){
+    console.log()
+    //先清除搜索缓存
+    this.obliterate();
   }
 })
