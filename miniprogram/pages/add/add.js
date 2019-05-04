@@ -276,6 +276,7 @@ Page({
         zhongdianweizhilatitude: '' + this.data.zhongdianweizhilatitude, //终点纬度
         zhongdianweizhilongitude: '' + this.data.zhongdianweizhilongitude, //终点经度
         ifFinish: false, //表示是否完成
+        isaccept:false, //表示是否被接单
         chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) + '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()]//创建时间
       },
       success(res) {
