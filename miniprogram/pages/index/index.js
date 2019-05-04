@@ -39,6 +39,7 @@ Page({
     wx.navigateTo({
       url: '/information/information?informationid=' + sousuoid,
     })
+    ///
 
   },
 
