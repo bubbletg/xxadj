@@ -37,10 +37,8 @@ Page({
     let sousuoid=e.currentTarget.dataset.sousuoid;
     //跳转编辑信息页面
     wx.navigateTo({
-      url: '/information/information?informationid=' + sousuoid,
+      url: 'information/information?informationid=' + sousuoid,
     })
-    ///
-
   },
 
   /**
