@@ -1,0 +1,32 @@
+<view wx:if="{{changjianwenti=='订单常见问题1。。。。。。。。。'}}">
+    <view class="bar solid-bottom">
+        <view class='ml-sm'>
+            <text class='iconfont icon-wenhao success-text'></text>
+            <text class='text-lg ml-xs'>{{changjianwenti}}？</text>
+        </view>
+    </view>
+    <view class='faq-changjianwenti'>回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！
+回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！
+回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！
+    </view>
+</view>
+<view wx:if="{{changjianwenti=='常见问题2'}}">
+    <view class="bar solid-bottom">
+        <view class='ml-sm'>
+            <text class='iconfont icon-wenhao success-text'></text>
+            <text class='text-lg ml-xs'>{{changjianwenti}}？</text>
+        </view>
+    </view>
+    <view class='faq-changjianwenti'>常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2
+    </view>
+</view>
+<view wx:if="{{changjianwenti=='常见问题3'}}">
+    <view class="bar solid-bottom">
+        <view class='ml-sm'>
+            <text class='iconfont icon-wenhao success-text'></text>
+            <text class='text-lg ml-xs'>{{changjianwenti}}？</text>
+        </view>
+    </view>
+    <view class='faq-changjianwenti'>常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3
+    </view>
+</view>

@@ -1,0 +1,40 @@
+<view class="leirong">
+    <view class="bar success">
+        <view catchtap='xiangxixinxi'>
+            <image src="{{avatarUrl}}" class='round mh-sm'></image>
+        </view>
+        <view class='serach-round'>
+            <text class="iconfont icon-sousuo"></text>
+            <input name='sousuo' type="text" placeholder="搜索" style="width:390rpx;" bindinput="shurushichufa" value="{{sousuoValue}}"></input>
+            <text class="iconfont icon-chacha" wx:if="{{sousuoValue!=null}}" catchtap="shanchusousuo" ></text>
+        </view>
+        <view class='mh-sm text-sm'>
+            北京
+            <text class="iconfont icon-xiangxia2"></text>
+        </view>
+    </view>
+    <view class="sousuo-view1" wx:if="{{qishiweizhi.length>0||zhongdianweizhi.length>0}}">
+        <view class="nav center-nav success-nav">
+            <view class="nav-item-box">
+                <view class="nav-item nav-item-left {{qishiweizhiqiehuan}}" catchtap="weizhiqiehuan" data-weizhiqiehuan="起始位置">
+                    <text class='iconfont icon-suozaidi success-text'></text>
+                    起始位置
+                </view>
+                <view class="nav-item nav-item-right {{zhongdianweizhiqiehuan}}" catchtap="weizhiqiehuan" data-weizhiqiehuan="终点位置">
+                   <text class='iconfont icon-suozaidi success-text'></text>
+                   终点位置
+                </view>
+            </view>
+        </view>
+        <view class="sousuo-view2">
+            <scroll-view class="sousuo-huadong" scroll-y="true">
+                <view class="sousuo" wx:if="{{qishiweizhi.length>0&&qishiweizhiqiehuan!=''}}" wx:for="{{qishiweizhi}}" wx:key="index" wx:for-item="item">
+                    {{item.qishiweizhi}}
+                </view>
+                <view class="sousuo" wx:if="{{zhongdianweizhi.length>0&&zhongdianweizhiqiehuan!=''}}" wx:for="{{zhongdianweizhi}}" wx:key="index" wx:for-item="item">
+                    {{item.zhongdianweizhi}}
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+</view>

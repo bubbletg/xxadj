@@ -1,0 +1,9 @@
+.success-text {
+    color: #ebcf52;
+    font-size: 40rpx;
+}
+.faq-changjianwenti{
+    margin: 20rpx;
+    margin-left:30rpx;
+
+}

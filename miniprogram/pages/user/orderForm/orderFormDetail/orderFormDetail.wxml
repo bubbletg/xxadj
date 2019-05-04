@@ -1,0 +1,65 @@
+<view>
+    <view class="order-form-detail view-margin">
+        <view class="order-form-detail-qishidizhi view-margin">
+            {{daijiadingdanDetail.qishiweizhi}}
+        </view>
+        <view class="view-dao">到</view>
+        <view class="order-form-detail-zhongdiandizhi view-margin">
+            {{daijiadingdanDetail.zhongdianweizhi}}
+        </view>
+        <view class="order-form-detail-phone view-margin">{{daijiadingdanDetail.phone}}</view>
+        <view class="order-form-detail-time view-margin">{{daijiadingdanDetail.time}}</view>
+        <!-- 日常代驾 -->
+        <view class="order-form-detail-tianjiadaijia view-margin" wx:if="{{daijiadingdanDetail.baochefuwu=='undefined'}}">
+            {{daijiadingdanDetail.tianjiadaijia}}
+        </view>
+        <!-- 包时代驾 -->
+        <view class="order-form-detail-tianjiadaijia view-margin" wx:if="{{daijiadingdanDetail.baoshidaijia!='undefined'&&daijiadingdanDetail.baochefuwu=='undefined'}}">
+            {{daijiadingdanDetail.baoshidaijia}}
+        </view>
+        <!-- 包车代驾 -->
+        <view class="order-form-detail-tianjiadaijia view-margin" wx:if="{{daijiadingdanDetail.baoshidaijia=='undefined'&&daijiadingdanDetail.baochefuwu!='undefined'}}">
+            {{daijiadingdanDetail.baochefuwu}}
+        </view>
+        <view class="order-form-detail-finish view-margin" wx:if="{{daijiadingdanDetail.ifFinish==false}}" catchtap="wanchengcaozuo">
+            完成
+        </view>
+        <view class="order-form-detail-finish view-margin" wx:if="{{daijiadingdanDetail.ifFinish!=false}}">
+            已完成
+        </view>
+        <view class="order-form-detail-alter view-margin" catchtap="orderFormUpdate" data-id='{{daijiadingdanDetail._id}}' wx:if="{{daijiadingdanDetail.ifFinish==false}}">
+            修改订单
+        </view>
+        <view class="order-form-detail-alter view-margin" wx:if="{{daijiadingdanDetail.ifFinish!=false}}" catchtap="orderFromDelete">
+            删除订单
+        </view>
+    </view>
+    <view class="order-form-help">
+        <view class="bar solid-bottom">
+            <view class='ml-sm'>
+                <text class='iconfont icon-guanyu success-text'></text>
+                <text class='text-lg ml-xs'>常见问题</text>
+            </view>
+        </view>
+        <view class="order-form-help2">
+            <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='订单常见问题1。。。。。。。。。'>
+                <view class="list-text">
+                    <view class="iconfont icon-wenhao moren-text"></view>
+                   订单常见问题1。。。。。。。。。
+                </view>
+            </view>
+            <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='常见问题2'>
+                <view class="list-text">
+                    <view class="iconfont icon-wenhao moren-text"></view>
+                    常见问题2
+                </view>
+            </view>
+            <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='常见问题3'>
+                <view class="list-text">
+                    <view class="iconfont icon-wenhao moren-text"></view>
+                    常见问题3
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

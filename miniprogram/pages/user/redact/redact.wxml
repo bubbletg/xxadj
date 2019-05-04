@@ -1,0 +1,86 @@
+<view class="geren">
+  <view class='geren-view'></view>
+  <view class="nav-list-geren">
+    <view class='nav-list-geren1'>
+      <image class="geren-view-image" src='{{avatarUrl}}'></image>
+      <view class="geren-view-name" wx:if="{{userInfo!=false}}">{{userInfo.nickName}}</view>
+    </view>
+    <view class="list-box">
+      <view class="list-li list-xiugai" catchtap='alterName' data-modal="modal" data-modal-name="修改姓名" data-modal-value="{{name}}" data-modal-title="name">
+        <view class="list-text">
+          <view class="iconfont icon-xingming moren-text"></view>
+          姓名：{{name}}
+        </view>
+      </view>
+      <view class="list-li list-xiugai" catchtap='alterPhone' data-modal="modal" data-modal-name="修改电话" data-modal-value="{{phone}}" data-modal-title="phone">
+        <view class="list-text">
+          <view class="iconfont icon-phone moren-text"></view>
+          电话：{{phone}}
+        </view>
+      </view>
+      <view class="list-li list-xiugai" catchtap='alterAge' data-modal="modal" data-modal-name="修改年龄" data-modal-value="{{age}}" data-modal-title="age">
+        <view class="list-text">
+          <view class="iconfont icon-age moren-text"></view>
+          年龄：{{age}}
+        </view>
+      </view>
+      <view class="list-li list-xiugai" catchtap='alterJialing' data-modal="modal" data-modal-name="修改驾龄" data-modal-value="{{jialing}}" data-modal-title="jialing">
+        <view class="list-text">
+          <view class="iconfont icon-jialing moren-text"></view>
+          驾龄：{{jialing}}
+        </view>
+      </view>
+      <picker mode="region" bindchange="alterSuozaidi" value="{{region}}" custom-item="{{customItem}}">
+        <view class="list-li list-xiugai"  data-modal="modal" data-modal-name="修改所在地" data-modal-value="{{suozaidi}}" data-modal-title="suozaidi">
+          <view class="list-text">
+            <view class="iconfont icon-suozaidi moren-text"></view>
+            所在地：{{region[0]}}，{{region[1]}}，{{region[2]}}
+          </view>
+        </view>
+      </picker>
+      <view class="list-li list-xiugai" catchtap='alterSpei' data-modal-value="{{spe_i}}" data-openid='{{openid}}'>
+        <view class="list-text">
+          <view class="iconfont icon-spe_i moren-text"></view>
+          实名认证：{{spe_i}}
+        </view>
+      </view>
+      <view class="list-li list-xiugai" catchtap='alterJiashi'   data-modal-value="{{jiashi}}" data-openid='{{openid}}'>
+        <view class="list-text">
+          <view class="iconfont icon-jiashi moren-text"></view>
+          驾驶认证：{{jiashi}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 弹出框 -->
+
+<view class="modal-box {{ifShow=='modal'?'cur':''}}">
+  <form bindsubmit="updateAlter">
+    <view class='modal-dialog'>
+      <view class="modal-title">
+        <text>{{modalName}}</text>
+        <view class='bar-close badge danger round' catchtap='closeModal'>
+          <text class='iconfont icon-close'></text>
+        </view>
+      </view>
+      <view class='modal-bd modal-message'>
+        <input name="{{modalTitle}}" type='text' value='{{modalValue}}'></input>
+      </view>
+      <view class='modal-option'>
+        <view class='modal-option-btn success-text'>
+          <button formType="submit" class='modal-option-btn-button' data-modal-title="{{modalTitle}}"> 确认</button>
+        </view>
+      </view>
+    </view>
+  </form>
+</view>
+
+<!-- 加载框 -->
+<view class='mode-loading' wx:if="{{showLoading}}">
+  <view class='mode-text'>
+    <view class='iconfont icon-emojifill moren-text'></view>
+    <view class='gray-text'>更新中...</view>
+  </view>
+</view>

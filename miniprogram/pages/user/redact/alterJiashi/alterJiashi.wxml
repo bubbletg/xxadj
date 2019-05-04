@@ -1,0 +1,96 @@
+<view class="cont">
+  <form bindsubmit='jiashisubmitForm'>
+    <view class="group-header">驾驶认证
+      <text style="font-size:22rpx">（请上传真实的证件信息）</text>
+    </view>
+    <view style="display:{{jiashizhengtijiao!=0?'block':'none'}}">
+      <view class="bar solid-bottom mt-sm">
+        <view class='ml-sm'>
+          <text class='iconfont icon-titles success-text'></text>
+          <text class='text-lg ml-xs'>驾驶证主页</text>
+        </view>
+      </view>
+      
+      <view class="doc-main">
+        <view class='text-center' catchtap='shangchuanzhengmian'>
+          <image src='{{jiashizhengtupian[0]}}' class='shang-img-block'></image>
+        </view>
+      </view>
+      <view class="bar solid-bottom mt-sm">
+        <view class='ml-sm'>
+          <text class='iconfont icon-titles success-text'></text>
+          <text class='text-lg ml-xs'>驾驶证副页</text>
+        </view>
+      </view>
+      <view class="doc-main">
+        <view class='text-center' catchtap='shangchuanfanmian'>
+          <image src='{{jiashizhengtupian[1]}}' class='shang-img-block'></image>
+        </view>
+      </view>
+      <view class="doc-main">
+        <view class='btn success block lg' catchtap='jiashizhengtijiao'> 上传
+        </view>
+      </view>
+    </view>
+    <view style="display:{{showxinxi==1?'block':'none'}}">
+      <view class="group-body">
+        <view class="input-list">
+          <view class="input-item">
+            <text class="input-item-label">姓名：</text>
+            <view class="input-item-content">
+              <input name="xingming" type="text" placeholder="{{xingming}}" value='{{xingming}}' bindinput="inputName"></input>
+            </view>
+          </view>
+          <view class="input-item">
+            <text class="input-item-label">证号：</text>
+            <view class="input-item-content">
+              <input name="jiashigzhenghao" type="idcard" placeholder="{{jiashigzhenghao}}" value='{{jiashigzhenghao}}' maxlength="18" bindinput="inputPhone"></input>
+            </view>
+          </view>
+           <view class="input-item">
+            <text class="input-item-label">国籍：</text>
+            <view class="input-item-content">
+              <input name="guoji" type="idcard" placeholder="{{guoji}}" value='{{guoji}}' maxlength="18" bindinput="inputPhone"></input>
+            </view>
+          </view>
+          <view class="input-item">
+            <text class="input-item-label">有效日期：</text>
+            <view class="input-item-content">
+              <input name="youxiaoqixian" type="idcard" placeholder="{{youxiaoqixian}} 至 {{youxiaoqixianzhi}}" value='{{youxiaoqixian}} 至 {{youxiaoqixianzhi}}' maxlength="25" bindinput="inputPhone"></input>
+            </view>
+          </view>
+          <view class="input-item">
+            <text class="input-item-label">准驾车型：</text>
+            <view class="input-item-content">
+              <input name="zhunjiachexing" type="idcard" placeholder="{{zhunjiachexing}}" value='{{zhunjiachexing}}' maxlength="18" bindinput="inputPhone"></input>
+            </view>
+          </view>
+          
+        </view>
+      </view>
+      <view style="padding-top:30rpx;font-size:30rpx;text-align:center;color:#cccccc">————请确认以上信息准确无误(可手动修改)————</view>
+      <view class="doc-main">
+        <view class='btn success-chong block lg' catchtap='chongxinchangchuan'> 重新上传
+        </view>
+      </view>
+      <view class="doc-main">
+        <button class='btn success block lg' formType="submit"> 确定提交
+        </button>
+      </view>
+    </view>
+  </form>
+</view>
+
+<!-- 加载框 -->
+<view class='mode-loading' wx:if="{{showLoading}}">
+  <view class='mode-text'>
+    <view class='iconfont icon-emojifill moren-text'></view>
+    <view class='gray-text'>上传中...</view>
+  </view>
+</view>
+<view class='mode-loading' wx:if="{{showLoading1}}">
+  <view class='mode-text'>
+    <view class='iconfont icon-emojifill moren-text'></view>
+    <view class='gray-text'>提交中...</view>
+  </view>
+</view>

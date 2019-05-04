@@ -1,0 +1,39 @@
+.sousuo-view1{
+    position:fixed;
+    border-radius:5pt/5pt;
+    margin-top:-5px;
+    margin-left:13rpx;
+    background-color:#FCE35F;
+    padding:20rpx;
+    font-size:35rpx;
+    width:730rpx;
+}
+.nav{
+    box-shadow:0 0 3px #FCE35F;
+}
+.success-nav {
+    background:#FCE35F;
+    color:#fff;
+   
+}
+
+.nav-item-right{
+    margin-left: 340rpx;
+}
+    
+
+/* 搜索滚动区域*/
+.sousuo-huadong{
+    border-top:3rpx solid #fff;
+    padding-top: 10rpx;
+    max-height: 400rpx;
+
+}
+.sousuo-view2 .sousuo{
+    padding: 10rpx;
+    background-color:#ebdede;
+    margin-top:2rpx;
+    border-radius:5pt/5pt;
+
+
+}

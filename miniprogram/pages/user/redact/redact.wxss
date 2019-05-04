@@ -1,0 +1,46 @@
+.geren-view {
+  display: block;
+  width: 100%;
+  height: 350rpx;
+  background: #fce35f;
+}
+
+.nav-list-geren {
+  display: block;
+  position: relative;
+  color: #666;
+  height: 1020rpx;
+  padding: 20rpx;
+  margin: 40rpx;
+  /* 相对定位 */
+  margin-top: -300rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+  background: rgb(153, 238, 18);
+}
+
+.nav-list-geren1 {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  margin: 40rpx;
+  height:200rpx;
+}
+
+.geren-view-image {
+  border-radius: 1000rpx;
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx;
+}
+
+.geren-view-name {
+  margin: 10rpx;
+  font-size: 40rpx;
+  width: 320rpx;
+}
+/* 确认提交按钮 */
+.modal-option-btn-button{
+  background-color: white;
+  color: forestgreen;
+}

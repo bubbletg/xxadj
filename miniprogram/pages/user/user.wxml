@@ -1,0 +1,49 @@
+<view class="geren">
+  <view class='geren-view'></view>
+  <view class="nav-list-geren">
+    <image class="geren-view-image" src='{{avatarUrl}}'></image>
+    <button open-type="getUserInfo" wx:if="{{userInfo==''}}" bindgetuserinfo="onGetUserInfo" data-openid='{{isopenid}}'>登录授权</button>
+    <view class="geren-view-name" wx:if="{{userInfo!=false}}">{{userInfo.nickName}}</view>
+
+  </view>
+  <view class="list-box">
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-changjingmoren moren-text"></view>
+        详细信息
+      </view>
+    </view>
+        <view class="list-li list-arrow" catchtap='cutInterface' data-interface='orderForm' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-dingdan moren-text"></view>
+        订单
+      </view>
+    </view>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='collect' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-unie601 moren-text"></view>
+        收藏
+      </view>
+    </view>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-pinglun moren-text"></view>
+        评论
+      </view>
+    </view>
+    <view class="list-li list-arrow"  catchtap='setting' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-settings moren-text"></view>
+        设置
+      </view>
+    </view>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='regard' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-guanyu moren-text"></view>
+        关于我们
+      </view>
+    </view>
+
+
+  </view>
+</view>

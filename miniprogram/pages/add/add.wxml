@@ -1,0 +1,88 @@
+<!-- catchtouchstart='touchStart' catchtouchend="touchEnd" -->
+<view>
+  <form bindsubmit="lijixiadan" bindreset="formReset">
+    <view class="nav center-nav success-nav">
+      <view class="nav-item-box">
+        <view class="nav-item {{richangdaijia}}" catchtap='daohangqiehuan' data-daohangqiehuan='richangdaijia'>
+          <text class='iconfont icon-album'></text>
+          日常代驾
+        </view>
+        <view class="nav-item {{baoshidaijia}}" catchtap='daohangqiehuan' data-daohangqiehuan='baoshidaijia'>
+          <text class='iconfont icon-video'></text>
+          包时代驾
+        </view>
+        <view class="nav-item {{baochefuwu}}" catchtap='daohangqiehuan' data-daohangqiehuan='baochefuwu'>
+          <text class='iconfont icon-video'></text>
+          包车服务
+        </view>
+      </view>
+    </view>
+    <view class='form-box'>
+      <view class='form-item'>
+        <view class='form-title cur'>起始位置</view>
+        <input name='qishiweizhi' type="text" placeholder="输入起始位置" value='{{qishiweizhisuozaidi}}' class='form-input'></input>
+        <view class='form-input-btn' catchtap='qishiweizhitap'>
+          <view class="iconfont icon-suozaidi moren-text"></view>
+        </view>
+      </view>
+      <view class='form-item'>
+        <view class='form-title cur'>终点位置</view>
+        <input name='zhongdianweizhi' type="text" placeholder="输入终点位置" value='{{zhongdianweizhisuozaidi}}' class='form-input'></input>
+        <view class='form-input-btn' catchtap='zhongdianweizhitap'>
+          <view class="iconfont icon-suozaidi moren-text" style='color:red'></view>
+        </view>
+      </view>
+      <view class='form-item'>
+        <view class='form-title cur'>联系方式</view>
+        <input name='phone' type="number" placeholder="输入联系方式" class='form-input'></input>
+        <view class='form-input-btn'>
+          <view class="iconfont icon-phone moren-text"></view>
+        </view>
+      </view>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" value="{{multiIndex}}" range="{{multiArray}}">
+        <view class='form-item'>
+          <view class='form-title cur'>预约时间</view>
+          <input name='time' type="text" disabled='true' placeholder="选择时间好让司机准时到达" class='form-input' value='{{multiArray[0][multiIndex[0]]}}年-{{multiArray[1][multiIndex[1]]}}-{{multiArray[2][multiIndex[2]]}} {{multiArray[3][multiIndex[3]]}}:{{multiArray[4][multiIndex[4]]}}'></input>
+          <view class='form-input-btn'>
+            <view class="iconfont icon-shijian moren-text"></view>
+          </view>
+        </view>
+      </picker>
+      <picker mode="multiSelector" bindchange="daijiarenPickerChange" value="{{daijiarenIndex}}" range="{{daijiarenshuArray}}">
+        <!-- 添加代驾，在日常代驾和包车代驾中都有用到 -->
+        <view class='form-item' wx:if='{{richangdaijia=="cur"||baoshidaijia=="cur"}}'>
+          <view class='form-title cur'>添加代驾</view>
+          <input name='tianjiadaijia' type="text" disabled='true' placeholder="默认为 1 位代驾" class='form-input' value='{{daijiarenshuArray[0][daijiarenIndex]}}代驾'></input>
+          <view class='form-input-btn'>
+            <view class="iconfont icon-tianjiarenyuan moren-text"></view>
+          </view>
+        </view>
+      </picker>
+      <picker mode="multiSelector" bindchange="baochePickerChange" value="{{baocheIndex}}" range="{{baocheArray}}">
+      <view class='form-item' wx:if='{{baochefuwu=="cur"}}'>
+        <view class='form-title cur'>包车服务</view>
+        <input name='baochefuwu' type="text" disabled='true' placeholder="选择包车的类型" value='{{baocheArray[0][baocheIndex]}}' class='form-input'></input>
+        <view class='form-input-btn'>
+          <view class="iconfont icon-tianjiarenyuan moren-text"></view>
+        </view>
+      </view>
+      </picker>
+      <picker mode="multiSelector" bindchange="baoshiPickerChange" value="{{baoshiIndex}}" range="{{baoshiArray}}">
+        <view class='form-item' wx:if='{{baoshidaijia=="cur"}}'>
+          <view class='form-title cur'>包时服务</view>
+          <input name='baoshidaijia' type="text" disabled='true' placeholder="选择包时的时间" value='{{baoshiArray[0][baoshiIndex]}}' class='form-input'></input>
+          <view class='form-input-btn'>
+            <view class="iconfont icon-shijian moren-text" style='color:red'></view>
+          </view>
+        </view>
+      </picker>
+      <view class="tiaosijijiedan">自己挑司机接单</view>
+      <view class="doc-main">
+        <view class='flex flex-direction'>
+          <!-- 包时服务下的按钮 -->
+          <button class='primary btn mt-sm block lg' form-type="submit">立即下单</button>
+        </view>
+      </view>
+    </view>
+  </form>
+</view>

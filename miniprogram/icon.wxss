@@ -1,0 +1,137 @@
+@keyframes icon-spin {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+.iconfont-spin {
+  -webkit-animation: icon-spin 2s infinite linear;
+  animation: icon-spin 2s infinite linear;
+  display: inline-block;
+}
+
+.iconfont-pulse {
+  -webkit-animation: icon-spin 1s infinite steps(8);
+  animation: icon-spin 1s infinite steps(8);
+  display: inline-block;
+}
+
+@font-face {
+  font-family: 'iconfont';  /* project id 1127277 */
+  src: url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.eot');
+  src: url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: iconfont !important;
+  font-size: inherit;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* 叉叉 */
+.icon-chacha:before{
+  content: "\e610";
+}
+/* 搜索 */
+.icon-sousuo:before{
+  content: "\e603";
+}
+/* 向下1 */
+.icon-xiangxia1:before{
+  content: "\e619";
+}
+/*向下2 */
+.icon-xiangxia2:before{
+  content: "\e600";
+}
+
+/* 问号 */
+.icon-wenhao:before{
+  content: "\e669";
+}
+
+/* 订单 */
+.icon-dingdan:before{
+   content: "\e63a";
+}
+
+/* 时间 */
+.icon-shijian:before{
+   content: "\e606";
+}
+/* 添加人员 */
+.icon-tianjiarenyuan:before{
+   content: "\e66a";
+}
+
+/* 驾驶 */
+.icon-jiashi:before{
+   content: "\e60c";
+}
+/* 所在地 */
+.icon-suozaidi:before{
+   content: "\e6b5";
+}
+/* 驾龄 */
+.icon-jialing:before{
+   content: "\e60a";
+}
+
+/* 年龄 */
+.icon-age:before{
+   content: "\e7ba";
+}
+/* 电话 */
+.icon-phone:before{
+   content: "\e60f";
+}
+/* 姓名 */
+.icon-xingming:before{
+   content: "\e609";
+}
+
+
+/* 收藏 */
+.icon-unie601:before{
+   content: "\e6cf";
+}
+/* 评论 */
+.icon-pinglun:before{
+   content: "\e6ad";
+}
+
+/* 右箭头 */
+.icon-jiantou3:before{
+   content: "\e634";
+}
+/*设置 */
+.icon-settings:before {
+  content: "\e632";
+}
+  /* 默认 */
+.icon-changjingmoren:before {
+  content: "\e629";
+}
+
+/* 关于 */
+.icon-guanyu:before {
+  content: "\e633";
+}
+/* 身份证 */
+.icon-spe_i:before {
+  content: "\e655";
+}
+.icon-close:before{
+  content: "\e61d";
+}

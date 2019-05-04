@@ -1,0 +1,25 @@
+.success-nav {
+    background: #FCE35F;
+    color: #fff;
+  }
+  .form-input-btn>.iconfont {
+    padding: 0 10rpx;
+    font-size: 50rpx;
+  }
+  /* 挑司机接单 */
+  .tiaosijijiedan{
+    margin: 0 auto;
+    margin-top:30rpx;
+    border-bottom: solid;
+    text-align: center;
+    width: 200rpx;
+    border-color: #FCE35F;
+  }
+  .primary {
+    background: #FCE35F;
+    color: #fff;
+  }
+  .lg.btn {
+    padding: 16rpx 30rpx;
+    font-size: 40rpx;
+  }

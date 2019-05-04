@@ -1,0 +1,76 @@
+.view-margin{
+    margin: 10rpx;
+}
+.view-dao{
+    margin-left:271rpx;
+    text-align:center;
+    border-left:3rpx solid;
+    border-right:3rpx solid;
+    width:100rpx;
+}
+.order-form-detail{
+    margin:10rpx;
+    padding:20rpx;
+    background-color:#FCE35F;
+    font-size:40rpx;
+
+}
+.order-form-detail-qishidizhi{
+    border-bottom:2rpx solid;
+    border-color: #ffffff; 
+    background-color: #FCE35F;
+
+}
+.order-form-detail-zhongdiandizhi{
+    border-top:2rpx solid;
+    border-color: #ffffff; 
+    position: relative;
+    text-align: right;
+
+}
+.order-form-detail-phone{
+    text-align:center;
+    margin-top:50rpx;
+    
+
+}
+.order-form-detail-time{
+    text-align:center;
+    margin-top:50rpx;
+    
+}
+.order-form-detail-tianjiadaijia{
+    text-align:center;
+    margin-top:50rpx;
+    
+}
+.order-form-detail-finish{
+    position:relative;
+    background-color:#5858f1;
+    width:200rpx;
+    padding:10rpx;
+    text-align:center;
+    border-radius:5pt/5pt;
+    left:450rpx;
+    top:70rpx;  
+}
+.order-form-detail-alter{
+    position:relative;
+    background-color:#b150f1;
+    width:200rpx;
+    padding:10rpx;
+    text-align:center;
+    border-radius:5pt/5pt;
+    left:70rpx;
+    top:-14rpx;    
+    
+}
+
+.order-form-help2{
+    margin: 20rpx;
+}
+.button-order-form-help2{
+    border-style: none;
+    background-color: #ffffff;
+    margin: 20rpx;
+}
