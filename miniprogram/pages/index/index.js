@@ -20,12 +20,29 @@ Page({
    */
 
    chaxundaijia:function(e){
+     let shouyearray;
      //查询数据库   起始位置
      db.collection("daijiadingdan").where({
       isaccept:false,  //没有被接单
     }).get().then(res => {
+      shouyearray =  res.data;
+      let length_ = res.data.length;
+      let yonghuxinxi = [];
+      for(let i = 0;i<length_;i++){
+        console.log(res.data[i]._openid)
+        db.collection("user").where({
+          _openid:res.data[i]._openid,  //没有被接单
+        }).get().then(ress => {
+          console.log("查询到",ress.data)
+          yonghuxinxi.push(ress.data);
+          this.setData({
+            yonghuxinxi: yonghuxinxi,
+          })
+          
+        }) 
+      } 
       this.setData({
-        shouyearray: res.data,
+        shouyearray: shouyearray,
       })
     })
    },
@@ -92,9 +109,8 @@ Page({
           isopenid: res.result.openid,
         })
       }
-    }),
-    //查询代驾信息
-    this.chaxundaijia();
+    })
+    
 
   },
 
@@ -102,6 +118,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    //查询代驾信息
+    this.chaxundaijia();
     // 获取用户信息
     wx.getSetting({
       success: res => {
