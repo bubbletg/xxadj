@@ -24,12 +24,12 @@
 
 @font-face {
   font-family: 'iconfont';  /* project id 1127277 */
-  src: url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.eot');
-  src: url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1127277_lxbwwn1r6k.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1127277_b7hem6wvpar.eot');
+  src: url('//at.alicdn.com/t/font_1127277_b7hem6wvpar.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1127277_b7hem6wvpar.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1127277_b7hem6wvpar.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1127277_b7hem6wvpar.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1127277_b7hem6wvpar.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -38,6 +38,11 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 查看 */
+.icon-chakan:before{
+  content: "\e61b";
 }
 /* 叉叉 */
 .icon-chacha:before{
