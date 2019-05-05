@@ -44,8 +44,38 @@
     </view>
     <view class="zhanshi-quanju" wx:if="{{xianshi=='shouye'}}">
         <scroll-view class="zhanshi-scroll-view" scroll-y="true">
-            <view wx:for="{{shouyearray}}" wx:key="index" wx:for-item="item">
-                    {{index}}{{item._id}}
+            <view class='card-list-box'>
+                <view class="ins-list-li" wx:for="{{shouyearray}}" wx:key="index" wx:for-item="item">
+                    <view catch:tap="sousuoxiangxi" data-sousuoid="{{item._id}}">
+                        <view class="ins-list-img">
+                            <image src="http://image.weilanwl.com/img/3x4-4.jpg" mode="widthFix"></image>
+                            <view class="ins-list-num">
+                                <text class="iconfont icon-chakan">10</text>
+                                <text class="iconfont icon-unie601">20</text>
+                                <text class="iconfont icon-pinglun">30</text>
+                            </view>
+                            <view class="ins-list-title">
+                                
+                                <view class="zhanshi-kapian-qishiweizhi">
+                                    <view>起始位置：</view>
+                                    <text class="qishiweizhi">{{item.qishiweizhi}}</text>
+                                </view>
+                                <view class="zhanshi-kapian-shijian">
+                                    <view>时间：</view>
+                                    <view>{{item.time}}</view>
+                                </view>
+                                <view class="zhanshi-kapian-daijia">
+                                    <view>代驾：</view>
+                                    <view>{{item.tianjiadaijia}}</view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="ins-list-author">
+                            <image src="http://image.weilanwl.com/img/4x4.jpg" class='round'></image>
+                            <view class="ins-list-name">文晓港</view>
+                        </view>
+                    </view>
+                </view>
             </view>
         </scroll-view>
     </view>

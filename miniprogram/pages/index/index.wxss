@@ -53,3 +53,53 @@
     background-color: #f0f7f3;
     height:1000rpx;
 }
+.ins-list-title {
+    position: absolute;
+    bottom: 0;
+    padding: 10rpx 10rpx 10rpx 15rpx;
+    width: 100%;
+    height: 340rpx;
+    border-bottom-left-radius: 8rpx;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 1) 500%);
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 1) 500%);
+    background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 1) 500%);
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 1) 500%);
+    color: #000000;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    word-wrap: normal;
+    font-size: 30rpx;
+  }
+.zhanshi-kapian-qishiweizhi{
+    margin-bottom: 10rpx;
+}
+.zhanshi-kapian-qishiweizhi .qishiweizhi{
+    display: inline;
+}
+.zhanshi-kapian-shijian{
+    margin-bottom: 10rpx;
+}
+
+
+.zhanshi-kapian-daijia{
+   
+    margin-bottom: 10rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
