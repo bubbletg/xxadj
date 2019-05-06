@@ -23,7 +23,9 @@ Page({
      let shouyearray;
      //查询数据库   起始位置
      db.collection("daijiadingdan").where({
-      isaccept:false,  //没有被接单
+      ifFinish: false, //表示是否完成
+      isaccept: false, //表示是否被接单
+
     }).get().then(res => {
       shouyearray =  res.data;
       let length_ = res.data.length;
