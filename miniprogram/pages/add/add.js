@@ -276,7 +276,7 @@ Page({
         zhongdianweizhilatitude: '' + this.data.zhongdianweizhilatitude, //终点纬度
         zhongdianweizhilongitude: '' + this.data.zhongdianweizhilongitude, //终点经度
         ifFinish: false, //表示是否完成
-        isaccept:false, //表示是否被接单
+        isaccept: false, //表示是否被接单
         chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) + '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()]//创建时间
       },
       success(res) {
@@ -315,6 +315,10 @@ Page({
     })
   },
 
+  /**
+   * 
+   * 获得数据
+   */
   huodeshuju: function (e) {
     console.log("----------addthis.data.openid", this.data.isopenid)
     var thiss = this;
@@ -348,25 +352,13 @@ Page({
   onShow: function () {
 
     /**
-     * 先判断用户是否登录，没有则让用户登录
-     * 获得缓存 dengluchenggong 
-     * 值为 ture  表示登录
-     * 值为 false  表示没有登录
-     */
-    wx.getStorage({
-      key: 'dengluchenggong',
+ * 先判断用户是否登录，没有则让用户登录
+ */
+    wx.getSetting({
       success(res) {
-        if (res.data == 'ture') {
-          console.log("add -------------已经登录")
-        }
-      },
-
-      /**
-       * 没有缓存，表示获取失败，则没有登录过
-       */
-      fail(res) {
-        if (res.data != 'ture') {
-          console.log("add -------------没有登录")
+        console.log(res.authSetting)
+        //没有授权
+        if (!res.authSetting['scope.userInfo']) {
           wx.showModal({
             title: '请登录',
             content: '您好还没有登录，请先登录再操作！',
@@ -391,8 +383,6 @@ Page({
         }
       }
     })
-
-
   },
 
   /**
