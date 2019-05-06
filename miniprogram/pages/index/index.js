@@ -22,6 +22,10 @@ Page({
    * 获得当前位置
    */
   dangqianweizhi(){
+    //打开当前位置侧边栏
+    this.setData({
+      modalName: 'menuSide'
+    })
     this.weizhi();
   },
 
@@ -30,14 +34,20 @@ Page({
     var BMap = new bmap.BMapWX({
       ak: "Z3MotXRHKMq5OzjNG1ukIxSQPrGYfpK0"
     });
-    BMap.regeocoding({
+    BMap.weather({
       fail(data) {
-        console.log(data)
+        that.setData({
+          dangqianweizhicurrentCity: "定位失败"       
+        });
       },
       success: function (data) {
-        wxMarkerData = data.wxMarkerData;
+        var weatherData = data.currentWeather[0];
         that.setData({
-          markers: wxMarkerData,
+          dangqianweizhicurrentCity: weatherData.currentCity,
+          dangqianweizhiPM25: weatherData.pm25,
+          dangqianweizhiwendu: weatherData.temperature,
+          dangqianweizhitianqi: weatherData.weatherDesc,
+          dangqianweizhifengli: weatherData.wind,
         });
       },
     });
@@ -132,7 +142,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.weizhi();
     //执行云涵数，获得openid作为id
     wx.cloud.callFunction({
       name: 'login',
@@ -176,6 +186,7 @@ Page({
   onHide: function () {
     //隐藏清空缓存
     this.obliterate();
+    this.closeModal(); 
   },
   /**
    * 
@@ -285,5 +296,15 @@ Page({
     console.log()
     //先清除搜索缓存
     this.obliterate();
+  }
+  ,
+  /**
+   * 
+   * 关闭侧边
+   */
+  closeModal: function (e) {
+    this.setData({
+      modalName: null
+    })
   }
 })
