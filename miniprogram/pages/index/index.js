@@ -18,6 +18,29 @@ Page({
   },
 
   /**
+   * 附近位置最大最小经纬度计算 
+   * @param   longitude  经度
+   * @param   latitude   纬度
+   * @param   distince    距离（千米）
+   * @returns 格式：经度最小值-经度最大值-纬度最小值-纬度最大值
+   */
+  getMaxMinLongitudeLatitude(longitude,latitude,distince){
+    console.log("查询经纬度最大最小奥MaxMinLongitudeLatitude",longitude,latitude);
+    let r = 6371.393;    // 地球半径千米
+    let lng = longitude;
+    let lat = latitude;
+    let dlng = 2 * Math.asin(Math.sin(distince / (2 * r)) / Math.cos(lat * Math.PI / 180));
+    dlng = dlng * 180 / Math.PI;// 角度转为弧度
+    let dlat = distince / r;
+    dlat = dlat * 180 / Math.PI;
+    let minlat = lat - dlat;
+    let maxlat = lat + dlat;
+    let minlng = lng - dlng;
+    let maxlng = lng + dlng;
+    return minlng + "-" + maxlng + "-" + minlat + "-" + maxlat; 
+  },
+
+  /**
    * 
    * 获得当前位置
    */
@@ -26,18 +49,21 @@ Page({
     this.setData({
       modalName: 'menuSide'
     })
-    this.weizhi();
+    this.weizhi("dangqianweizhi");
   },
-
-  weizhi: function () {
+/**
+ * 获得位置
+ */
+  weizhi: function (dangqianweizhi) {
     var that = this;
     var BMap = new bmap.BMapWX({
       ak: "Z3MotXRHKMq5OzjNG1ukIxSQPrGYfpK0"
     });
+    //获得当前位置，但没有获得经纬度
     BMap.weather({
       fail(data) {
         that.setData({
-          dangqianweizhicurrentCity: "定位失败"       
+          dangqianweizhicurrentCity: "定位失败"
         });
       },
       success: function (data) {
@@ -51,21 +77,97 @@ Page({
         });
       },
     });
-  },
+    //获得当前位置经纬度
+    BMap.regeocoding({
+      fail(data) {
 
+        //dangqianweizhi   当前位置不为空，表示是点击位置切换，不用查询数据库，
+        if (dangqianweizhi == '') {
+          //按附近位置查询信息
+          console.log("---获取经纬度失败--开始按照全局查找！");
+          //当获取经纬度失败时！！按照全局查找
+          that.chaxundaijia();
+        }
+      },
+      success(data) {
+        let longitude = data.wxMarkerData[0].longitude;
+        let latitude = data.wxMarkerData[0].latitude;
+        //获得附近N千米最大最小经纬度 (33千米)   经度最小值-经度最大值-纬度最小值-纬度最大值
+        let MaxMinLongitudeLatitude = that.getMaxMinLongitudeLatitude(longitude, latitude, 33).split('-');
+        that.setData({
+          longitude: longitude,  //经度
+          latitude: latitude,   //维度
+          MaxMinLongitudeLatitude: MaxMinLongitudeLatitude, //经度最小值-经度最大值-纬度最小值-纬度最大值
+        })
+        //dangqianweizhi   当前位置不为空，表示是点击位置切换，不用查询数据库，
+        if (dangqianweizhi == '') {
+          //按附近位置查询信息
+          console.log("-----开始按附近查找没有找到！");
+          that.weizhichaxundaijia();
+        }
+      },
+
+    });
+
+
+  },
+  /**
+   * 按附近位置查询信息
+   * 查询发布的代驾信息
+   */
+  weizhichaxundaijia(){
+    //用于保存首页查询到的代驾信息
+    let shouyearray;
+    //查询数据库   起始位置
+    const _ = db.command;
+    db.collection("daijiadingdan").where({
+     ifFinish: false, //表示是否完成
+     isaccept: false, //表示是否被接单
+     qishiweizhilongitude:_.gt(this.data.MaxMinLongitudeLatitude[0]).and(_.lt(this.data.MaxMinLongitudeLatitude[1])),
+     qishiweizhilatitude:_.gt(this.data.MaxMinLongitudeLatitude[2]).and(_.lt(this.data.MaxMinLongitudeLatitude[3])), 
+
+   }).get().then(res => {
+     shouyearray =  res.data;
+     //判断按附近查找到了吗？没有则按照安装全部查找
+     if(shouyearray.length <=0){
+       console.log("-----按附近查找没有找到！开始查找全局！！");
+        this.chaxundaijia();
+        return;
+     }
+     let length_ = res.data.length;
+     let yonghuxinxi = [];
+     for(let i = 0;i<length_;i++){
+       console.log(res.data[i]._openid)
+       db.collection("user").where({
+         _openid:res.data[i]._openid,  //没有被接单
+       }).get().then(ress => {
+         console.log("查询到",ress.data)
+         yonghuxinxi.push(ress.data);
+         this.setData({
+           yonghuxinxi: yonghuxinxi,
+         })
+         
+       }) 
+     } 
+     this.setData({
+       shouyearray: shouyearray,
+     })
+   })
+  },
 
   /**
    * 
    * 查询发布的代驾信息
    */
 
-   chaxundaijia:function(e){
+   chaxundaijia:function(fujin){
+    //用于保存首页查询到的代驾信息
      let shouyearray;
      //查询数据库   起始位置
+     const _ = db.command;
      db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
-
     }).get().then(res => {
       shouyearray =  res.data;
       let length_ = res.data.length;
@@ -142,7 +244,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.weizhi();
+   
+    //获得当前位置, 参数为空表示不是点击切换附近
+    this.weizhi('');
     //执行云涵数，获得openid作为id
     wx.cloud.callFunction({
       name: 'login',
@@ -161,7 +265,7 @@ Page({
    */
   onShow: function () {
     //查询代驾信息
-    this.chaxundaijia();
+    //this.chaxundaijia();
     // 获取用户信息
     wx.getSetting({
       success: res => {
