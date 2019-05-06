@@ -9,7 +9,7 @@
                 <input name='sousuo' type="text" placeholder="搜索" style="width:390rpx;" bindinput="shurushichufa" value="{{sousuoValue}}"></input>
                 <text class="iconfont icon-chacha" wx:if="{{sousuoValue!=null}}" catchtap="shanchusousuo"></text>
             </view>
-            <view class='mh-sm text-sm'>
+            <view class='mh-sm text-sm' catch:tap="dangqianweizhi">
                 北京
                 <text class="iconfont icon-xiangxia2"></text>
             </view>

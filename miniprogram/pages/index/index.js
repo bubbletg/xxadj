@@ -1,5 +1,8 @@
 //获得数据库引用
 const db = wx.cloud.database();
+// 引用百度地图微信小程序JSAPI模块 
+var bmap = require('../../libs/bmap-wx.min.js'); 
+var wxMarkerData = []; 
 Page({
 
   /**
@@ -13,6 +16,33 @@ Page({
     qishiweizhiqiehuan:'cur',//起始位置切换
     zhongdianweizhiqiehuan:'',//终点位置切换
   },
+
+  /**
+   * 
+   * 获得当前位置
+   */
+  dangqianweizhi(){
+    this.weizhi();
+  },
+
+  weizhi: function () {
+    var that = this;
+    var BMap = new bmap.BMapWX({
+      ak: "Z3MotXRHKMq5OzjNG1ukIxSQPrGYfpK0"
+    });
+    BMap.regeocoding({
+      fail(data) {
+        console.log(data)
+      },
+      success: function (data) {
+        wxMarkerData = data.wxMarkerData;
+        that.setData({
+          markers: wxMarkerData,
+        });
+      },
+    });
+  },
+
 
   /**
    * 
