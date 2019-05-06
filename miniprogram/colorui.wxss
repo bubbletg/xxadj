@@ -983,7 +983,7 @@ overflow: hidden;
 
 .bar .serach-round .iconfont {
   display: inline-block;
-  width: 70rpx;
+  width: 60rpx;
   text-align: center;
 }
 
