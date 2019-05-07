@@ -1,5 +1,6 @@
 //获得数据库引用
 const db = wx.cloud.database();
+const app = getApp();
 // 引用百度地图微信小程序JSAPI模块 
 var bmap = require('../../libs/bmap-wx.min.js'); 
 var wxMarkerData = []; 
@@ -102,7 +103,7 @@ Page({
         //dangqianweizhi   当前位置不为空，表示是点击位置切换，不用查询数据库，
         if (dangqianweizhi == '') {
           //按附近位置查询信息
-          console.log("-----开始按附近查找没有找到！");
+          console.log("-----开始按附近查找------！");
           that.weizhichaxundaijia();
         }
       },
@@ -134,6 +135,7 @@ Page({
         this.chaxundaijia();
         return;
      }
+     console.log("-----按附近查找查找成功---------");
      let length_ = res.data.length;
      let yonghuxinxi = [];
      for(let i = 0;i<length_;i++){
@@ -165,19 +167,20 @@ Page({
      let shouyearray;
      //查询数据库   起始位置
      const _ = db.command;
+     console.log("-----开始查找全局-------------------");
      db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
     }).get().then(res => {
+      console.log("--------------全局查找完成！！---------");
       shouyearray =  res.data;
       let length_ = res.data.length;
       let yonghuxinxi = [];
       for(let i = 0;i<length_;i++){
-        console.log(res.data[i]._openid)
         db.collection("user").where({
           _openid:res.data[i]._openid,  //没有被接单
         }).get().then(ress => {
-          console.log("查询到",ress.data)
+          console.log("查询到第"+ i +"个用户信息",ress.data)
           yonghuxinxi.push(ress.data);
           this.setData({
             yonghuxinxi: yonghuxinxi,
@@ -256,6 +259,7 @@ Page({
         })
       }
     })
+    
     
 
   },
