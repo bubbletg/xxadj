@@ -1,6 +1,6 @@
 // pages/add/add.js
 const db = wx.cloud.database();
-
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -302,29 +302,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //执行云涵数，获得openid作为id
-    wx.cloud.callFunction({
-      name: 'login',
-      complete: (res) => {
-        this.setData({
-          isopenid: res.result.openid,
-        })
-        //获取用户信息
-        this.huodeshuju();
-      }
-    })
+    console.log("----------add页面--onLoad生命周期函数-this.data")
   },
 
   /**
    * 
    * 获得数据
    */
-  huodeshuju: function (e) {
-    console.log("----------addthis.data.openid", this.data.isopenid)
+  huodeshuju: function (openid_) {
+    console.log("----------add页面----获得数据方法：")
     var thiss = this;
     //查询数据
-    db.collection('user').doc(this.data.openid).get({
+    db.collection('user').doc(openid_).get({
       success(res) {
+        console.log("----------add页面----获得数据方法：success--------------------",res)
         // res.data 包含该记录的数据
         thiss.setData({
           name: res.data.name, //姓名
@@ -336,6 +327,9 @@ Page({
           jiashi: res.data.jiashi, //驾驶认证
           region: res.data.region, //所在地
         })
+      },
+      fail(){
+        console.log("----------add页面----获得数据方法：fail--------------------")
       }
     })
   },
@@ -343,14 +337,33 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    console.log("----------add页面--onReady生命周期函数")
+    /**
+     * 先根据全局openid_获得用户信息，减少云函数执行
+     * 当获取全局失败时，则再次重新执行云函数。
+     * 当openid_ 为空时，表示在全局app.js 中获取数据失败，需要重新获取。
+     * 当openid_ 为不空时，表示在全局app.js 中获取数据成功，直接获取用户信息。
+     */
+    let openid_ = app.globalDataOpenid.openid_;
+    if (openid_ != '') {
+      //获取用户信息
+      this.huodeshuju(openid_);
+    } else {
+      //执行云涵数，获得openid作为id
+      wx.cloud.callFunction({
+        name: 'login',
+        complete: (res) => {
+          this.huodeshuju(res.result.openid);
+        }
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log("----------add页面--onShow生命周期函数")
     /**
  * 先判断用户是否登录，没有则让用户登录
  */
@@ -391,32 +404,4 @@ Page({
   onHide: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
