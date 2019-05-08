@@ -1,6 +1,8 @@
-@import "icon.wxss";
-@import "colorui.wxss";
+@import "colorui_v1/icon_v1.wxss";
+@import "colorui_v1/colorui_v1.wxss";
 
+ @import "colorui_v2/main.wxss";
+@import "colorui_v2/icon.wxss"; 
 
 page {
   counter-reset: header;
