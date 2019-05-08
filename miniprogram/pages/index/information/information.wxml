@@ -1,2 +1,36 @@
-<!--pages/index/information/information.wxml-->
-<text>pages/index/information/information.wxml</text>
+<view>
+    <view class="order-form-detail view-margin">
+        <view class="order-form-detail-qishidizhi view-margin" 
+        catch:tap="dakaiqishiweizhiditu" 
+        data-longitude=" {{information.qishiweizhilongitude}}" 
+        data-latitude=" {{information.qishiweizhilatitude}}">
+            {{information.qishiweizhi}}
+            <text class="text-embellish">(点击查看位置)</text>
+        </view>
+        <view class="view-dao">到</view>
+        <view class="order-form-detail-zhongdiandizhi view-margin">
+            {{information.zhongdianweizhi}}
+        </view>
+        <view class="order-form-detail-phone view-margin" 
+        catch:tap="dial" data-phone="{{information.phone}}">
+            {{information.phone}}
+            <text class="text-embellish">(点击拨号)</text>
+        </view>
+        <view class="order-form-detail-time view-margin">{{information.time}}</view>
+        <!-- 日常代驾 -->
+        <view class="order-form-detail-tianjiadaijia view-margin"
+         wx:if="{{information.baochefuwu=='undefined'}}">
+            {{information.tianjiadaijia}}
+        </view>
+        <!-- 包时代驾 -->
+        <view class="order-form-detail-tianjiadaijia view-margin" 
+        wx:if="{{information.baoshidaijia!='undefined'&&information.baochefuwu=='undefined'}}">
+            {{information.baoshidaijia}}
+        </view>
+        <!-- 包车代驾 -->
+        <view class="order-form-detail-tianjiadaijia view-margin" 
+        wx:if="{{information.baoshidaijia=='undefined'&&information.baochefuwu!='undefined'}}">
+            {{information.baochefuwu}}
+        </view>
+    </view>
+</view>

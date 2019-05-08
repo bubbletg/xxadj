@@ -51,7 +51,8 @@
                 <view class="ins-list-li" wx:for="{{shouyearray}}" wx:key="index" wx:for-item="item">
                     <view catch:tap="sousuoxiangxi" data-sousuoid="{{item._id}}">
                         <view class="ins-list-img">
-                            <image src="http://image.weilanwl.com/img/3x4-4.jpg" mode="widthFix"></image>
+                        <!-- 图片 ： 363*484 -->
+                            <image src="../../images/cheche.png" mode="widthFix"></image>
                             <view class="ins-list-num">
                                 <text class="iconfont icon-chakan">10</text>
                                 <text class="iconfont icon-unie601">20</text>
