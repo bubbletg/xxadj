@@ -1,36 +1,82 @@
-<view>
-    <view class="order-form-detail view-margin">
-        <view class="order-form-detail-qishidizhi view-margin" 
-        catch:tap="dakaiqishiweizhiditu" 
-        data-longitude=" {{information.qishiweizhilongitude}}" 
-        data-latitude=" {{information.qishiweizhilatitude}}">
-            {{information.qishiweizhi}}
-            <text class="text-embellish">(点击查看位置)</text>
-        </view>
-        <view class="view-dao">到</view>
-        <view class="order-form-detail-zhongdiandizhi view-margin">
-            {{information.zhongdianweizhi}}
-        </view>
-        <view class="order-form-detail-phone view-margin" 
-        catch:tap="dial" data-phone="{{information.phone}}">
-            {{information.phone}}
-            <text class="text-embellish">(点击拨号)</text>
-        </view>
-        <view class="order-form-detail-time view-margin">{{information.time}}</view>
-        <!-- 日常代驾 -->
-        <view class="order-form-detail-tianjiadaijia view-margin"
-         wx:if="{{information.baochefuwu=='undefined'}}">
-            {{information.tianjiadaijia}}
-        </view>
-        <!-- 包时代驾 -->
-        <view class="order-form-detail-tianjiadaijia view-margin" 
-        wx:if="{{information.baoshidaijia!='undefined'&&information.baochefuwu=='undefined'}}">
-            {{information.baoshidaijia}}
-        </view>
-        <!-- 包车代驾 -->
-        <view class="order-form-detail-tianjiadaijia view-margin" 
-        wx:if="{{information.baoshidaijia=='undefined'&&information.baochefuwu!='undefined'}}">
-            {{information.baochefuwu}}
+<view class=" bg-white padding-sm">
+    <view class="cu-card dynamic no-card">
+        <view class="cu-item shadow">
+            <view class="cu-list menu-avatar">
+                <view class="cu-item">
+                    <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round lg'></image>
+                    <view class="content flex-sub">
+                        <view>{{yonghuxinxi[0].username}}</view>
+                        <view class="text-gray text-sm flex justify-between">
+                            {{information.chuangjianshijian[0]}} {{information.chuangjianshijian[1]}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="grid col-1">
+                <view class="bg-yellow  radius  light">
+                    <view class="padding text-center">
+                        <view catch:tap="dakaiqishiweizhiditu" data-longitude=" {{information.qishiweizhilongitude}}" data-latitude=" {{information.qishiweizhilatitude}}">
+                            <view>{{information.qishiweizhi}}</view>
+                            <view class="text-xs padding-xs solid-bottom">
+                                <text class="text-gray">（点击查看地图）</text>
+                            </view>
+                        </view>
+                        <view class="solid-top padding-xs">
+                            {{information.zhongdianweizhi==''?"...":information.zhongdianweizhi}}
+                        </view>
+                        <view catch:tap="dial" data-phone="{{information.phone}}">
+                            <view>{{information.phone}}</view>
+                            <view class="text-xs padding-xs">
+                                <text class="text-gray">（点击拨号）</text>
+                            </view>
+                        </view>
+                        <view class="padding-xs">{{information.time}}</view>
+                        <!-- 日常代驾 -->
+                        <view class="padding-xs" wx:if="{{information.baochefuwu=='undefined'}}">
+                            {{information.tianjiadaijia}}
+                        </view>
+                        <!-- 包时代驾 -->
+                        <view class="padding-xs" wx:if="{{information.baoshidaijia!='undefined'&&information.baochefuwu=='undefined'}}">
+                            {{information.baoshidaijia}}
+                        </view>
+                        <!-- 包车代驾 -->
+                        <view class="padding-xs" wx:if="{{information.baoshidaijia=='undefined'&&information.baochefuwu!='undefined'}}">
+                            {{information.baochefuwu}}
+                        </view>
+                    </view>
+                    <view class="flex justify-around padding-sm"></view>
+                </view>
+            </view>
+            <view class="text-gray text-sm text-right padding">
+                <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                10
+                <text class="cuIcon-appreciatefill margin-lr-xs"></text>
+                20
+                <text class="cuIcon-messagefill margin-lr-xs"></text>
+                30
+            </view>
+            <view class="cu-list menu-avatar comment solids-top">
+                <view class="cu-item" wx:for="{{[1,2,3,4]}}" wx:key="index">
+                     <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round'></image>
+                    <view class="content">
+                        <view class="text-grey">{{yonghuxinxi[0].username}}</view>
+                        <view class="text-gray text-content text-df">凯尔，你被自己的光芒变的盲目。</view>
+                        <view class="bg-orange light padding-sm radius margin-top-sm  text-sm">
+                            <view class="flex">
+                                <view>凯尔：</view>
+                                <view class="flex-sub">妹妹，你在帮他们给黑暗找借口吗?</view>
+                            </view>
+                        </view>
+                        <view class="margin-top-sm flex justify-between">
+                            <view class="text-gray text-df">2018年12月4日</view>
+                            <view>
+                                <text class="cuIcon-appreciatefill text-red"></text>
+                                <text class="cuIcon-messagefill text-gray margin-left-sm"></text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
         </view>
     </view>
 </view>
