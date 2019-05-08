@@ -334,10 +334,9 @@ Page({
     })
   },
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 获取用户信息
    */
-  onReady: function () {
-    console.log("----------add页面--onReady生命周期函数")
+  huoquyonhuxinxi(){
     /**
      * 先根据全局openid_获得用户信息，减少云函数执行
      * 当获取全局失败时，则再次重新执行云函数。
@@ -345,6 +344,7 @@ Page({
      * 当openid_ 为不空时，表示在全局app.js 中获取数据成功，直接获取用户信息。
      */
     let openid_ = app.globalDataOpenid.openid_;
+    console.log("------------------------",openid_);
     if (openid_ != '') {
       //获取用户信息
       this.huodeshuju(openid_);
@@ -358,11 +358,19 @@ Page({
       })
     }
   },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    console.log("----------add页面--onReady生命周期函数")
+    
+  },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
     console.log("----------add页面--onShow生命周期函数")
     /**
  * 先判断用户是否登录，没有则让用户登录
@@ -393,6 +401,9 @@ Page({
               }
             }
           })
+        }else{
+           //获取用户信息
+         that.huoquyonhuxinxi();
         }
       }
     })
