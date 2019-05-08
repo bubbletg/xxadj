@@ -250,13 +250,15 @@ Page({
    
     //获得当前位置, 参数为空表示不是点击切换附近
     this.weizhi('');
-    //执行云涵数，获得openid作为id
+    /**
+     * 执行云涵数，获得openid作为id
+     * 设置全局openid ，当用户退出时，再次进来则加载云函数获得用户信息，保存到全局变量中
+     * 
+     * */
     wx.cloud.callFunction({
       name: 'login',
       complete: (res) => {
-        this.setData({
-          isopenid: res.result.openid,
-        })
+        app.globalDataOpenid.openid_ = res.result.openid;
       }
     })
     
