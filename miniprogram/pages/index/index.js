@@ -52,6 +52,43 @@ Page({
     })
     this.weizhi("dangqianweizhi");
   },
+  /**
+   * 位置授权失败，给出相应引导授权
+   */
+  weizhishouquanshibai(){
+    let that = this;
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userLocation']) {
+          wx.showModal({
+            title: '是否需要打开设置页面',
+            content: '你已取消授权位置，是否打开设置页面进行授权',
+            confirmText: '确定',
+            cancelText: '取消',
+            success(ress) {
+              //表示点击了取消
+              if (ress.confirm == false) {
+                return;
+              } else {
+                wx.openSetting({
+                  success(resss) {
+                    if (resss.authSetting['scope.userLocation']) {
+                      //用户打开了位置授权，重新加载
+                            //获得当前位置, 参数为空表示不是点击切换附近
+                            that.weizhi('');
+                    }
+                  }
+                })
+              }
+            }
+          })
+        }
+       
+      }
+    })
+ 
+
+  },
 /**
  * 获得位置
  */
@@ -66,6 +103,13 @@ Page({
         that.setData({
           dangqianweizhicurrentCity: "定位失败"
         });
+        /**
+         * 定位失败，可能是用户开始时取消了位置获取权限，这里加以判断
+         * 1.获取位置授权信息
+         * 2.判断是否授权
+         * 3.没有授权给定相应提示信息
+         */
+        that.weizhishouquanshibai();
       },
       success: function (data) {
         var weatherData = data.currentWeather[0];
@@ -81,7 +125,6 @@ Page({
     //获得当前位置经纬度
     BMap.regeocoding({
       fail(data) {
-
         //dangqianweizhi   当前位置不为空，表示是点击位置切换，不用查询数据库，
         if (dangqianweizhi == '') {
           //按附近位置查询信息
