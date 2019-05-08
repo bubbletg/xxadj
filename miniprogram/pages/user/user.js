@@ -1,6 +1,7 @@
 // pages/user/user.js
 //获得数据库引用
 const db = wx.cloud.database();
+const app = getApp();
 Page({
 
   /**
@@ -78,7 +79,9 @@ Page({
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo,
         openid: e.target.dataset.openid,
+        
       })
+      app.globalDataOpenid.openid_ = e.target.dataset.openid;
     }
     //执行成功  下载头像
     this.xiazaitouxiang(e.detail.userInfo.avatarUrl);
