@@ -44,12 +44,24 @@ Page({
               isaccept: true, //表示被接单
               jiedanren: informationid, //表示此订单被当前用户接单
             }, success(res) {
-              wx.showToast({
-                title: '接单成功',
-                icon: 'success',
-                duration: 2000
-              });
-              getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+  
+              wx.showModal({
+                title: '完成成功',
+                content: '您已经成功接单，是否切换到订单页面？',
+                confirmText: '确定',
+                cancelText: '取消',
+                success(ress) {
+                  //表示点击了取消
+                  if (ress.confirm == false) {
+                    getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+                  } else {
+                    wx.redirectTo({
+                      url:'../../user/orderForm/orderForm',
+                    })
+                  }
+                }
+              })
+             
             }, fail(res) {
               wx.showToast({
                 title: '出错了',
