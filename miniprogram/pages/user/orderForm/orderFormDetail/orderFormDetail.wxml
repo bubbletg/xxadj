@@ -1,37 +1,87 @@
 <view>
-    <view class="order-form-detail view-margin">
-        <view class="order-form-detail-qishidizhi view-margin">
-            {{daijiadingdanDetail.qishiweizhi}}
-        </view>
-        <view class="view-dao">到</view>
-        <view class="order-form-detail-zhongdiandizhi view-margin">
-            {{daijiadingdanDetail.zhongdianweizhi}}
-        </view>
-        <view class="order-form-detail-phone view-margin">{{daijiadingdanDetail.phone}}</view>
-        <view class="order-form-detail-time view-margin">{{daijiadingdanDetail.time}}</view>
-        <!-- 日常代驾 -->
-        <view class="order-form-detail-tianjiadaijia view-margin" wx:if="{{daijiadingdanDetail.baochefuwu=='undefined'}}">
-            {{daijiadingdanDetail.tianjiadaijia}}
-        </view>
-        <!-- 包时代驾 -->
-        <view class="order-form-detail-tianjiadaijia view-margin" wx:if="{{daijiadingdanDetail.baoshidaijia!='undefined'&&daijiadingdanDetail.baochefuwu=='undefined'}}">
-            {{daijiadingdanDetail.baoshidaijia}}
-        </view>
-        <!-- 包车代驾 -->
-        <view class="order-form-detail-tianjiadaijia view-margin" wx:if="{{daijiadingdanDetail.baoshidaijia=='undefined'&&daijiadingdanDetail.baochefuwu!='undefined'}}">
-            {{daijiadingdanDetail.baochefuwu}}
-        </view>
-        <view class="order-form-detail-finish view-margin" wx:if="{{daijiadingdanDetail.ifFinish==false}}" catchtap="wanchengcaozuo">
-            完成
-        </view>
-        <view class="order-form-detail-finish view-margin" wx:if="{{daijiadingdanDetail.ifFinish!=false}}">
-            已完成
-        </view>
-        <view class="order-form-detail-alter view-margin" catchtap="orderFormUpdate" data-id='{{daijiadingdanDetail._id}}' wx:if="{{daijiadingdanDetail.ifFinish==false}}">
-            修改订单
-        </view>
-        <view class="order-form-detail-alter view-margin" wx:if="{{daijiadingdanDetail.ifFinish!=false}}" catchtap="orderFromDelete">
-            删除订单
+    <view class=" bg-white padding-sm">
+        <view class="cu-card dynamic no-card">
+            <view class="cu-item shadow">
+                <!-- 信息详细 -->
+                <view class="grid col-1">
+                    <view class="bg-yellow  radius  light">
+                        <view class="padding text-center text-lg">
+                            <view>
+                                <view>{{daijiadingdanDetail.qishiweizhi}}</view>
+                            </view>
+                            <view class="solid-top padding-xs">
+                                {{daijiadingdanDetail.zhongdianweizhi==''?"...":daijiadingdanDetail.zhongdianweizhi}}
+                            </view>
+                            <view catch:tap="dial" data-phone="{{daijiadingdanDetail.phone}}">
+                                <view>{{daijiadingdanDetail.phone}}</view>
+                            </view>
+                            <view class="padding-xs">{{daijiadingdanDetail.time}}</view>
+                            <!-- 日常代驾 -->
+                            <view class="padding-xs" wx:if="{{daijiadingdanDetail.baochefuwu=='undefined'}}">
+                                {{daijiadingdanDetail.tianjiadaijia}}
+                            </view>
+                            <!-- 包时代驾 -->
+                            <view class="padding-xs" wx:if="{{daijiadingdanDetail.baoshidaijia!='undefined'&&daijiadingdanDetail.baochefuwu=='undefined'}}">
+                                {{daijiadingdanDetail.baoshidaijia}}
+                            </view>
+                            <!-- 包车代驾 -->
+                            <view class="padding-xs" wx:if="{{daijiadingdanDetail.baoshidaijia=='undefined'&&daijiadingdanDetail.baochefuwu!='undefined'}}">
+                                {{daijiadingdanDetail.baochefuwu}}
+                            </view>
+                            <view class="flex solid-bottom padding justify-between">
+                                <view>
+                                    <bottom class="cu-btn line-mauve lg margin-tb-sm shadow" catchtap="orderFormUpdate" data-id='{{daijiadingdanDetail._id}}' wx:if="{{daijiadingdanDetail.ifFinish==false}}">
+                                        修改订单
+                                    </bottom>
+                                    <bottom class="cu-btn line-red lg margin-tb-sm shadow" wx:if="{{daijiadingdanDetail.ifFinish!=false}}" catchtap="orderFromDelete">
+                                        删除订单
+                                    </bottom>
+                                </view>
+                                <view>
+                                    <bottom class="cu-btn line-blue lg margin-tb-sm shadow" wx:if="{{daijiadingdanDetail.ifFinish==false}}" catchtap="wanchengcaozuo">
+                                        完成
+                                    </bottom>
+                                    <bottom class="cu-btn line-cyan lg margin-tb-sm shadow" wx:if="{{daijiadingdanDetail.ifFinish!=false}}">
+                                        已完成
+                                    </bottom>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <!-- 点赞 收藏 -->
+                <view class="text-gray text-sm text-right padding">
+                    <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                    10
+                    <text class="cuIcon-appreciatefill margin-lr-xs"></text>
+                    20
+                    <text class="cuIcon-messagefill margin-lr-xs"></text>
+                    30
+                </view>
+                <!-- 评论 -->
+                <view class="cu-list menu-avatar comment solids-top">
+                    <view class="cu-item" wx:for="{{[1,2,3,4]}}" wx:key="index">
+                        <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round'></image>
+                        <view class="content">
+                            <view class="text-grey">{{yonghuxinxi[0].username}}</view>
+                            <view class="text-gray text-content text-df">凯尔，你被自己的光芒变的盲目。</view>
+                            <view class="bg-orange light padding-sm radius margin-top-sm  text-sm">
+                                <view class="flex">
+                                    <view>凯尔：</view>
+                                    <view class="flex-sub">妹妹，你在帮他们给黑暗找借口吗?</view>
+                                </view>
+                            </view>
+                            <view class="margin-top-sm flex justify-between">
+                                <view class="text-gray text-df">2018年12月4日</view>
+                                <view>
+                                    <text class="cuIcon-appreciatefill text-red"></text>
+                                    <text class="cuIcon-messagefill text-gray margin-left-sm"></text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
         </view>
     </view>
     <view class="order-form-help">
@@ -45,7 +95,7 @@
             <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='订单常见问题1。。。。。。。。。'>
                 <view class="list-text">
                     <view class="iconfont icon-wenhao moren-text"></view>
-                   订单常见问题1。。。。。。。。。
+                    订单常见问题1。。。。。。。。。
                 </view>
             </view>
             <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='常见问题2'>
