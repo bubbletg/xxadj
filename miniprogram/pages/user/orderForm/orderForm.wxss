@@ -55,34 +55,16 @@
    
   }
   .orderFrom-proceed-finish-delete{
-    display:absolute;
-    position:relative;
-    left:550rpx;
-    top:-45rpx;
-    background-color:rgb(248, 120, 70);
-    width:110rpx;
-    padding:5rpx;
-    height:50rpx;
-    border-radius:5pt/5pt;
-    text-align:center;
-    font-size:30rpx;
-    
+    display:block;
+    margin-top: -100rpx;  
   }
   .orderFrom-proceed-finish-label{
-    display:absolute;
-    position:relative;
-    left:460rpx;
-    top:-210rpx;
-    background-color:rgb(131, 245, 190);
-    width:205rpx;
-    padding:5rpx;
-    height:70rpx;
-    border-radius:5pt/5pt;
-    text-align:center;
-    font-size:48rpx;
-    height:70rpx;
-    
-
+    margin-top: -270rpx; 
+ 
+  }
+  .orderFrom-proceed-finish-biaoqian{
+    display:block;
+    margin-left:500rpx;
   }
   /* 最后提示没有更多数据了 */
   .orderFrom-proceed-finish-finish{
