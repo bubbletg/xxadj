@@ -277,7 +277,9 @@ Page({
         zhongdianweizhilongitude: '' + this.data.zhongdianweizhilongitude, //终点经度
         ifFinish: false, //表示是否完成
         isaccept: false, //表示是否被接单
-        chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) + '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()]//创建时间
+        jiedanren:'', //表示此订单被谁接单
+        chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) + 
+        '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
       },
       success(res) {
         //表示下单成功，把id保存到
