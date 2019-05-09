@@ -11,19 +11,57 @@ Page({
 
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     console.log("-----information 页面----------onLoad（）---------");
     informationid = options.informationid;
-    //根据信息id查询信息
-    //显示加载
-    wx.showLoading({
-      title: '加载中',
-      icon: 'loading',
+    
+  },
+  /**
+   * 
+   * 点击接单按钮，实现接单
+   * 原理：把订单（daijiadingdan）表中isaccept 更新为 true表示该订单被接单，
+   *       保存接单人员的opeind,方便查询
+   * @param   e 
+   */
+  informationJieDan(e) {
+    wx.showModal({
+      title: '确认接单',
+      content: '在接单前确认已和发布者沟通清除，你确认接此单吗？',
+      confirmText: '确定',
+      cancelText: '取消',
+      success(ress) {
+        //表示点击了取消
+        if (ress.confirm == false) {
+          return;
+        } else {
+          //接单
+          db.collection("daijiadingdan").doc(e.currentTarget.dataset.informationid).update({
+            data: {
+              isaccept: true, //表示被接单
+              jiedanren: informationid, //表示此订单被当前用户接单
+            }, success(res) {
+              wx.showToast({
+                title: '接单成功',
+                icon: 'success',
+                duration: 2000
+              });
+              getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+            }, fail(res) {
+              wx.showToast({
+                title: '出错了',
+                icon: 'fail',
+                duration: 2000
+              })
+            }
+          });
+        }
+      }
     })
-    this.getinformation();
+
   },
   /**
    * 查询详细信息
@@ -84,7 +122,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+//根据信息id查询信息
+    //显示加载
+    wx.showLoading({
+      title: '加载中',
+      icon: 'loading',
+    })
+    this.getinformation();
   },
 
   /**

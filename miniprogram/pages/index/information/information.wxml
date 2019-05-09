@@ -1,6 +1,7 @@
 <view class=" bg-white padding-sm">
     <view class="cu-card dynamic no-card">
         <view class="cu-item shadow">
+            <!-- 头 -->
             <view class="cu-list menu-avatar">
                 <view class="cu-item">
                     <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round lg'></image>
@@ -12,6 +13,7 @@
                     </view>
                 </view>
             </view>
+            <!-- 信息详细 -->
             <view class="grid col-1">
                 <view class="bg-yellow  radius  light">
                     <view class="padding text-center">
@@ -43,10 +45,16 @@
                         <view class="padding-xs" wx:if="{{information.baoshidaijia=='undefined'&&information.baochefuwu!='undefined'}}">
                             {{information.baochefuwu}}
                         </view>
+                        <view class="flex flex-direction">
+                         <bottom class="cu-btn line-yellow lg margin-tb-sm shadow"  wx:if="{{information.isaccept==false}}"
+                         catch:tap="informationJieDan" data-informationid="{{information._id}}">接单</bottom>
+                         <bottom class="cu-btn block line-blue margin-tb-sm lg" 
+                         wx:if="{{information.isaccept==true}}">已接单</bottom>
+                         </view>
                     </view>
-                    <view class="flex justify-around padding-sm"></view>
                 </view>
             </view>
+            <!-- 点赞 收藏-->
             <view class="text-gray text-sm text-right padding">
                 <text class="cuIcon-attentionfill margin-lr-xs"></text>
                 10
@@ -55,6 +63,7 @@
                 <text class="cuIcon-messagefill margin-lr-xs"></text>
                 30
             </view>
+            <!-- 评论 -->
             <view class="cu-list menu-avatar comment solids-top">
                 <view class="cu-item" wx:for="{{[1,2,3,4]}}" wx:key="index">
                      <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round'></image>
