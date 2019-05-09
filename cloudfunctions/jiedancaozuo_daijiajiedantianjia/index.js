@@ -1,5 +1,7 @@
 
-
+/**
+ *  接单操作，向接单表中添加数据
+ */
 const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database()

@@ -1,3 +1,6 @@
+/**
+ * 接单操作，更新订单表里数据
+ */
 const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database()
