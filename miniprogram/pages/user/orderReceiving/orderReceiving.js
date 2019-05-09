@@ -38,6 +38,7 @@ Page({
    * 因为是接单管理，所以查询条件接单人员是自己的数据
    *  */
   daijiadingdan: function (ifFinish) {
+    console.log(this.data.openid,"-----------------")
     //
     db.collection('daijiajiedan').where({
       jiedanren: this.data.openid, //openid 表示当前用户
@@ -83,6 +84,9 @@ Page({
                 duration: 2000
               })
               getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+            },
+            fail(res){
+                console.log(res);
             }
           })
         }

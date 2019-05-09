@@ -49,77 +49,62 @@ Page({
         if (ress.confirm == false) {
           return;
         } else {
-          wx.cloud.callFunction({
-            name: 'jiedancaozuo',
+          //添加在数据库
+          db.collection('daijiajiedan').add({
+            // data 字段表示需新增的 JSON 数据
             data: {
-              information: information,
-              openid_: app.globalDataOpenid.openid_,
-            },
-            complete: res => {
-              console.log('jiedancaozuo: ', res)
+              _id: information._id,    //id  自动生成
+              qishiweizhi: information.qishiweizhi, //起始位置
+              zhongdianweizhi: information.zhongdianweizhi, //终点位置
+              phone: information.phone, //联系方式
+              time: information.time, //预约时间
+              tianjiadaijia: '' + information.tianjiadaijia, //添加代驾
+              baochefuwu: '' + information.baochefuwu, //包车服务
+              baoshidaijia: '' + information.baoshidaijia, //包时代驾
+              qishiweizhilatitude: '' + information.qishiweizhilatitude, //起始位置纬度
+              qishiweizhilongitude: '' + information.qishiweizhilongitude, //起始位置经度
+              zhongdianweizhilatitude: '' + information.zhongdianweizhilatitude, //终点纬度
+              zhongdianweizhilongitude: '' + information.zhongdianweizhilongitude, //终点经度
+              ifFinish: false, //表示是否完成
+              isaccept: true, //表示是否被接单
+              jiedanren: app.globalDataOpenid.openid_, //表示此订单当前登录用户接单
+              daijiajiedanid: '', //接单表的id
+              chuangjianshijian: information.chuangjianshijian,//创建时间
             }
+          }).then(res=>{
+            //通过云函数更新驾驶dingdan表，因为不同用户更新一个表不可能，只有通过云函数
+            wx.cloud.callFunction({
+              name: 'jiedancaozuo_daijiadingdangengxin',
+              data: {
+                informationid: information._id,
+                openid_: app.globalDataOpenid.openid_,
+              },
+              complete: res => {
+                wx.showModal({
+                  title: '完成成功',
+                  content: '您已经成功接单，是否切换到接单管理页面？',
+                  confirmText: '确定',
+                  cancelText: '取消',
+                  success(ress_) {
+                    //表示点击了取消
+                    if (ress_.confirm == false) {
+                      getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+                    } else {
+                      wx.redirectTo({
+                        url: '../../user/orderReceiving/orderReceiving',
+                      })
+                    }
+                  }
+                })
+              }
+            });
           })
-          // //接单，先把信息添加在接单表
-          // //向daijiadingdan表中添加信息
-          // db.collection("daijiajiedan").add({
-          //   // data 字段表示需新增的 JSON 数据
-          //   data: {
-          //     _id: information._id,    //id  自动生成
-          //     qishiweizhi: information.qishiweizhi, //起始位置
-          //     zhongdianweizhi: information.zhongdianweizhi, //终点位置
-          //     phone: information.phone, //联系方式
-          //     time: information.time, //预约时间
-          //     tianjiadaijia: '' + information.tianjiadaijia, //添加代驾
-          //     baochefuwu: '' + information.baochefuwu, //包车服务
-          //     baoshidaijia: '' + information.baoshidaijia, //包时代驾
-          //     qishiweizhilatitude: '' + information.qishiweizhilatitude, //起始位置纬度
-          //     qishiweizhilongitude: '' + information.qishiweizhilongitude, //起始位置经度
-          //     zhongdianweizhilatitude: '' + information.zhongdianweizhilatitude, //终点纬度
-          //     zhongdianweizhilongitude: '' + information.zhongdianweizhilongitude, //终点经度
-          //     ifFinish: false, //表示是否完成
-          //     isaccept: true, //表示是否被接单
-          //     jiedanren: app.globalDataOpenid.openid_, //表示此订单当前登录用户接单
-          //     daijiajiedanid: '', //接单表的id
-          //     chuangjianshijian: information.chuangjianshijian,//创建时间
-          //   }
-          // }).then(res => {
-          //   console.log("----------------更新-------daijiadingdan------", information._id)
-          //   db.collection("daijiadingdan").doc(''+information._id).update({
-          //     data: {
-          //       isaccept: true, //表示被接单
-          //       jiedanren: app.globalDataOpenid.openid_, //表示此订单当前登录用户接单
-          //     }, success(res__) {
-          //       console.log("-----更新-------daijiadingdan--success----------",res__)
-          //       wx.showModal({
-          //         title: '完成成功',
-          //         content: '您已经成功接单，是否切换到接单管理页面？',
-          //         confirmText: '确定',
-          //         cancelText: '取消',
-          //         success(ress_) {
-          //           //表示点击了取消
-          //           if (ress_.confirm == false) {
-          //             getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
-          //           } else {
-          //             wx.redirectTo({
-          //               url: '../../user/orderReceiving/orderReceiving',
-          //             })
-          //           }
-          //         }
-          //       })
-          //     }, fail(res) {
-          //       wx.showToast({
-          //         title: '出错了',
-          //         duration: 2000
-          //       })
-          //     }
-          //   });
-          // }
-          // )
         }
       }
     })
 
   },
+
   /**
    * 查询详细信息
    *  */
