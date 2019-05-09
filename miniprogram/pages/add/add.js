@@ -278,6 +278,7 @@ Page({
         ifFinish: false, //表示是否完成
         isaccept: false, //表示是否被接单
         jiedanren:'', //表示此订单被谁接单
+        daijiajiedanid:'', //接单表的id
         chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) + 
         '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
       },

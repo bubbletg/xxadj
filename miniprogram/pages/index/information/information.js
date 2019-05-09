@@ -2,6 +2,7 @@
 const db = wx.cloud.database();
 var informationid; //信息id
 var yonghuxinxi; //用户信息 
+const app = getApp();
 Page({
 
   /**
@@ -24,10 +25,20 @@ Page({
    * 
    * 点击接单按钮，实现接单
    * 原理：把订单（daijiadingdan）表中isaccept 更新为 true表示该订单被接单，
-   *       保存接单人员的opeind,方便查询
+   *       jiedanren保存接单人员的opeind,方便查询,daijiajiedanid  是接单的表的id。
    * @param   e 
    */
   informationJieDan(e) {
+    console.log("---------informationJieDan执行----------------", this.data);
+    let information = this.data.information;
+    //先判断接单是否自己的的单
+    if (information._openid == app.globalDataOpenid.openid_) {
+      wx.showToast({
+        title: '自己不可接自己的订单！',
+        duration: 2000
+      })
+      return;
+    }
     wx.showModal({
       title: '确认接单',
       content: '在接单前确认已和发布者沟通清除，你确认接此单吗？',
@@ -38,38 +49,72 @@ Page({
         if (ress.confirm == false) {
           return;
         } else {
-          //接单
-          db.collection("daijiadingdan").doc(e.currentTarget.dataset.informationid).update({
+          wx.cloud.callFunction({
+            name: 'jiedancaozuo',
             data: {
-              isaccept: true, //表示被接单
-              jiedanren: informationid, //表示此订单被当前用户接单
-            }, success(res) {
-  
-              wx.showModal({
-                title: '完成成功',
-                content: '您已经成功接单，是否切换到订单页面？',
-                confirmText: '确定',
-                cancelText: '取消',
-                success(ress) {
-                  //表示点击了取消
-                  if (ress.confirm == false) {
-                    getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
-                  } else {
-                    wx.redirectTo({
-                      url:'../../user/orderForm/orderForm',
-                    })
-                  }
-                }
-              })
-             
-            }, fail(res) {
-              wx.showToast({
-                title: '出错了',
-                icon: 'fail',
-                duration: 2000
-              })
+              information: information,
+              openid_: app.globalDataOpenid.openid_,
+            },
+            complete: res => {
+              console.log('jiedancaozuo: ', res)
             }
-          });
+          })
+          // //接单，先把信息添加在接单表
+          // //向daijiadingdan表中添加信息
+          // db.collection("daijiajiedan").add({
+          //   // data 字段表示需新增的 JSON 数据
+          //   data: {
+          //     _id: information._id,    //id  自动生成
+          //     qishiweizhi: information.qishiweizhi, //起始位置
+          //     zhongdianweizhi: information.zhongdianweizhi, //终点位置
+          //     phone: information.phone, //联系方式
+          //     time: information.time, //预约时间
+          //     tianjiadaijia: '' + information.tianjiadaijia, //添加代驾
+          //     baochefuwu: '' + information.baochefuwu, //包车服务
+          //     baoshidaijia: '' + information.baoshidaijia, //包时代驾
+          //     qishiweizhilatitude: '' + information.qishiweizhilatitude, //起始位置纬度
+          //     qishiweizhilongitude: '' + information.qishiweizhilongitude, //起始位置经度
+          //     zhongdianweizhilatitude: '' + information.zhongdianweizhilatitude, //终点纬度
+          //     zhongdianweizhilongitude: '' + information.zhongdianweizhilongitude, //终点经度
+          //     ifFinish: false, //表示是否完成
+          //     isaccept: true, //表示是否被接单
+          //     jiedanren: app.globalDataOpenid.openid_, //表示此订单当前登录用户接单
+          //     daijiajiedanid: '', //接单表的id
+          //     chuangjianshijian: information.chuangjianshijian,//创建时间
+          //   }
+          // }).then(res => {
+          //   console.log("----------------更新-------daijiadingdan------", information._id)
+          //   db.collection("daijiadingdan").doc(''+information._id).update({
+          //     data: {
+          //       isaccept: true, //表示被接单
+          //       jiedanren: app.globalDataOpenid.openid_, //表示此订单当前登录用户接单
+          //     }, success(res__) {
+          //       console.log("-----更新-------daijiadingdan--success----------",res__)
+          //       wx.showModal({
+          //         title: '完成成功',
+          //         content: '您已经成功接单，是否切换到接单管理页面？',
+          //         confirmText: '确定',
+          //         cancelText: '取消',
+          //         success(ress_) {
+          //           //表示点击了取消
+          //           if (ress_.confirm == false) {
+          //             getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+          //           } else {
+          //             wx.redirectTo({
+          //               url: '../../user/orderReceiving/orderReceiving',
+          //             })
+          //           }
+          //         }
+          //       })
+          //     }, fail(res) {
+          //       wx.showToast({
+          //         title: '出错了',
+          //         duration: 2000
+          //       })
+          //     }
+          //   });
+          // }
+          // )
         }
       }
     })

@@ -2,9 +2,10 @@
   <view class='geren-view'></view>
   <view class="nav-list-geren">
     <image class="geren-view-image" src='{{avatarUrl}}'></image>
-    <button open-type="getUserInfo" wx:if="{{userInfo==''}}" bindgetuserinfo="onGetUserInfo" data-openid='{{isopenid}}'>登录授权</button>
+    <button open-type="getUserInfo" wx:if="{{userInfo==''}}" bindgetuserinfo="onGetUserInfo" data-openid='{{isopenid}}'>
+      登录授权
+    </button>
     <view class="geren-view-name" wx:if="{{userInfo!=false}}">{{userInfo.nickName}}</view>
-
   </view>
   <view class="list-box">
     <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>
@@ -13,10 +14,16 @@
         详细信息
       </view>
     </view>
-        <view class="list-li list-arrow" catchtap='cutInterface' data-interface='orderForm' data-openid='{{isopenid}}'>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='orderForm' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-dingdan moren-text"></view>
-        订单
+        订单管理
+      </view>
+    </view>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='orderReceiving' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-dingdan moren-text"></view>
+        接单管理
       </view>
     </view>
     <view class="list-li list-arrow" catchtap='cutInterface' data-interface='collect' data-openid='{{isopenid}}'>
@@ -31,7 +38,7 @@
         评论
       </view>
     </view>
-    <view class="list-li list-arrow"  catchtap='setting' data-openid='{{isopenid}}'>
+    <view class="list-li list-arrow" catchtap='setting' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-settings moren-text"></view>
         设置
@@ -43,7 +50,5 @@
         关于我们
       </view>
     </view>
-
-
   </view>
 </view>

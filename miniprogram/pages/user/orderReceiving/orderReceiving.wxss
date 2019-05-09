@@ -1,0 +1,73 @@
+
+.secondary {
+    background:#FCE35F;
+    color:#666;
+    margin:17rpx;
+    margin-bottom:0rpx;
+    }
+    
+  .success-nav {
+      background: #FCE35F;
+      color: #fff;
+    }
+    .form-input-btn>.iconfont {
+      padding: 0 10rpx;
+      font-size: 50rpx;
+    }
+    .nav-item {
+      display: inline-block;
+      overflow: hidden;
+      margin: 0 100rpx;
+      height: 92rpx;
+      color: #666;
+      line-height: 92rpx;
+    }
+    /* 滑动view 样式 */
+    .scroll-view-orderReceiving-proceed{
+      margin-top: 10rpx;
+      height: 1078rpx;
+    }
+  
+    /* 订单样式 */
+    .orderReceiving-proceed-finish{
+      display: block;
+      background-color: #FCE35F;
+      margin: 20rpx;
+      padding: 20rpx;
+      padding-left:25rpx;
+      height: 200rpx;
+      border-radius:5pt/5pt;
+    }
+    .orderReceiving-proceed-finish-dizhi{
+      display: block;
+      position:relative;
+      height:85rpx;
+    }
+    .orderReceiving-proceed-finish-dianhua{
+      display: block;
+      position:relative;
+      
+    }
+    .orderReceiving-proceed-finish-shijian{
+      display: block;
+      position:relative;
+     
+     
+    }
+    .orderReceiving-proceed-finish-delete{
+      display:block;
+      margin-top: -100rpx;  
+    }
+    .orderReceiving-proceed-finish-label{
+      margin-top: -270rpx; 
+   
+    }
+    .orderReceiving-proceed-finish-biaoqian{
+      display:block;
+      margin-left:500rpx;
+    }
+    /* 最后提示没有更多数据了 */
+    .orderReceiving-proceed-finish-finish{
+      margin: 100rpx;
+      text-align: center;
+    }

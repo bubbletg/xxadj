@@ -7,7 +7,9 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"nodeModules": true
 	},
 	"appid": "wx5e8a50f5ee9c99bd",
 	"projectname": "%E5%BF%83%E7%B3%BB%E7%88%B1%E4%BB%A3%E9%A9%BE",

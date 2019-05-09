@@ -1,0 +1,85 @@
+<view>
+    <view class="nav center-nav success-nav">
+        <view class="nav-item-box">
+            <!-- orderReceivingProceed  订单进行中 -->
+            <view class="nav-item {{orderReceivingProceed}}" catchtap='daohangqiehuan' data-daohangqiehuan='orderReceivingProceed'>
+                <text class='iconfont icon-album'></text>
+                进行中
+            </view>
+            <!-- orderReceivingFinish  订单完成 -->
+            <view class="nav-item {{orderReceivingFinish}}" catchtap='daohangqiehuan' data-daohangqiehuan='orderReceivingFinish'>
+                <text class='iconfont icon-video'></text>
+                已结束
+            </view>
+        </view>
+    </view>
+    <scroll-view scroll-y='ture' class="scroll-view-orderReceiving-proceed" bindscrolltolower="orderReceivingUpdate">
+        <view wx:if="{{orderReceivingProceed=='cur'}}" wx:for="{{daijiadingdanNoFinish}}" wx:key="index" wx:for-item="item" catchtap="coderFormDetail" data-id='{{item._id}}'>
+            <view class='badge secondary radius capsule-badge'>
+                <text>{{item.chuangjianshijian[0]}}</text>
+                <text>{{item.chuangjianshijian[1]}}</text>
+            </view>
+            <!-- 进行中 -->
+            <view class="orderReceiving-proceed-finish">
+                <view class='orderReceiving-proceed-finish-dizhi'>{{item.qishiweizhi}}</view>
+                <view class="orderReceiving-proceed-finish-dianhua">{{item.phone}}</view>
+                <view class="orderReceiving-proceed-finish-shijian">{{item.time}}</view>
+                <view class="flex solid-bottom padding justify-end orderReceiving-proceed-finish-biaoqian">
+                    <view class="padding-sm orderReceiving-proceed-finish-delete">
+                        <view class="padding-xs">
+                            <view class="cu-tag bg-red"  catchtap="orderReceivingDelete" data-id='{{item._id}}'>删除</view>
+                        </view>
+                    </view>
+                </view>
+                 <view class="flex solid-bottom padding justify-end orderReceiving-proceed-finish-biaoqian">
+                    <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu=='undefined'}}">
+                        <view class="padding-sm flex flex-wrap">
+                            <view class="padding-xs">
+                                <view class="cu-tag bg-olive">日常代驾</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia!='undefined'&&item.baochefuwu=='undefined'}}">
+                        <view class="padding-sm flex flex-wrap">
+                            <view class="padding-xs">
+                                <view class="cu-tag bg-green">包时代驾</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu!='undefined'}}">
+                        <view class="padding-sm flex flex-wrap">
+                            <view class="padding-xs">
+                                <view class="cu-tag bg-cyan">包车代驾</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{orderReceivingProceed=='cur'}}" wx:if="{{orderReceivingFinish=='cur'}}" wx:for="{{daijiadingdanFinish}}" wx:key="index" wx:for-item="item" catchtap="coderFormDetail" data-id='{{item._id}}'>
+            <view class='badge secondary radius capsule-badge'>
+                <text>{{item.chuangjianshijian[0]}}</text>
+                <text>{{item.chuangjianshijian[1]}}</text>
+            </view>
+            <!-- 完成 -->
+            <view class="orderReceiving-proceed-finish">
+                <view class='orderReceiving-proceed-finish-dizhi'>{{item.qishiweizhi}}</view>
+                <view class="orderReceiving-proceed-finish-dianhua">{{item.phone}}</view>
+                <view class="orderReceiving-proceed-finish-shijian">{{item.time}}</view>
+                <view class="orderReceiving-proceed-finish-delete" catchtap="orderReceivingDelete" data-id='{{item._id}}'>
+                    删除
+                </view>
+                <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu=='undefined'}}">
+                    日常代驾
+                </view>
+                <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia!='undefined'&&item.baochefuwu=='undefined'}}">
+                    包时代驾
+                </view>
+                <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu!='undefined'}}">
+                    包车代驾
+                </view>
+            </view>
+        </view>
+        <view class="orderReceiving-proceed-finish-finish">没有呢</view>
+    </scroll-view>
+</view>
