@@ -74,8 +74,8 @@
                             </view>
                         </view>
                         <view class="ins-list-author">
-                            <image src='{{yonghuxinxi[index][0].portrait}}' class='round'></image>
-                            <view class="ins-list-name">{{yonghuxinxi[index][0].username}}</view>
+                            <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
+                            <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
                         </view>
                     </view>
                 </view>
@@ -105,8 +105,8 @@
                             </view>
                         </view>
                         <view class="ins-list-author">
-                            <image src='{{yonghuxinxi[index][0].portrait}}' class='round'></image>
-                            <view class="ins-list-name">{{yonghuxinxi[index][0].username}}</view>
+                            <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
+                            <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
                         </view>
                     </view>
                 </view>
