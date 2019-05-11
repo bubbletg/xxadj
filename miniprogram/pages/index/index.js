@@ -3,13 +3,16 @@ const db = wx.cloud.database();
 const app = getApp();
 // 引用百度地图微信小程序JSAPI模块 
 var bmap = require('../../libs/bmap-wx.min.js');
+let yonghuxinxi = []; //用户信息
+let fujinmeiyou = false; //表示第一次获取位置成功却没有数据给一次提示
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    shouyearray: [], //首页数组，用于展示首页信息
+    shouyefujin: [], //首页附近数组，用于展示首页附近信息
+    shouyequanju: [], //首页全部数组，用于展示首页全部信息
     xianshi: 'shouye',
     sousuoValue: null,  //搜索框默认
     avatarUrl: '../../images/user-unlogin.png',
@@ -128,9 +131,9 @@ Page({
         //dangqianweizhi   当前位置不为空，表示是点击位置切换，不用查询数据库，
         if (dangqianweizhi == '') {
           //按附近位置查询信息
-          console.log("---获取经纬度失败--开始按照全局查找！");
+          console.log("---获取经纬度失败--开始按照获取位置失败时执行的全局查找！");
           //当获取经纬度失败时！！按照全局查找
-          that.chaxundaijia();
+          that.chaxundaijiaquan();
         }
       },
       success(data) {
@@ -146,8 +149,10 @@ Page({
         //dangqianweizhi   当前位置不为空，表示是点击位置切换，不用查询数据库，
         if (dangqianweizhi == '') {
           //按附近位置查询信息
-          console.log("-----开始按附近查找------！");
+          console.log("---获取经纬度成功--开始按附近查找------！");
           that.weizhichaxundaijia();
+          console.log("---获取经纬度成功--开始按照获取位置成功时执行的全局查找！");
+          that.chaxundaijia();
         }
       },
 
@@ -161,7 +166,7 @@ Page({
    */
   weizhichaxundaijia() {
     //用于保存首页查询到的代驾信息
-    let shouyearray;
+    let shouyefujin;
     //查询数据库   起始位置
     const _ = db.command;
     db.collection("daijiadingdan").where({
@@ -171,16 +176,35 @@ Page({
       qishiweizhilatitude: _.gt(this.data.MaxMinLongitudeLatitude[2]).and(_.lt(this.data.MaxMinLongitudeLatitude[3])),
 
     }).get().then(res => {
-      shouyearray = res.data;
-      //判断按附近查找到了吗？没有则按照安装全部查找
-      if (shouyearray.length <= 0) {
-        console.log("-----按附近查找没有找到！开始查找全局！！");
-        this.chaxundaijia();
+      shouyefujin = res.data;
+      //判断按附近查找到了吗？没有则按照全部查找
+      if (shouyefujin.length <= 0) {
+        console.log("-----按附近查找没有找到！-------------");
+        if(!fujinmeiyou){
+          fujinmeiyou = true;
+          wx.showModal({
+            title: '当前位置没有代驾信息',
+            content: '你当前位置没有代驾信息，以为你加载其他地区的信息。是否自己发布代驾信息？',
+            confirmText: '确定',
+            cancelText: '取消',
+            success(ress) {
+              //表示点击了取消
+              if (ress.confirm == false) {
+                return;
+              } else {
+                //切换到添加代驾
+                wx.switchTab({
+                  url: '../add/add'
+                })
+              }
+            }
+          })
+        }
+        
         return;
       }
       console.log("-----按附近查找查找成功---------");
       let length_ = res.data.length;
-      let yonghuxinxi = [];
       for (let i = 0; i < length_; i++) {
         console.log(res.data[i]._openid)
         db.collection("user").where({
@@ -195,7 +219,7 @@ Page({
         })
       }
       this.setData({
-        shouyearray: shouyearray,
+        shouyefujin: shouyefujin,
       })
     })
   },
@@ -203,22 +227,24 @@ Page({
   /**
    * 
    * 查询发布的代驾信息
+   * 获取位置成功时执行的全局查找
    */
-
   chaxundaijia: function (fujin) {
     //用于保存首页查询到的代驾信息
-    let shouyearray;
+    let shouyequanju;
     //查询数据库   起始位置
     const _ = db.command;
-    console.log("-----开始查找全局-------------------");
+    console.log("-----开始获取位置成功时执行的全局查找！！！-------------------");
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      //全局查找，不再显示附近的
+      qishiweizhilongitude: _.lt(this.data.MaxMinLongitudeLatitude[0]).or(_.gt(this.data.MaxMinLongitudeLatitude[1])),
+      qishiweizhilatitude: _.lt(this.data.MaxMinLongitudeLatitude[2]).or(_.gt(this.data.MaxMinLongitudeLatitude[3])),
     }).get().then(res => {
-      console.log("--------------全局查找完成！！---------");
-      shouyearray = res.data;
+      console.log("--------------开始获取位置成功时执行的全局查找完成！！---------");
+      shouyequanju = res.data;
       let length_ = res.data.length;
-      let yonghuxinxi = [];
       for (let i = 0; i < length_; i++) {
         db.collection("user").where({
           _openid: res.data[i]._openid,  //没有被接单
@@ -232,7 +258,42 @@ Page({
         })
       }
       this.setData({
-        shouyearray: shouyearray,
+        shouyequanju: shouyequanju,
+      })
+    })
+  },
+    /**
+   * 
+   * 查询发布的代驾信息
+   * 获取位置失败时执行的全局查找
+   */
+  chaxundaijiaquan: function (fujin) {
+    //用于保存首页查询到的代驾信息
+    let shouyequanju;
+    //查询数据库   起始位置
+    const _ = db.command;
+    console.log("-----开始获取位置失败时执行的全局查找！！！-------------------");
+    db.collection("daijiadingdan").where({
+      ifFinish: false, //表示是否完成
+      isaccept: false, //表示是否被接单
+    }).get().then(res => {
+      console.log("--------------开始获取位置失败时执行的全局查找完成！！---------");
+      shouyequanju = res.data;
+      let length_ = res.data.length;
+      for (let i = 0; i < length_; i++) {
+        db.collection("user").where({
+          _openid: res.data[i]._openid,  //没有被接单
+        }).get().then(ress => {
+          console.log("查询到第" + i + "个用户信息", ress.data)
+          yonghuxinxi.push(ress.data);
+          this.setData({
+            yonghuxinxi: yonghuxinxi,
+          })
+
+        })
+      }
+      this.setData({
+        shouyequanju: shouyequanju,
       })
     })
   },
@@ -287,12 +348,11 @@ Page({
     })
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    
     /**
      * 执行云涵数，获得openid作为id
      * 设置全局openid ，当用户退出时，再次进来则加载云函数获得用户信息，保存到全局变量中
@@ -304,15 +364,20 @@ Page({
         app.globalDataOpenid.openid_ = res.result.openid;
       }
     })
-
-
-
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    /**
+     * 把开始获得的数据清空，防止数据重复。
+     * 如：当用户获得位置后获得附近数据，又在设置里面关闭了权限，重新返回首页时导致了附近位置数据还在。
+     */
+    this.setData({
+      shouyefujin:[],
+      shouyequanju:[],
+    })
     /**
      * 查询代驾信息，先查询位置
      * 再在位置里面查询信息
@@ -350,7 +415,6 @@ Page({
    * 进入个人详细信息
    */
   xiangxixinxi: function () {
-    let that = this;
     wx.getSetting({
       success(res) {
         console.log(res.authSetting)
@@ -380,7 +444,7 @@ Page({
         } else {
            //跳转编辑信息页面
            wx.navigateTo({
-            url: '../user/redact/redact?openid=' + that.data.isopenid,
+            url: '../user/redact/redact?openid=' + app.globalDataOpenid.openid_,
           })
         }
       }
