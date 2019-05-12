@@ -67,10 +67,15 @@
                                     <view>时间：</view>
                                     <view>{{item.time}}</view>
                                 </view>
-                                <view class="zhanshi-kapian-daijia">
+                                <view class="zhanshi-kapian-daijia" wx:if="{{item.tianjiadaijia != 'undefined'}}">
                                     <view>代驾：</view>
                                     <view>{{item.tianjiadaijia}}</view>
                                 </view>
+                                 <view class="zhanshi-kapian-daijia" wx:if="{{item.baochefuwu != 'undefined'}}">
+                                    <view>包车：</view>
+                                    <view>{{item.baochefuwu}}</view>
+                                </view>
+
                             </view>
                         </view>
                         <view class="ins-list-author">
@@ -98,9 +103,13 @@
                                     <view>时间：</view>
                                     <view>{{item.time}}</view>
                                 </view>
-                                <view class="zhanshi-kapian-daijia">
+                                <view class="zhanshi-kapian-daijia" wx:if="{{item.tianjiadaijia != 'undefined'}}">
                                     <view>代驾：</view>
                                     <view>{{item.tianjiadaijia}}</view>
+                                </view>
+                                 <view class="zhanshi-kapian-daijia" wx:if="{{item.baochefuwu != 'undefined'}}">
+                                    <view>包车：</view>
+                                    <view>{{item.baochefuwu}}</view>
                                 </view>
                             </view>
                         </view>
