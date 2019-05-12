@@ -1,6 +1,7 @@
 // pages/user/redact.js
 //获得数据库引用
 const db = wx.cloud.database();
+const app = getApp();
 Page({
 
   /**
@@ -96,7 +97,7 @@ Page({
     console.log("修改所在地被点击。。。。。。。。。。", e);
     //更新到数据库
     var thiss = this;
-    db.collection('user').doc(this.data.openid).update({
+    db.collection('user').doc(app.globalDataOpenid.openid_).update({
       data: {
         region: e.detail.value
       },
@@ -127,7 +128,7 @@ Page({
     }else{
       //跳转编辑信息页面
       wx.navigateTo({
-        url: 'alterSpei/alterSpei?openid=' + e.currentTarget.dataset.openid + '&ifSpei=' + e.currentTarget.dataset.modalValue,
+        url: 'alterSpei/alterSpei?openid=' + app.globalDataOpenid.openid_ + '&ifSpei=' + e.currentTarget.dataset.modalValue,
       })
     }
     
@@ -136,7 +137,7 @@ Page({
   alterJiashi: function(e) {
     //跳转编辑信息页面
     wx.navigateTo({
-      url: 'alterJiashi/alterJiashi?openid=' + e.currentTarget.dataset.openid + '&ifJiashi=' + e.currentTarget.dataset.modalValue,
+      url: 'alterJiashi/alterJiashi?openid=' + app.globalDataOpenid.openid_ + '&ifJiashi=' + e.currentTarget.dataset.modalValue,
     })
   },
 
@@ -162,7 +163,7 @@ Page({
       if (e.detail.value.name != this.data.modalValue) {
         //更新数据
         var thiss = this;
-        db.collection('user').doc(this.data.openid).update({
+        db.collection('user').doc(app.globalDataOpenid.openid_).update({
           data: {
 
             name: e.detail.value.name
@@ -200,7 +201,7 @@ Page({
       if (e.detail.value.phone != this.data.modalValue) {
         //更新具体操作
         var thiss = this;
-        db.collection('user').doc(this.data.openid).update({
+        db.collection('user').doc(app.globalDataOpenid.openid_).update({
           data: {
             phone: e.detail.value.phone
           },
@@ -237,7 +238,7 @@ Page({
       if (e.detail.value.age != this.data.modalValue) {
         //更新到数据库
         var thiss = this;
-        db.collection('user').doc(this.data.openid).update({
+        db.collection('user').doc(app.globalDataOpenid.openid_).update({
           data: {
             age: e.detail.value.age
           },
@@ -274,7 +275,7 @@ Page({
       if (e.detail.value.jialing != this.data.modalValue) {
         //更新到数据库
         var thiss = this;
-        db.collection('user').doc(this.data.openid).update({
+        db.collection('user').doc(app.globalDataOpenid.openid_).update({
           data: {
             jialing: e.detail.value.jialing
           },
@@ -352,7 +353,7 @@ Page({
   
     //获得传递过来的 openid
     this.setData({
-      openid: options.openid
+      openid: app.globalDataOpenid.openid_
     })  
  
   },
@@ -382,7 +383,7 @@ Page({
     })
     var thiss = this;
     //查询数据
-    db.collection('user').doc(this.data.openid).get({
+    db.collection('user').doc(app.globalDataOpenid.openid_).get({
       success(res) {
         // res.data 包含该记录的数据
         thiss.setData({
