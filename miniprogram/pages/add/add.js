@@ -1,6 +1,7 @@
 // pages/add/add.js
 const db = wx.cloud.database();
 const app = getApp();
+let dateYear,dateMonth,dateDay,dateHour,dateMinute; //全是变量   年，月，日，小时，分钟。
 Page({
   /**
    * 页面的初始数据
@@ -159,6 +160,16 @@ Page({
 
   //输入验证
   verify: function (e) {
+    let appointmentDate = this.data.multiArray;
+    let appointmentTime = this.data.multiIndex;
+    var date1 = new Date(dateYear+"/"+dateMonth+"/"+dateDay+" "+dateHour+":"+dateMinute);//传入时间格式，不传获取当前时间,结果格式为C
+    var time1 = date1.getTime(); 
+    var date2 = new Date(appointmentDate[0][appointmentTime[0]]+"/"+(appointmentTime[1]+1)+"/"
+                        +(appointmentTime[2]+1)+" "+appointmentDate[3][appointmentTime[3]]+":"
+                        +appointmentDate[4][appointmentTime[4]]);
+    var time2 = date2.getTime(); 
+    console.log(time1+"-----------时间戳-----"+time2);
+
     //验证起始位置是否添加
     if (e.detail.value.qishiweizhi == '') {
       wx.showToast({
@@ -184,38 +195,28 @@ Page({
       });
       return false;
     }
-    //验证时间
-    if (e.detail.value.time == '') {
+    //验证时间，当前时间戳 time1 ，设置的时间戳 time2
+    if ((time2-60*30)<time1) {
       wx.showToast({
-        title: "请添加预约时间！",
+        title: "时间必须大于当前时间30分钟！",
+        icon: "none",
+        duration: 2000
+      });
+      return false;
+    }else if((time2-time1) > (86400*15)){
+      // 一天是86400=60*60*24秒   故 15 天前的时间戳为 (86400*15)
+      wx.showToast({
+        title: "最长时间为15天！",
         icon: "none",
         duration: 2000
       });
       return false;
     }
-    //验证添加代驾 包车服务 包时代驾
-    if (this.data.richangdaijia = 'cur') {
-      if (e.detail.value.tianjiadaijia == '') {
-        wx.showToast({
-          title: "请添加添加代驾人员！",
-          icon: "none",
-          duration: 2000
-        });
-        return false;
-      }
-    }
+    //验证添加代驾 包车服务 包时代驾  
     if (this.data.baoshidaijia = 'cur') {
-      if (e.detail.value.tianjiadaijia == '') {
+      if (e.detail.value.baoshidaijia == '请选择包时时间') {
         wx.showToast({
-          title: "请添加添加代驾人员！",
-          icon: "none",
-          duration: 2000
-        });
-        return false;
-      }
-      if (e.detail.value.baoshidaijia == '') {
-        wx.showToast({
-          title: "请添加包时时间！",
+          title: "请选择包时时间！",
           icon: "none",
           duration: 2000
         });
@@ -223,9 +224,9 @@ Page({
       }
     }
     if (this.data.baochefuwu = 'cur') {
-      if (e.detail.value.baochefuwu == '') {
+      if (e.detail.value.baochefuwu == '请选择包车服务类型') {
         wx.showToast({
-          title: "请添加包车服务类型！",
+          title: "请选择包车服务类型！",
           icon: "none",
           duration: 2000
         });
@@ -362,6 +363,24 @@ Page({
     }
   },
   /**
+   * 获得当前时间
+   */
+  getCurrentDate(){
+
+    let currentDate =  new Date();
+    //年
+    dateYear = currentDate.getFullYear();
+    dateMonth= currentDate.getMonth()+1;
+    dateDay= currentDate.getDate();
+    dateHour= currentDate.getHours();
+    dateMinute= currentDate.getMinutes();
+    console.log("当前时间是："+dateYear+'/'+dateMonth+'/'+dateDay+' '+dateHour+':'+dateMinute);
+    //因为是全局变量，不用返回
+    
+  },
+
+
+  /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
@@ -409,6 +428,13 @@ Page({
          that.huoquyonhuxinxi();
         }
       }
+    })
+
+  //获取当前时间
+  this.getCurrentDate();
+    //设置默认下单时间
+    this.setData({
+      multiIndex:[(dateYear==2019?0:(dateYear==2020)?1:2),(dateMonth-1),(dateDay-1),dateHour,dateMinute],
     })
   },
 
