@@ -49,6 +49,9 @@ Page({
         if (ress.confirm == false) {
           return;
         } else {
+          wx.showLoading({
+            title: '接单中',
+          })
           //添加在数据库
           db.collection('daijiajiedan').add({
             // data 字段表示需新增的 JSON 数据
@@ -80,6 +83,7 @@ Page({
                 openid_: app.globalDataOpenid.openid_,
               },
               complete: res => {
+                wx.hideLoading();
                 wx.showModal({
                   title: '完成成功',
                   content: '您已经成功接单，是否切换到接单管理页面？',

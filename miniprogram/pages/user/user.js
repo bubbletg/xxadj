@@ -18,7 +18,7 @@ Page({
    * 更新头像
    */
   gengxintouxiang:function(fileID) {
-    db.collection('user').doc(this.data.openid).update({
+    db.collection('user').doc(app.globalDataOpenid.openid_).update({
       data: {
         portrait: fileID,
       },
@@ -44,7 +44,7 @@ Page({
           //下载成功，保存到云存储
           wx.cloud.uploadFile({
             // 指定上传到的云路径
-            cloudPath: 'portrait/' + that.data.openid + res.tempFilePath.substring((res.tempFilePath.length) - 5, (res.tempFilePath.length)),
+            cloudPath: 'portrait/' + app.globalDataOpenid.openid_ + res.tempFilePath.substring((res.tempFilePath.length) - 5, (res.tempFilePath.length)),
             filePath: res.tempFilePath,
             // 成功回调
             success: res => {
