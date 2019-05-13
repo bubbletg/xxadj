@@ -1,5 +1,6 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/add/add",
     "pages/user/user",
@@ -12,6 +13,7 @@
     "pages/user/redact/redact",
     "pages/user/collect/collect",
     "pages/index/information/information",
+    "pages/index/userCard/userCard",
     "pages/user/FAQ/FAQ"
     
   ],
