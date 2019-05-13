@@ -215,6 +215,7 @@ Page({
       }),
       this.setData({
         shouyefujin: shouyefujin,
+        isLoad:true,
       })
     })
   },
@@ -251,6 +252,7 @@ Page({
       }),
       this.setData({
         shouyequanju: shouyequanju,
+        isLoad:true,
       })
     })
   },
@@ -367,6 +369,7 @@ Page({
       shouyefujin:[],
       shouyequanju:[],
       yonghuxinxi:yonghuxinxi,
+      isLoad:false,
     })
     /**
      * 查询代驾信息，先查询位置

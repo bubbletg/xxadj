@@ -47,7 +47,8 @@
         </view>
     </view>
 </block>
-<block>
+ <view wx:if="{{!isLoad}}" class="cu-load bg-white {{!isLoad?'loading':'over'}}"></view>
+<block> 
     <!-- 首页显示模块 -->
     <view class='card-list-box'>
         <view class="ins-list-li" wx:for="{{shouyefujin}}" wx:key="index" wx:for-item="item">
@@ -122,6 +123,7 @@
         </view>
     </view>
 </block>
+
 <view class="leirong">
     <!-- 定位侧边栏 -->
     <view class='side side-right' wx:if="{{modalName=='menuSide'}}">
