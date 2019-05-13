@@ -11,6 +11,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    CustomBar: app.globalData.CustomBar,
+    TabCur:0,
+    tabNav: ['代驾卡片', '用户卡片'],
     shouyefujin: [], //首页附近数组，用于展示首页附近信息
     shouyequanju: [], //首页全部数组，用于展示首页全部信息
     xianshi: 'shouye',
@@ -20,6 +23,15 @@ Page({
     zhongdianweizhiqiehuan: '',//终点位置切换
   },
 
+  //切换卡片
+  tabSelect(e) {
+    console.log(e);
+    this.setData({
+      TabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id - 1) * 60
+    })
+  }
+  ,
   /**
    * 附近位置最大最小经纬度计算 
    * @param   longitude  经度

@@ -13,7 +13,6 @@
     "pages/user/redact/redact",
     "pages/user/collect/collect",
     "pages/index/information/information",
-    "pages/index/userCard/userCard",
     "pages/user/FAQ/FAQ"
     
   ],
