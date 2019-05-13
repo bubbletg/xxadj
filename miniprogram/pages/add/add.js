@@ -354,7 +354,7 @@ Page({
     }else if(operation =="orderForm"){
       //跳转订单管理
       wx.navigateTo({
-        url:'../user/orderForm/orderForm'
+        url:'../user/orderForm/orderForm?openid=' + app.globalDataOpenid.openid_,
       });
       this.closeModal();
     }
