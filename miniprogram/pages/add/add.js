@@ -168,7 +168,7 @@ Page({
                         +(appointmentTime[2]+1)+" "+appointmentDate[3][appointmentTime[3]]+":"
                         +appointmentDate[4][appointmentTime[4]]);
     var time2 = date2.getTime(); 
-    console.log(time1+"-----------时间戳-----"+time2);
+    console.log("---------------time1="+time1+"----------time2="+time2)
 
     //验证起始位置是否添加
     if (e.detail.value.qishiweizhi == '') {
@@ -196,15 +196,17 @@ Page({
       return false;
     }
     //验证时间，当前时间戳 time1 ，设置的时间戳 time2
-    if ((time2-60*30)<time1) {
+    //(time2+60*30*1000) 表示现在设置的时间30分钟的时间戳
+    console.log((time2+(60*30*1000))+"----"+time1);
+    if ((time2-time1)<=(60*30*1000)) {
       wx.showToast({
         title: "时间必须大于当前时间30分钟！",
         icon: "none",
         duration: 2000
       });
       return false;
-    }else if((time2-time1) > (86400*15)){
-      // 一天是86400=60*60*24秒   故 15 天前的时间戳为 (86400*15)
+    }else if((time2-time1) > (86400*15*1000)){
+      // 一天是86400=60*60*24秒   故 15 天前的时间戳为 (86400*15)  承1000表示毫秒
       wx.showToast({
         title: "最长时间为15天！",
         icon: "none",
