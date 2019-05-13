@@ -12,7 +12,7 @@
           姓名：{{name}}
         </view>
       </view>
-      <view class="list-li list-xiugai" catchtap='alterPhone' data-modal="modal" data-modal-name="修改电话" data-modal-value="{{phone}}" data-modal-title="phone">
+      <view class="list-li list-xiugai" catchtap='alterPhone'  data-modal="modal" data-modal-name="修改电话" data-modal-value="{{phone}}" data-modal-title="phone">
         <view class="list-text">
           <view class="iconfont icon-phone moren-text"></view>
           电话：{{phone}}
@@ -66,7 +66,7 @@
         </view>
       </view>
       <view class='modal-bd modal-message'>
-        <input name="{{modalTitle}}" type='text' value='{{modalValue}}'></input>
+        <input name="{{modalTitle}}" type='text' placeholder="{{modalValue}}" ></input>
       </view>
       <view class='modal-option'>
         <view class='modal-option-btn success-text'>

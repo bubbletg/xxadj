@@ -197,6 +197,14 @@ Page({
         })
         return;
       }
+      if (!(/^1[3578]\d{9}$/.test(e.detail.value.phone))) {
+        wx.showToast({
+          title: "请添加正确的联系方式!",
+          icon: "none",
+          duration: 2000
+        });
+        return false;
+      }
       //当与原始ide数据相等时，不用更新数据库
       if (e.detail.value.phone != this.data.modalValue) {
         //更新具体操作
