@@ -34,9 +34,10 @@
       </view>
       <view class='form-item'>
         <view class='form-title cur'>联系方式</view>
-        <input name='phone' type="number" placeholder="输入联系方式" class='form-input'></input>
+        <input name='phone' type="number" placeholder="输入联系方式" wx:if="{{ifphone==true}}" value="{{phone}}" class='form-input'></input>
+        <input name='phone' type="number" placeholder="输入联系方式" wx:if="{{ifphone!=true}}" class='form-input'></input>
         <view class='form-input-btn'>
-          <view class="iconfont icon-phone moren-text"></view>
+          <view class="iconfont icon-phone moren-text" catch:tap="phonetap"></view>
         </view>
       </view>
       <picker mode="multiSelector" bindchange="bindMultiPickerChange" value="{{multiIndex}}" range="{{multiArray}}">
@@ -85,4 +86,23 @@
       </view>
     </view>
   </form>
+  <view class="cu-modal {{modalName=='DialogModal2'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">完成预约</view>
+      <view class="action" catchtap="hideModal" data-hideModal='close'>
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+     你已经成功预约代驾！你还可以进行如下操作。
+    </view>
+    <view class="cu-bar bg-white">
+      <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='this'>
+        再次添加预约</view>
+      <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='index'>去首页</view>
+      <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='orderForm'>去订单管理</view>
+    </view>
+  </view>
+</view>
 </view>

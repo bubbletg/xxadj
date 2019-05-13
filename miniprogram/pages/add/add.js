@@ -156,6 +156,27 @@ Page({
   zhongdianweizhitap: function (e) {
     this.huodeweizhi('zhongdianwei');
   },
+  //点击电话图标
+  phonetap(){
+    let that  = this;
+    wx.showModal({
+      title: '默认联系方式',
+      content: '默认联系方式可以在个人详细页面修改，你确定使用此 '+ this.data.phone +' 默认联系方式吗？',
+      confirmText: '确定',
+      cancelText: '取消',
+      success(ress) {
+        //表示点击了取消
+        if (ress.confirm == false) {
+          return;
+        } else {
+          that.setData({
+            ifphone:true,
+          })
+
+        }
+      }
+    })
+  },
 
 
   //输入验证
@@ -245,6 +266,11 @@ Page({
       //失败
       return;
     }
+     //显示加载
+     wx.showLoading({
+      title: '预约中',
+      icon: 'loading',
+    })
     console.log("lijixiadan", e)
     let tianjiadaijia = ''; //添加代驾
     let baochefuwu = ''; //包车服务
@@ -262,6 +288,7 @@ Page({
     }
     let t = new Date(); //获得时间
     //向daijiadingdan表中添加信息
+    let  that = this;
     db.collection("daijiadingdan").add({
       // data 字段表示需新增的 JSON 数据
       data: {
@@ -285,14 +312,16 @@ Page({
         '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
       },
       success(res) {
+         //关闭加载...
+         wx.hideLoading();
         //表示下单成功，把id保存到
         console.log("下单成功", res)
-        wx.showToast({
-          title: "下单成功！",
-          icon: "none",
-          duration: 2000
-        });
+        that.setData({
+          modalName: 'DialogModal2',
+        })
       }, fail(res) {
+         //关闭加载...
+         wx.hideLoading();
         console.log("下单失败", res)
         wx.showToast({
           title: "下单失败！",
@@ -301,6 +330,35 @@ Page({
         });
       }
     })
+  },
+  closeModal(){
+ //关闭，留在此页
+ this.setData({
+  modalName: ''
+})
+  },
+  /**
+   * 提示框操作
+   */
+  hideModal(e){
+    let operation = e.currentTarget.dataset.hidemodal;
+    if(operation  == 'this' || operation == 'close'){
+     this.closeModal();
+    }else if(operation =="index"){
+      //跳转首页
+      wx.switchTab({
+        url:'../index/index'
+      });
+      this.closeModal();
+
+    }else if(operation =="orderForm"){
+      //跳转订单管理
+      wx.navigateTo({
+        url:'../user/orderForm/orderForm'
+      });
+      this.closeModal();
+    }
+    
   },
 
   /**
