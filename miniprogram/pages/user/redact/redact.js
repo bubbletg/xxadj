@@ -18,6 +18,7 @@ Page({
     spe_i: '未实名认证', //实名认证
     jiashi: '未驾驶认证', //驾驶认证
     region: ['山东省', '枣庄市', '市中区'],
+    showData:false,
   },
 
   //打开弹出框
@@ -165,7 +166,6 @@ Page({
         var thiss = this;
         db.collection('user').doc(app.globalDataOpenid.openid_).update({
           data: {
-
             name: e.detail.value.name
           },
           success(res) {
@@ -302,11 +302,6 @@ Page({
 
     }
 
-
-
-
-
-
     //关闭修改框
     this.closeModal();
     //加载更新提示框
@@ -317,6 +312,70 @@ Page({
     this.setData({
       showLoading: false
     })
+  },
+  //更新SetShadow
+  updateSetShadow:function(ee){
+    db.collection('user').doc(app.globalDataOpenid.openid_).update({
+      data: {
+        showData: ee,
+      },
+      success(res) {
+        //提示
+        wx.showToast({
+          title: "操作成功！",
+          icon: "none",
+          duration: 2000
+        })
+       
+      }
+    });
+
+  },
+  /**
+   * 是否展示个人资料
+   */
+  SetShadow(e){
+    let thiss  = this;
+    //e.detail.value 为 true  表示打开
+    if(e.detail.value){
+      wx.showModal({
+        title: '确认展示',
+        content: '打开展示资料后，他人可以收藏，评论，分享你的资料卡片，确定打开吗？',
+        confirmText: '确定',
+        cancelText: '取消',
+        success(ress) {
+          //表示点击了取消
+          if (ress.confirm == false) {
+            thiss.setData({
+              showData: e.detail.value==true?false:true, 
+            })
+            return;
+          } else {
+            thiss.updateSetShadow(e.detail.value);
+          }
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '确认关闭',
+        content: '关闭展示资料，他人将不可以收藏，评论，分享你的资料卡片了，确定关闭吗？',
+        confirmText: '确定',
+        cancelText: '取消',
+        success(ress) {
+          //表示点击了取消
+          if (ress.confirm == false) {
+            thiss.setData({
+              showData: e.detail.value==false?true:false, 
+            })
+            return;
+            
+          } else {
+            thiss.updateSetShadow(e.detail.value);
+          }
+        }
+      })
+     
+    }
   },
 
   /**
@@ -365,6 +424,7 @@ Page({
     })  
  
   },
+
   huodeshuju: function(e) {
      //显示加载
      wx.showLoading({
@@ -403,6 +463,7 @@ Page({
           spe_i: res.data.spe_i, //实名认证
           jiashi: res.data.jiashi, //驾驶认证
           region: res.data.region, //所在地
+          showData:res.data.showData, //是否显示
         })
       }
     })

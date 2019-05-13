@@ -52,7 +52,18 @@
       </view>
     </view>
   </view>
+  <view class="ifzhanshi">
+    <view class="cu-bar margin-top bg-white">
+      <view class="action">
+        <text class="cuIcon-emoji moren-text"></text>是否展示资料
+      </view>
+      <view class="action">
+        <switch class="sm" checked="{{showData}}" bindchange="SetShadow"></switch>
+      </view>
+    </view>
+    </view>
 </view>
+
 
 <!-- 弹出框 -->
 
@@ -84,3 +95,7 @@
     <view class='gray-text'>更新中...</view>
   </view>
 </view>
+
+<!-- 是否展示个人信息 -->
+
+

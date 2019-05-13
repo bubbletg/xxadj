@@ -18,6 +18,10 @@
   box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
   background: rgb(153, 238, 18);
 }
+/* 是否展示样式 */
+.ifzhanshi{
+  margin-top:-30rpx
+}
 
 .nav-list-geren1 {
   display: flex;
@@ -44,3 +48,4 @@
   background-color: white;
   color: forestgreen;
 }
+
