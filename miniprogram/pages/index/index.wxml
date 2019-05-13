@@ -1,4 +1,4 @@
-<view class="leirong">
+<scroll-view scroll-x class="bg-white nav text-center fixed" style="top:{{CustomBar}}px">
     <!-- 搜索框 -->
     <view class="bar-success-tuo">
         <view class="bar success">
@@ -16,9 +16,11 @@
             </view>
         </view>
     </view>
-    <view class="bar-success-zhan"></view>
+</scroll-view>
+<view class="bar-success-zhan"></view>
+<block wx:if="{{xianshi=='sousuoxianshi'}}">
     <!-- 搜索模块 -->
-    <view class="sousuo-quanju" wx:if="{{xianshi=='sousuoxianshi'}}">
+    <view class="sousuo-quanju">
         <view class="sousuo-view1" wx:if="{{qishiweizhi.length>0||zhongdianweizhi.length>0}}">
             <view class="nav center-nav success-nav">
                 <view class="nav-item-box">
@@ -44,84 +46,83 @@
             </view>
         </view>
     </view>
+</block>
+<block>
     <!-- 首页显示模块 -->
-    <view class="zhanshi-quanju" wx:if="{{xianshi=='shouye'}}">
-        <scroll-view class="zhanshi-scroll-view" scroll-y="true">
-            <view class='card-list-box'>
-                <view class="ins-list-li" wx:for="{{shouyefujin}}" wx:key="index" wx:for-item="item">
-                    <view catch:tap="sousuoxiangxi" data-sousuoid="{{item._id}}">
-                        <view class="ins-list-img">
-                        <!-- 图片 ： 363*484 -->
-                            <image src="../../images/cheche.png" mode="widthFix"></image>
-                            <view class="ins-list-num">
-                                <text class="iconfont icon-chakan">10</text>
-                                <text class="iconfont icon-unie601">20</text>
-                                <text class="iconfont icon-pinglun">30</text>
-                            </view>
-                            <view class="ins-list-title">
-                                <view class="zhanshi-kapian-qishiweizhi">
-                                    <view>起始位置：</view>
-                                    <text class="qishiweizhi">{{item.qishiweizhi}}</text>
-                                </view>
-                                <view class="zhanshi-kapian-shijian">
-                                    <view>时间：</view>
-                                    <view>{{item.time}}</view>
-                                </view>
-                                <view class="zhanshi-kapian-daijia" wx:if="{{item.tianjiadaijia != 'undefined'}}">
-                                    <view>代驾：</view>
-                                    <view>{{item.tianjiadaijia}}</view>
-                                </view>
-                                 <view class="zhanshi-kapian-daijia" wx:if="{{item.baochefuwu != 'undefined'}}">
-                                    <view>包车：</view>
-                                    <view>{{item.baochefuwu}}</view>
-                                </view>
-
-                            </view>
+    <view class='card-list-box'>
+        <view class="ins-list-li" wx:for="{{shouyefujin}}" wx:key="index" wx:for-item="item">
+            <view catch:tap="sousuoxiangxi" data-sousuoid="{{item._id}}">
+                <view class="ins-list-img">
+                    <!-- 图片 ： 363*484 -->
+                    <image src="../../images/cheche.png" mode="widthFix"></image>
+                    <view class="ins-list-num">
+                        <text class="iconfont icon-chakan">10</text>
+                        <text class="iconfont icon-unie601">20</text>
+                        <text class="iconfont icon-pinglun">30</text>
+                    </view>
+                    <view class="ins-list-title">
+                        <view class="zhanshi-kapian-qishiweizhi">
+                            <view>起始位置：</view>
+                            <text class="qishiweizhi">{{item.qishiweizhi}}</text>
                         </view>
-                        <view class="ins-list-author">
-                            <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
-                            <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
+                        <view class="zhanshi-kapian-shijian">
+                            <view>时间：</view>
+                            <view>{{item.time}}</view>
+                        </view>
+                        <view class="zhanshi-kapian-daijia" wx:if="{{item.tianjiadaijia != 'undefined'}}">
+                            <view>代驾：</view>
+                            <view>{{item.tianjiadaijia}}</view>
+                        </view>
+                        <view class="zhanshi-kapian-daijia" wx:if="{{item.baochefuwu != 'undefined'}}">
+                            <view>包车：</view>
+                            <view>{{item.baochefuwu}}</view>
                         </view>
                     </view>
                 </view>
-                 <view class="ins-list-li" wx:for="{{shouyequanju}}" wx:key="index" wx:for-item="item">
-                    <view catch:tap="sousuoxiangxi" data-sousuoid="{{item._id}}">
-                        <view class="ins-list-img">
-                        <!-- 图片 ： 363*484 -->
-                            <image src="../../images/cheche.png" mode="widthFix"></image>
-                            <view class="ins-list-num">
-                                <text class="iconfont icon-chakan">10</text>
-                                <text class="iconfont icon-unie601">20</text>
-                                <text class="iconfont icon-pinglun">30</text>
-                            </view>
-                            <view class="ins-list-title">
-                                <view class="zhanshi-kapian-qishiweizhi">
-                                    <view>起始位置：</view>
-                                    <text class="qishiweizhi">{{item.qishiweizhi}}</text>
-                                </view>
-                                <view class="zhanshi-kapian-shijian">
-                                    <view>时间：</view>
-                                    <view>{{item.time}}</view>
-                                </view>
-                                <view class="zhanshi-kapian-daijia" wx:if="{{item.tianjiadaijia != 'undefined'}}">
-                                    <view>代驾：</view>
-                                    <view>{{item.tianjiadaijia}}</view>
-                                </view>
-                                 <view class="zhanshi-kapian-daijia" wx:if="{{item.baochefuwu != 'undefined'}}">
-                                    <view>包车：</view>
-                                    <view>{{item.baochefuwu}}</view>
-                                </view>
-                            </view>
-                        </view>
-                        <view class="ins-list-author">
-                            <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
-                            <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
-                        </view>
-                    </view>
+                <view class="ins-list-author">
+                    <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
+                    <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
                 </view>
             </view>
-        </scroll-view>
+        </view>
+        <view class="ins-list-li" wx:for="{{shouyequanju}}" wx:key="index" wx:for-item="item">
+            <view catch:tap="sousuoxiangxi" data-sousuoid="{{item._id}}">
+                <view class="ins-list-img">
+                    <!-- 图片 ： 363*484 -->
+                    <image src="../../images/cheche.png" mode="widthFix"></image>
+                    <view class="ins-list-num">
+                        <text class="iconfont icon-chakan">10</text>
+                        <text class="iconfont icon-unie601">20</text>
+                        <text class="iconfont icon-pinglun">30</text>
+                    </view>
+                    <view class="ins-list-title">
+                        <view class="zhanshi-kapian-qishiweizhi">
+                            <view>起始位置：</view>
+                            <text class="qishiweizhi">{{item.qishiweizhi}}</text>
+                        </view>
+                        <view class="zhanshi-kapian-shijian">
+                            <view>时间：</view>
+                            <view>{{item.time}}</view>
+                        </view>
+                        <view class="zhanshi-kapian-daijia" wx:if="{{item.tianjiadaijia != 'undefined'}}">
+                            <view>代驾：</view>
+                            <view>{{item.tianjiadaijia}}</view>
+                        </view>
+                        <view class="zhanshi-kapian-daijia" wx:if="{{item.baochefuwu != 'undefined'}}">
+                            <view>包车：</view>
+                            <view>{{item.baochefuwu}}</view>
+                        </view>
+                    </view>
+                </view>
+                <view class="ins-list-author">
+                    <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
+                    <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
+                </view>
+            </view>
+        </view>
     </view>
+</block>
+<view class="leirong">
     <!-- 定位侧边栏 -->
     <view class='side side-right' wx:if="{{modalName=='menuSide'}}">
         <view class='side-close' catchtap='closeModal'></view>
