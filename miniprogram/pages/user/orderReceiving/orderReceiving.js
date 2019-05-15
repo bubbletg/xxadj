@@ -62,7 +62,7 @@ Page({
   },
 
   //删除根据id删除
-  orderReceivingDelete: function (e) {
+  orderReceivingquxiao: function (e) {
     let that  = this;
     let daijiadingdanNoFinish = that.data.daijiadingdanNoFinish[0];
     //其实是否确定删除
@@ -105,6 +105,39 @@ Page({
       }
     })
 
+  },
+  orderReceivingDelete: function (e) {
+    let that  = this;
+    let daijiadingdanNoFinish = that.data.daijiadingdanNoFinish[0];
+    //其实是否确定删除
+    wx.showModal({
+      title: '确认删除',
+      content: '订单删除后不可恢复，确认删除！',
+      confirmText: '确定',
+      cancelText: '取消',
+      success(res) {
+        //表示点击了取消
+        if (res.confirm == false) {
+          return;
+        } else {
+          wx.showLoading({
+            title:"删除中",
+          })
+          //先删除（删除接单表），再取消(订单表）。
+          db.collection('daijiajiedan').doc(daijiadingdanNoFinish._id).remove({
+          }).then(res => {
+            wx.hideLoading();
+            wx.showToast({
+              title: '删除成功！',
+              icon: 'success',
+              duration: 2000
+            })   
+              getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+
+          })
+        }
+      }
+    })
   },
 
   //进入订单详细
