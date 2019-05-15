@@ -84,32 +84,4 @@
             </view>
         </view>
     </view>
-    <view class="order-form-help">
-        <view class="bar solid-bottom">
-            <view class='ml-sm'>
-                <text class='iconfont icon-guanyu success-text'></text>
-                <text class='text-lg ml-xs'>常见问题</text>
-            </view>
-        </view>
-        <view class="order-form-help2">
-            <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='订单常见问题1。。。。。。。。。'>
-                <view class="list-text">
-                    <view class="iconfont icon-wenhao moren-text"></view>
-                    订单常见问题1。。。。。。。。。
-                </view>
-            </view>
-            <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='常见问题2'>
-                <view class="list-text">
-                    <view class="iconfont icon-wenhao moren-text"></view>
-                    常见问题2
-                </view>
-            </view>
-            <view class="list-li list-arrow" catchtap='changjianwenti' data-changjianwenti='常见问题3'>
-                <view class="list-text">
-                    <view class="iconfont icon-wenhao moren-text"></view>
-                    常见问题3
-                </view>
-            </view>
-        </view>
-    </view>
 </view>
