@@ -63,10 +63,12 @@ Page({
 
   //删除根据id删除
   orderReceivingDelete: function (e) {
+    let that  = this;
+    let daijiadingdanNoFinish = that.data.daijiadingdanNoFinish[0];
     //其实是否确定删除
     wx.showModal({
       title: '确认删除',
-      content: '订单删除后不可恢复，确认删除吗？',
+      content: '订单删除后此单后可在首页或搜索继续添加！',
       confirmText: '确定',
       cancelText: '取消',
       success(res) {
@@ -74,20 +76,30 @@ Page({
         if (res.confirm == false) {
           return;
         } else {
-          //执行删除操作
-          console.log("删除根据id删除", e.currentTarget.dataset.id);
-          db.collection('daijiajiedan').doc(e.currentTarget.dataset.id).remove({
-            success(res) {
+          wx.showLoading({
+            title:"删除中",
+          })
+          //先删除（删除接单表），再取消(订单表）。
+          db.collection('daijiajiedan').doc(daijiadingdanNoFinish._id).remove({
+          }).then(res => {
+            //取消订单表，
+           //通过云函数更新驾驶dingdan表，因为不同用户更新一个表不可能，只有通过云函数
+           wx.cloud.callFunction({
+            name: 'jiedancaozuo_daijiadingdangengxin_quexiao',
+            data: {
+              daijiadingdan_id: daijiadingdanNoFinish.daijiadingdan_id,
+            },
+            complete: res => { 
+              wx.hideLoading();
               wx.showToast({
-                title: '删除成功！',
+                title: '取消订单成功！',
                 icon: 'success',
                 duration: 2000
-              })
-              getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
-            },
-            fail(res){
-                console.log(res);
+              })   
+                getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
             }
+          });
+
           })
         }
       }
@@ -99,7 +111,7 @@ Page({
   coderFormDetail: function (e) {
     //跳转编辑信息页面
     wx.navigateTo({
-      url: 'orderFormDetail/orderFormDetail?detailId=' + e.currentTarget.dataset.id,
+      url: 'orderReceivingDetail/orderReceivingDetail?detailId=' + e.currentTarget.dataset.id,
     })
   },
   /**

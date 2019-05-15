@@ -8,6 +8,7 @@
     "pages/user/redact/alterJiashi/alterJiashi",
     "pages/user/orderForm/orderForm",
     "pages/user/orderReceiving/orderReceiving",
+    "pages/user/orderReceiving/orderReceivingDetail/orderReceivingDetail",
     "pages/user/orderForm/orderFormUpdate/orderFormUpdate",
     "pages/user/orderForm/orderFormDetail/orderFormDetail",
     "pages/user/redact/redact",

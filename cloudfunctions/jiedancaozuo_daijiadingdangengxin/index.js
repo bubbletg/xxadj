@@ -16,6 +16,7 @@ exports.main = async (event, context) => {
       data: {
         isaccept: true, //表示被接单
         jiedanren: openid_, //表示此订单当前登录用户接单
+        daijiajiedan_id:daijiajiedan_id, //接单id，表示当前被接的订单
       }
     })
   } catch (e) {

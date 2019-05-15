@@ -1,0 +1,87 @@
+<view>
+    <view class=" bg-white padding-sm">
+        <view class="cu-card dynamic no-card">
+            <view class="cu-item shadow">
+                <!-- 信息详细 -->
+                <view class="grid col-1">
+                    <view class="bg-yellow  radius  light">
+                        <view class="padding text-center text-lg">
+                            <view>
+                                <view>{{daijiajiedanDetail.qishiweizhi}}</view>
+                            </view>
+                            <view class="solid-top padding-xs">
+                                {{daijiajiedanDetail.zhongdianweizhi==''?"...":daijiajiedanDetail.zhongdianweizhi}}
+                            </view>
+                            <view catch:tap="dial" data-phone="{{daijiajiedanDetail.phone}}">
+                                <view>{{daijiajiedanDetail.phone}}</view>
+                            </view>
+                            <view class="padding-xs">{{daijiajiedanDetail.time}}</view>
+                            <!-- 日常代驾 -->
+                            <view class="padding-xs" wx:if="{{daijiajiedanDetail.baochefuwu=='undefined'}}">
+                                {{daijiajiedanDetail.tianjiadaijia}}
+                            </view>
+                            <!-- 包时代驾 -->
+                            <view class="padding-xs" wx:if="{{daijiajiedanDetail.baoshidaijia!='undefined'&&daijiajiedanDetail.baochefuwu=='undefined'}}">
+                                {{daijiajiedanDetail.baoshidaijia}}
+                            </view>
+                            <!-- 包车代驾 -->
+                            <view class="padding-xs" wx:if="{{daijiajiedanDetail.baoshidaijia=='undefined'&&daijiajiedanDetail.baochefuwu!='undefined'}}">
+                                {{daijiajiedanDetail.baochefuwu}}
+                            </view>
+                            <view class="flex solid-bottom padding justify-between">
+                                <view>
+                                    <bottom class="cu-btn line-mauve lg margin-tb-sm shadow" catchtap="orderReceivingUpdate" data-id='{{daijiajiedanDetail._id}}' wx:if="{{daijiajiedanDetail.ifFinish==false}}">
+                                        取消订单
+                                    </bottom>
+                                    <bottom class="cu-btn line-red lg margin-tb-sm shadow" wx:if="{{daijiajiedanDetail.ifFinish!=false}}" catchtap="orderReceivingDelete">
+                                        删除订单
+                                    </bottom>
+                                </view>
+                                <view>
+                                    <bottom class="cu-btn line-blue lg margin-tb-sm shadow" wx:if="{{daijiajiedanDetail.ifFinish==false}}" catchtap="wanchengcaozuo">
+                                        完成
+                                    </bottom>
+                                    <bottom class="cu-btn line-cyan lg margin-tb-sm shadow" wx:if="{{daijiajiedanDetail.ifFinish!=false}}">
+                                        已完成
+                                    </bottom>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <!-- 点赞 收藏 -->
+                <view class="text-gray text-sm text-right padding">
+                    <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                    10
+                    <text class="cuIcon-appreciatefill margin-lr-xs"></text>
+                    20
+                    <text class="cuIcon-messagefill margin-lr-xs"></text>
+                    30
+                </view>
+                <!-- 评论 -->
+                <view class="cu-list menu-avatar comment solids-top">
+                    <view class="cu-item" wx:for="{{[1,2,3,4]}}" wx:key="index">
+                        <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round'></image>
+                        <view class="content">
+                            <view class="text-grey">{{yonghuxinxi[0].username}}</view>
+                            <view class="text-gray text-content text-df">凯尔，你被自己的光芒变的盲目。</view>
+                            <view class="bg-orange light padding-sm radius margin-top-sm  text-sm">
+                                <view class="flex">
+                                    <view>凯尔：</view>
+                                    <view class="flex-sub">妹妹，你在帮他们给黑暗找借口吗?</view>
+                                </view>
+                            </view>
+                            <view class="margin-top-sm flex justify-between">
+                                <view class="text-gray text-df">2018年12月4日</view>
+                                <view>
+                                    <text class="cuIcon-appreciatefill text-red"></text>
+                                    <text class="cuIcon-messagefill text-gray margin-left-sm"></text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

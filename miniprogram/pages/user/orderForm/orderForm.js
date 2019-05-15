@@ -78,7 +78,10 @@ Page({
                 icon: 'success',
                 duration: 2000
               })
-              getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+              setTimeout(res=>{
+                //返回上一层页面
+                getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+                },2000)
             }
           })
         }

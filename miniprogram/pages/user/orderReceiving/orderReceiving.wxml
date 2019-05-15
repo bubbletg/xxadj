@@ -27,7 +27,7 @@
                 <view class="flex solid-bottom padding justify-end orderReceiving-proceed-finish-biaoqian">
                     <view class="padding-sm orderReceiving-proceed-finish-delete">
                         <view class="padding-xs">
-                            <view class="cu-tag bg-red"  catchtap="orderReceivingDelete" data-id='{{item._id}}'>删除</view>
+                            <view class="cu-tag bg-red"  catchtap="orderReceivingDelete" data-id='{{item._id}}'>取消</view>
                         </view>
                     </view>
                 </view>
@@ -66,17 +66,35 @@
                 <view class='orderReceiving-proceed-finish-dizhi'>{{item.qishiweizhi}}</view>
                 <view class="orderReceiving-proceed-finish-dianhua">{{item.phone}}</view>
                 <view class="orderReceiving-proceed-finish-shijian">{{item.time}}</view>
-                <view class="orderReceiving-proceed-finish-delete" catchtap="orderReceivingDelete" data-id='{{item._id}}'>
-                    删除
+                <view class="flex solid-bottom padding justify-end orderReceiving-proceed-finish-biaoqian">
+                    <view class="padding-sm orderReceiving-proceed-finish-delete">
+                        <view class="padding-xs">
+                            <view class="cu-tag bg-red"  catchtap="orderReceivingDelete" data-id='{{item._id}}'>取消</view>
+                        </view>
+                    </view>
                 </view>
-                <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu=='undefined'}}">
-                    日常代驾
-                </view>
-                <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia!='undefined'&&item.baochefuwu=='undefined'}}">
-                    包时代驾
-                </view>
-                <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu!='undefined'}}">
-                    包车代驾
+                 <view class="flex solid-bottom padding justify-end orderReceiving-proceed-finish-biaoqian">
+                    <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu=='undefined'}}">
+                        <view class="padding-sm flex flex-wrap">
+                            <view class="padding-xs">
+                                <view class="cu-tag bg-olive">日常代驾</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia!='undefined'&&item.baochefuwu=='undefined'}}">
+                        <view class="padding-sm flex flex-wrap">
+                            <view class="padding-xs">
+                                <view class="cu-tag bg-green">包时代驾</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="orderReceiving-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu!='undefined'}}">
+                        <view class="padding-sm flex flex-wrap">
+                            <view class="padding-xs">
+                                <view class="cu-tag bg-cyan">包车代驾</view>
+                            </view>
+                        </view>
+                    </view>
                 </view>
             </view>
         </view>

@@ -102,10 +102,12 @@ Page({
               wx.showToast({
                 title: '删除成功！',
                 icon: 'success',
-                duration: 2000
+                duration: 1000
               })
-              //返回上一层页面
-              wx.navigateBack();
+              setTimeout(res=>{
+                //返回上一层页面
+                wx.navigateBack();
+                },1000)
             }
           })
         }
@@ -122,14 +124,5 @@ Page({
       url: '../orderFormUpdate/orderFormUpdate?detailId=' + e.currentTarget.dataset.id,
     })
   },
-  /**
-   * 从常见问题1
-   */
-  changjianwenti:function(e){
-    console.log("-------------------客户信息",e.currentTarget.dataset.changjianwenti);
-    //跳转到常见问题页面
-    wx.navigateTo({
-      url: '../../FAQ/FAQ?changjianwenti='+e.currentTarget.dataset.changjianwenti,
-    })
-  }
+
 })

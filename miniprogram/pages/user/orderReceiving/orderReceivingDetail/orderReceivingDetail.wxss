@@ -1,0 +1,10 @@
+
+.cu-list.menu-avatar>.cu-item {
+	position: relative;
+	display: flex;
+	padding-right: 10rpx;
+	height: 140rpx;
+  background-color:var(--yellowLight);
+	justify-content: flex-end;
+	align-items: center
+}

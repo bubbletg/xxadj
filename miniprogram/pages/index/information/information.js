@@ -56,11 +56,12 @@ Page({
             wx.showLoading({
               title: '接单中',
             })
-            //添加在数据库
-            db.collection('daijiajiedan').add({
+             //添加在数据库
+             db.collection('daijiajiedan').add({
               // data 字段表示需新增的 JSON 数据
               data: {
-                _id: information._id,    //id  自动生成
+                _id: information._id + (new Date()),    //id  用订单表_id + 现在时间表示  
+                daijiadingdan_id:information._id, //订单id，表示当前被接的订单
                 qishiweizhi: information.qishiweizhi, //起始位置
                 zhongdianweizhi: information.zhongdianweizhi, //终点位置
                 phone: information.phone, //联系方式
@@ -75,16 +76,17 @@ Page({
                 ifFinish: false, //表示是否完成
                 isaccept: true, //表示是否被接单
                 jiedanren: app.globalDataOpenid.openid_, //表示此订单当前登录用户接单
-                daijiajiedanid: '', //接单表的id
                 chuangjianshijian: information.chuangjianshijian,//创建时间
               }
-            }).then(res=>{
+            }).then(daijiajiedan_res => {
+              console.log("------------daijiajiedanid_"+daijiajiedan_res._id);
               //通过云函数更新驾驶dingdan表，因为不同用户更新一个表不可能，只有通过云函数
               wx.cloud.callFunction({
                 name: 'jiedancaozuo_daijiadingdangengxin',
                 data: {
                   informationid: information._id,
                   openid_: app.globalDataOpenid.openid_,
+                  daijiajiedan_id:daijiajiedan_res._id,
                 },
                 complete: res => {
                   wx.hideLoading();
@@ -107,6 +109,7 @@ Page({
                 }
               });
             })
+           
           }
         }
       })
