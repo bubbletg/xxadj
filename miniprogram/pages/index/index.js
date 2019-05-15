@@ -11,9 +11,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    CustomBar: app.globalData.CustomBar,
-    TabCur:0,
-    tabNav: ['代驾卡片', '用户卡片'],
     shouyefujin: [], //首页附近数组，用于展示首页附近信息
     shouyequanju: [], //首页全部数组，用于展示首页全部信息
     xianshi: 'shouye',
@@ -296,6 +293,7 @@ Page({
       }),
       this.setData({
         shouyequanju: shouyequanju,
+        isLoad:true,
       })
     })
   },
