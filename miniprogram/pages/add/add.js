@@ -1,7 +1,7 @@
 // pages/add/add.js
 const db = wx.cloud.database();
 const app = getApp();
-let dateYear,dateMonth,dateDay,dateHour,dateMinute; //全是变量   年，月，日，小时，分钟。
+let dateYear, dateMonth, dateDay, dateHour, dateMinute; //全是变量   年，月，日，小时，分钟。
 Page({
   /**
    * 页面的初始数据
@@ -157,11 +157,11 @@ Page({
     this.huodeweizhi('zhongdianwei');
   },
   //点击电话图标
-  phonetap(){
-    let that  = this;
+  phonetap() {
+    let that = this;
     wx.showModal({
       title: '默认联系方式',
-      content: '默认联系方式可以在个人详细页面修改，你确定使用此 '+ this.data.phone +' 默认联系方式吗？',
+      content: '默认联系方式可以在个人详细页面修改，你确定使用此 ' + this.data.phone + ' 默认联系方式吗？',
       confirmText: '确定',
       cancelText: '取消',
       success(ress) {
@@ -170,7 +170,7 @@ Page({
           return;
         } else {
           that.setData({
-            ifphone:true,
+            ifphone: true,
           })
 
         }
@@ -178,18 +178,51 @@ Page({
     })
   },
 
-
+  /**
+   * 
+   * 下载头像上传到云存储
+   */
+  xiazaitouxiang: function (avatarUrl) {
+    let that = this;
+    //先下载
+    wx.downloadFile({
+      url: '' + avatarUrl,
+      success(res) {
+        if (res.statusCode === 200) {
+          console.log(res.tempFilePath);
+          //保存缓存路径
+          that.setData({
+            portraitTup: res.tempFilePath
+          })
+          //下载成功，保存到云存储
+          // wx.cloud.uploadFile({
+          //   // 指定上传到的云路径
+          //   cloudPath: 'portrait/' + app.globalDataOpenid.openid_ + res.tempFilePath.substring((res.tempFilePath.length) - 5, (res.tempFilePath.length)),
+          //   filePath: res.tempFilePath,
+          //   // 成功回调
+          //   success: res => {
+          //     console.log('上传成功', res.fileID)
+          //     //保存云路径
+          //     that.setData({
+          //       portrait: res.fileID,
+          //      });
+          //   },
+          // })
+        }
+      }
+    })
+  },
   //输入验证
   verify: function (e) {
     let appointmentDate = this.data.multiArray;
     let appointmentTime = this.data.multiIndex;
-    var date1 = new Date(dateYear+"/"+dateMonth+"/"+dateDay+" "+dateHour+":"+dateMinute);//传入时间格式，不传获取当前时间,结果格式为C
-    var time1 = date1.getTime(); 
-    var date2 = new Date(appointmentDate[0][appointmentTime[0]]+"/"+(appointmentTime[1]+1)+"/"
-                        +(appointmentTime[2]+1)+" "+appointmentDate[3][appointmentTime[3]]+":"
-                        +appointmentDate[4][appointmentTime[4]]);
-    var time2 = date2.getTime(); 
-    console.log("---------------time1="+time1+"----------time2="+time2)
+    var date1 = new Date(dateYear + "/" + dateMonth + "/" + dateDay + " " + dateHour + ":" + dateMinute);//传入时间格式，不传获取当前时间,结果格式为C
+    var time1 = date1.getTime();
+    var date2 = new Date(appointmentDate[0][appointmentTime[0]] + "/" + (appointmentTime[1] + 1) + "/"
+      + (appointmentTime[2] + 1) + " " + appointmentDate[3][appointmentTime[3]] + ":"
+      + appointmentDate[4][appointmentTime[4]]);
+    var time2 = date2.getTime();
+    console.log("---------------time1=" + time1 + "----------time2=" + time2)
 
     //验证起始位置是否添加
     if (e.detail.value.qishiweizhi == '') {
@@ -218,15 +251,15 @@ Page({
     }
     //验证时间，当前时间戳 time1 ，设置的时间戳 time2
     //(time2+60*30*1000) 表示现在设置的时间30分钟的时间戳
-    console.log((time2+(60*30*1000))+"----"+time1);
-    if ((time2-time1)<=(60*30*1000)) {
+    console.log((time2 + (60 * 30 * 1000)) + "----" + time1);
+    if ((time2 - time1) <= (60 * 30 * 1000)) {
       wx.showToast({
         title: "时间必须大于当前时间30分钟！",
         icon: "none",
         duration: 2000
       });
       return false;
-    }else if((time2-time1) > (86400*15*1000)){
+    } else if ((time2 - time1) > (86400 * 15 * 1000)) {
       // 一天是86400=60*60*24秒   故 15 天前的时间戳为 (86400*15)  承1000表示毫秒
       wx.showToast({
         title: "最长时间为15天！",
@@ -266,8 +299,8 @@ Page({
       //失败
       return;
     }
-     //显示加载
-     wx.showLoading({
+    //显示加载
+    wx.showLoading({
       title: '预约中',
       icon: 'loading',
     })
@@ -288,11 +321,13 @@ Page({
     }
     let t = new Date(); //获得时间
     //向daijiadingdan表中添加信息
-    let  that = this;
+    let that = this;
     db.collection("daijiadingdan").add({
       // data 字段表示需新增的 JSON 数据
       data: {
         _id: t,
+        portrait: '',// 默认头像
+        username: '' + this.data.userInfo.nickName, //默认
         qishiweizhi: e.detail.value.qishiweizhi, //起始位置
         zhongdianweizhi: e.detail.value.zhongdianweizhi, //终点位置
         phone: e.detail.value.phone, //联系方式
@@ -306,59 +341,86 @@ Page({
         zhongdianweizhilongitude: '' + this.data.zhongdianweizhilongitude, //终点经度
         ifFinish: false, //表示是否完成
         isaccept: false, //表示是否被接单
-        jiedanren:'', //表示此订单被谁接单
-        daijiajiedan_id:'', //接单表的id
-        chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) + 
-        '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
-      },
-      success(res) {
-         //关闭加载...
-         wx.hideLoading();
-        //表示下单成功，把id保存到
-        console.log("下单成功", res)
-        that.setData({
-          modalName: 'DialogModal2',
-        })
-      }, fail(res) {
-         //关闭加载...
-         wx.hideLoading();
-        console.log("下单失败", res)
-        wx.showToast({
-          title: "下单失败！",
-          icon: "none",
-          duration: 2000
-        });
+        jiedanren: '', //表示此订单被谁接单
+        daijiajiedan_id: '', //接单表的id
+        chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) +
+          '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
       }
+    }).then(add_res => {
+      console.log("------------add_res",add_res)
+      //上传头像
+      wx.cloud.uploadFile({
+        // 指定上传到的云路径
+        cloudPath: 'portrait/' + new Date().getTime() + this.data.portraitTup.substring((this.data.portraitTup.length) - 5, (this.data.portraitTup.length)),
+        filePath: this.data.portraitTup,
+        fail(res) {
+          //关闭加载...
+          wx.hideLoading();
+          console.log("下单失败", res)
+          wx.showToast({
+            title: "下单失败！",
+            icon: "none",
+            duration: 2000
+          });
+        }, success(uploadFile_res) {
+          console.log('上传成功', uploadFile_res.fileID)
+          db.collection("daijiadingdan").doc(add_res._id).update({
+            //更新
+            data: {
+              portrait: uploadFile_res.fileID,
+            },
+            success: res_ => {
+               //关闭加载...
+               wx.hideLoading();
+              //表示下单成功，把id保存到
+              console.log("下单成功", res_)
+              that.setData({
+                modalName: 'DialogModal2',
+              })
+            },
+            fail(res_) {
+              //关闭加载...
+              wx.hideLoading();
+              console.log("下单失败", res_)
+              wx.showToast({
+                title: "下单失败！",
+                icon: "none",
+                duration: 2000
+              });
+            }
+          })
+        }
+      })
     })
   },
-  closeModal(){
- //关闭，留在此页
- this.setData({
-  modalName: ''
-})
+  closeModal() {
+    //关闭，留在此页
+    this.setData({
+      modalName: ''
+    })
   },
   /**
    * 提示框操作
    */
-  hideModal(e){
+  hideModal(e) {
     let operation = e.currentTarget.dataset.hidemodal;
-    if(operation  == 'this' || operation == 'close'){
-     this.closeModal();
-    }else if(operation =="index"){
+    if (operation == 'this' || operation == 'close') {
+      this.closeModal();
+    } else if (operation == "index") {
       //跳转首页
       wx.switchTab({
-        url:'../index/index'
+        url: '../index/index'
       });
       this.closeModal();
 
-    }else if(operation =="orderForm"){
+    } else if (operation == "orderForm") {
       //跳转订单管理
       wx.navigateTo({
-        url:'../user/orderForm/orderForm?openid=' + app.globalDataOpenid.openid_,
+        url: '../user/orderForm/orderForm?openid=' + app.globalDataOpenid.openid_,
       });
       this.closeModal();
     }
-    
+
   },
 
   /**
@@ -378,7 +440,7 @@ Page({
     //查询数据
     db.collection('user').doc(openid_).get({
       success(res) {
-        console.log("----------add页面----获得数据方法：success--------------------",res)
+        console.log("----------add页面----获得数据方法：success--------------------", res)
         // res.data 包含该记录的数据
         thiss.setData({
           name: res.data.name, //姓名
@@ -391,15 +453,16 @@ Page({
           region: res.data.region, //所在地
         })
       },
-      fail(){
+      fail() {
         console.log("----------add页面----获得数据方法：fail--------------------")
       }
-    })
+    });
+
   },
   /**
    * 获取用户信息
    */
-  huoquyonhuxinxi(){
+  huoquyonhuxinxi() {
     /**
      * 先根据全局openid_获得用户信息，减少云函数执行
      * 当获取全局失败时，则再次重新执行云函数。
@@ -407,7 +470,7 @@ Page({
      * 当openid_ 为不空时，表示在全局app.js 中获取数据成功，直接获取用户信息。
      */
     let openid_ = app.globalDataOpenid.openid_;
-    console.log("------------------------",openid_);
+    console.log("------------------------", openid_);
     if (openid_ != '') {
       //获取用户信息
       this.huodeshuju(openid_);
@@ -424,18 +487,18 @@ Page({
   /**
    * 获得当前时间
    */
-  getCurrentDate(){
+  getCurrentDate() {
 
-    let currentDate =  new Date();
+    let currentDate = new Date();
     //年
     dateYear = currentDate.getFullYear();
-    dateMonth= currentDate.getMonth()+1;
-    dateDay= currentDate.getDate();
-    dateHour= currentDate.getHours();
-    dateMinute= currentDate.getMinutes();
-    console.log("当前时间是："+dateYear+'/'+dateMonth+'/'+dateDay+' '+dateHour+':'+dateMinute);
+    dateMonth = currentDate.getMonth() + 1;
+    dateDay = currentDate.getDate();
+    dateHour = currentDate.getHours();
+    dateMinute = currentDate.getMinutes();
+    console.log("当前时间是：" + dateYear + '/' + dateMonth + '/' + dateDay + ' ' + dateHour + ':' + dateMinute);
     //因为是全局变量，不用返回
-    
+
   },
 
 
@@ -444,7 +507,7 @@ Page({
    */
   onReady: function () {
     console.log("----------add页面--onReady生命周期函数")
-    
+
   },
 
   /**
@@ -482,18 +545,28 @@ Page({
               }
             }
           })
-        }else{
-           //获取用户信息
-         that.huoquyonhuxinxi();
+        } else {
+          wx.getUserInfo({
+            success(res) {
+              //执行成功  下载头像
+              that.xiazaitouxiang(res.userInfo.avatarUrl);
+              that.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo,
+              })
+            }
+          })
+          //获取用户信息
+          that.huoquyonhuxinxi();
         }
       }
     })
 
-  //获取当前时间
-  this.getCurrentDate();
+    //获取当前时间
+    this.getCurrentDate();
     //设置默认下单时间
     this.setData({
-      multiIndex:[(dateYear==2019?0:(dateYear==2020)?1:2),(dateMonth-1),(dateDay-1),dateHour,dateMinute],
+      multiIndex: [(dateYear == 2019 ? 0 : (dateYear == 2020) ? 1 : 2), (dateMonth - 1), (dateDay - 1), dateHour, dateMinute],
     })
   },
 

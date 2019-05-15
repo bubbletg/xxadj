@@ -12,63 +12,6 @@ Page({
     userInfo: '',
   },
 
-
-
-  /**
-   * 更新头像
-   */
-  gengxintouxiang:function(fileID) {
-    db.collection('user').doc(app.globalDataOpenid.openid_).update({
-      data: {
-        portrait: fileID,
-      },
-      success(res) {
-      },
-      fail() {
-      }
-    });
-
-  },
-  /**
-   * 
-   * 下载头像上传到云存储
-   */
-  xiazaitouxiang:function(avatarUrl) {
-    let that = this;
-    //先下载
-    wx.downloadFile({
-      url: '' + avatarUrl,
-      success(res) {
-        if (res.statusCode === 200) {
-          console.log(res.tempFilePath);
-          //下载成功，保存到云存储
-          wx.cloud.uploadFile({
-            // 指定上传到的云路径
-            cloudPath: 'portrait/' + app.globalDataOpenid.openid_ + res.tempFilePath.substring((res.tempFilePath.length) - 5, (res.tempFilePath.length)),
-            filePath: res.tempFilePath,
-            // 成功回调
-            success: res => {
-              console.log('上传成功', res.fileID)
-              //保存云路径
-              that.touxiangFilePath(res.fileID);
-            },
-          })
-        }
-      }
-    })
-  },
-  /**
-   * 保存上传路径
-   */
-  touxiangFilePath(fileID) {
-    console.log('保存上传路径', fileID)
-    this.setData({
-      touxiangFilePath: fileID,
-    })
-    //更新头像
-    this.gengxintouxiang(fileID);
-  },
-
   //登录授权
   onGetUserInfo: function (e) {
     console.log("---点击登录授权---", e)
@@ -101,7 +44,6 @@ Page({
         _id: '' + e.target.dataset.openid,
         name: '' + this.data.userInfo.nickName, //默认
         username: '' + this.data.userInfo.nickName, //默认
-        portrait: '' + this.data.touxiangtempFilePath,// 默认头像
         phone: '17863273072', //电话
         age: '0', //年龄
         jialing: '0', //驾龄
@@ -190,8 +132,6 @@ Page({
         }else{
           wx.getUserInfo({
             success(res) {
-              //执行成功  下载头像
-              that.xiazaitouxiang(res.userInfo.avatarUrl);
               that.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo,
