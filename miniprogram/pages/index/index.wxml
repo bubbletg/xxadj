@@ -81,8 +81,8 @@
                     </view>
                 </view>
                 <view class="ins-list-author">
-                    <image src='{{yonghuxinxi[item._openid].portrait}}' class='round'></image>
-                    <view class="ins-list-name">{{yonghuxinxi[item._openid].username}}</view>
+                    <image src='{{item.portrait}}' class='round'></image>
+                    <view class="ins-list-name">{{item.username}}</view>
                 </view>
             </view>
         </view>

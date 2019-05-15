@@ -3,7 +3,6 @@ const db = wx.cloud.database();
 const app = getApp();
 // 引用百度地图微信小程序JSAPI模块 
 var bmap = require('../../libs/bmap-wx.min.js');
-var yonghuxinxi={}; //用户信息
 let fujinmeiyou = false; //表示第一次获取位置成功却没有数据给一次提示
 Page({
 
@@ -211,17 +210,6 @@ Page({
         }
         return;
       }
-      console.log("-----按附近查找查找成功---------",res.data);
-      res.data.forEach((item, index) => {
-        db.collection("user").where({
-              _openid: item._openid,  //没有被接单
-            }).get().then(comitres => {
-              yonghuxinxi[''+comitres.data[0]._openid]=comitres.data[0]; 
-              this.setData({
-                yonghuxinxi: yonghuxinxi,
-              })
-            })
-      }),
       this.setData({
         shouyefujin: shouyefujin,
         isLoad:true,
@@ -247,18 +235,7 @@ Page({
       qishiweizhilongitude: _.lt(this.data.MaxMinLongitudeLatitude[0]).or(_.gt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.lt(this.data.MaxMinLongitudeLatitude[2]).or(_.gt(this.data.MaxMinLongitudeLatitude[3])),
     }).get().then(res => {
-      
       shouyequanju = res.data;
-      res.data.forEach((item, index) => {
-        db.collection("user").where({
-              _openid: item._openid,  //没有被接单
-            }).get().then(comitres => {
-              yonghuxinxi[''+comitres.data[0]._openid]=comitres.data[0];
-              this.setData({
-                yonghuxinxi:yonghuxinxi,
-              })
-            })
-      }),
       this.setData({
         shouyequanju: shouyequanju,
         isLoad:true,
@@ -281,16 +258,6 @@ Page({
       isaccept: false, //表示是否被接单
     }).get().then(res => {
       shouyequanju = res.data;
-      res.data.forEach((item, index) => {
-        db.collection("user").where({
-              _openid: item._openid,  //没有被接单
-            }).get().then(comitres => {
-              yonghuxinxi[''+comitres.data[0]._openid]=comitres.data[0];
-              this.setData({
-                yonghuxinxi: yonghuxinxi,
-              })
-            })
-      }),
       this.setData({
         shouyequanju: shouyequanju,
         isLoad:true,
@@ -374,11 +341,9 @@ Page({
      * 把开始获得的数据清空，防止数据重复。
      * 如：当用户获得位置后获得附近数据，又在设置里面关闭了权限，重新返回首页时导致了附近位置数据还在。
      */
-    yonghuxinxi = {};
     this.setData({
       shouyefujin:[],
       shouyequanju:[],
-      yonghuxinxi:yonghuxinxi,
       isLoad:false,
     })
     /**
