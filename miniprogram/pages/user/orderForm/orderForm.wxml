@@ -1,19 +1,22 @@
 <view>
-    <view class="nav center-nav success-nav">
-        <view class="nav-item-box">
-            <!-- orderFromProceed  订单进行中 -->
-            <view class="nav-item {{orderFromProceed}}" catchtap='daohangqiehuan' data-daohangqiehuan='orderFromProceed'>
-                <text class='iconfont icon-album'></text>
-                进行中
-            </view>
-            <!-- orderFromFinish  订单完成 -->
-            <view class="nav-item {{orderFromFinish}}" catchtap='daohangqiehuan' data-daohangqiehuan='orderFromFinish'>
-                <text class='iconfont icon-video'></text>
-                已结束
+    <scroll-view scroll-x class="bg-white nav text-center fixed" style="top:{{CustomBar}}px">
+        <view class="nav center-nav success-nav">
+            <view class="nav-item-box">
+                <!-- orderFromProceed  订单进行中 -->
+                <view class="nav-item {{orderFromProceed}}" catchtap='daohangqiehuan' data-daohangqiehuan='orderFromProceed'>
+                    <text class='iconfont icon-album'></text>
+                    进行中
+                </view>
+                <!-- orderFromFinish  订单完成 -->
+                <view class="nav-item {{orderFromFinish}}" catchtap='daohangqiehuan' data-daohangqiehuan='orderFromFinish'>
+                    <text class='iconfont icon-video'></text>
+                    已结束
+                </view>
             </view>
         </view>
-    </view>
-    <scroll-view scroll-y='ture' class="scroll-view-orderFrom-proceed" bindscrolltolower="orderFromUpdate">
+    </scroll-view>
+    <view class="bar-success-zhan"></view>
+    <block>
         <view wx:if="{{orderFromProceed=='cur'}}" wx:for="{{daijiadingdanNoFinish}}" wx:key="index" wx:for-item="item" catchtap="coderFormDetail" data-id='{{item._id}}'>
             <view class='badge secondary radius capsule-badge'>
                 <text>{{item.chuangjianshijian[0]}}</text>
@@ -27,11 +30,13 @@
                 <view class="flex solid-bottom padding justify-end orderFrom-proceed-finish-biaoqian">
                     <view class="padding-sm orderFrom-proceed-finish-delete">
                         <view class="padding-xs">
-                            <view class="cu-tag bg-red"  catchtap="orderFromDelete" data-id='{{item._id}}'>删除</view>
+                            <view class="cu-tag bg-red" catchtap="orderFromDelete" data-id='{{item._id}}'>
+                                删除
+                            </view>
                         </view>
                     </view>
                 </view>
-                 <view class="flex solid-bottom padding justify-end orderFrom-proceed-finish-biaoqian">
+                <view class="flex solid-bottom padding justify-end orderFrom-proceed-finish-biaoqian">
                     <view class="orderFrom-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu=='undefined'}}">
                         <view class="padding-sm flex flex-wrap">
                             <view class="padding-xs">
@@ -69,11 +74,13 @@
                 <view class="flex solid-bottom padding justify-end orderFrom-proceed-finish-biaoqian">
                     <view class="padding-sm orderFrom-proceed-finish-delete">
                         <view class="padding-xs">
-                            <view class="cu-tag bg-red"  catchtap="orderFromDelete" data-id='{{item._id}}'>删除</view>
+                            <view class="cu-tag bg-red" catchtap="orderFromDelete" data-id='{{item._id}}'>
+                                删除
+                            </view>
                         </view>
                     </view>
                 </view>
-                 <view class="flex solid-bottom padding justify-end orderFrom-proceed-finish-biaoqian">
+                <view class="flex solid-bottom padding justify-end orderFrom-proceed-finish-biaoqian">
                     <view class="orderFrom-proceed-finish-label" wx:if="{{item.baoshidaijia=='undefined'&&item.baochefuwu=='undefined'}}">
                         <view class="padding-sm flex flex-wrap">
                             <view class="padding-xs">
@@ -99,5 +106,5 @@
             </view>
         </view>
         <view class="orderFrom-proceed-finish-finish">没有呢</view>
-    </scroll-view>
+    </block>
 </view>

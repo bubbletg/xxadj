@@ -22,11 +22,6 @@
     color: #666;
     line-height: 92rpx;
   }
-  /* 滑动view 样式 */
-  .scroll-view-orderFrom-proceed{
-    margin-top: 10rpx;
-    height: 1078rpx;
-  }
 
   /* 订单样式 */
   .orderFrom-proceed-finish{
@@ -71,3 +66,6 @@
     margin: 100rpx;
     text-align: center;
   }
+  .bar-success-zhan{
+    height: 90rpx;
+}
