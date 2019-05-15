@@ -32,6 +32,13 @@
         收藏
       </view>
     </view>
+    
+     <view class="list-li list-arrow" catchtap='cutInterface' data-interface='news' data-openid='{{isopenid}}'>
+      <view class="list-text">
+        <view class="iconfont icon-xiaoxi moren-text"></view>
+        消息
+      </view>
+    </view>
     <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-pinglun moren-text"></view>

@@ -7,6 +7,7 @@
     "pages/user/redact/alterSpei/alterSpei",
     "pages/user/redact/alterJiashi/alterJiashi",
     "pages/user/orderForm/orderForm",
+    "pages/user/news/news",
     "pages/user/orderReceiving/orderReceiving",
     "pages/user/orderReceiving/orderReceivingDetail/orderReceivingDetail",
     "pages/user/orderForm/orderFormUpdate/orderFormUpdate",
