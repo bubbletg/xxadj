@@ -38,6 +38,7 @@ Page({
       if (information._openid == app.globalDataOpenid.openid_) {
         wx.showToast({
           title: '自己不可接自己的订单！',
+          icon:'',
           duration: 2000
         })
         return;
@@ -98,7 +99,7 @@ Page({
                         getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
                       } else {
                         wx.redirectTo({
-                          url: '../../user/orderReceiving/orderReceiving',
+                          url: '../../user/orderReceiving/orderReceiving?openid=' + app.globalDataOpenid.openid_,
                         })
                       }
                     }
