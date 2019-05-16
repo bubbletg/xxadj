@@ -536,10 +536,6 @@ Page({
         } else {
           wx.getUserInfo({
             success(res) {
-              //执行成功  下载头像
-              wx.showModal({
-                content: ''+res.userInfo.avatarUrl,
-              })
               that.xiazaitouxiang(res.userInfo.avatarUrl);
               that.setData({
                 avatarUrl: res.userInfo.avatarUrl,
