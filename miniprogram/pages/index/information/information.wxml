@@ -4,9 +4,9 @@
             <!-- 头 -->
             <view class="cu-list menu-avatar">
                 <view class="cu-item">
-                    <image src='{{fabuyonghuxinxi.portrait}}' class='cu-avatar round lg'></image>
+                    <image src='{{information.portrait}}' class='cu-avatar round lg'></image>
                     <view class="content flex-sub">
-                        <view>{{fabuyonghuxinxi.username}}</view>
+                        <view>{{information.username}}</view>
                         <view class="text-gray text-sm flex justify-between">
                             {{information.chuangjianshijian[0]}} {{information.chuangjianshijian[1]}}
                         </view>
@@ -66,9 +66,9 @@
             <!-- 评论 -->
             <view class="cu-list menu-avatar comment solids-top">
                 <view class="cu-item" wx:for="{{[1,2,3,4]}}" wx:key="index">
-                     <image src='{{fabuyonghuxinxi.portrait}}' class='cu-avatar round'></image>
+                     <image src='{{information.portrait}}' class='cu-avatar round'></image>
                     <view class="content">
-                        <view class="text-grey">{{fabuyonghuxinxi.username}}</view>
+                        <view class="text-grey">{{information.username}}</view>
                         <view class="text-gray text-content text-df">凯尔，你被自己的光芒变的盲目。</view>
                         <view class="bg-orange light padding-sm radius margin-top-sm  text-sm">
                             <view class="flex">

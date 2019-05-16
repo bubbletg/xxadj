@@ -1,7 +1,6 @@
 //获得数据库引用
 const db = wx.cloud.database();
 var informationid; //信息id
-var fabuyonghuxinxi; //发布用户信息 
 var jiedanyonghuxinxi; //发布用户信息 
 const app = getApp();
 Page({
@@ -20,7 +19,7 @@ Page({
   onLoad: function (options) {
     console.log("-----information 页面----------onLoad（）---------");
     informationid = options.informationid;
-    
+
   },
   /**
    * 
@@ -32,13 +31,13 @@ Page({
   informationJieDan(e) {
     console.log("---------informationJieDan执行----------------", this.data);
     //判断是否实名
-    if(this.data.jiedanyonghuxinxi.spe_i=='已实名认证'){
+    if (this.data.jiedanyonghuxinxi.spe_i == '已实名认证') {
       let information = this.data.information;
       //先判断接单是否自己的的单
       if (information._openid == app.globalDataOpenid.openid_) {
         wx.showToast({
           title: '自己不可接自己的订单！',
-          icon:'',
+          icon: '',
           duration: 2000
         })
         return;
@@ -56,12 +55,12 @@ Page({
             wx.showLoading({
               title: '接单中',
             })
-             //添加在数据库
-             db.collection('daijiajiedan').add({
+            //添加在数据库
+            db.collection('daijiajiedan').add({
               // data 字段表示需新增的 JSON 数据
               data: {
                 _id: information._id + (new Date()),    //id  用订单表_id + 现在时间表示  
-                daijiadingdan_id:information._id, //订单id，表示当前被接的订单
+                daijiadingdan_id: information._id, //订单id，表示当前被接的订单
                 qishiweizhi: information.qishiweizhi, //起始位置
                 zhongdianweizhi: information.zhongdianweizhi, //终点位置
                 phone: information.phone, //联系方式
@@ -79,14 +78,14 @@ Page({
                 chuangjianshijian: information.chuangjianshijian,//创建时间
               }
             }).then(daijiajiedan_res => {
-              console.log("------------daijiajiedanid_"+daijiajiedan_res._id);
+              console.log("------------daijiajiedanid_" + daijiajiedan_res._id);
               //通过云函数更新驾驶dingdan表，因为不同用户更新一个表不可能，只有通过云函数
               wx.cloud.callFunction({
                 name: 'jiedancaozuo_daijiadingdangengxin',
                 data: {
                   informationid: information._id,
                   openid_: app.globalDataOpenid.openid_,
-                  daijiajiedan_id:daijiajiedan_res._id,
+                  daijiajiedan_id: daijiajiedan_res._id,
                 },
                 complete: res => {
                   wx.hideLoading();
@@ -109,11 +108,11 @@ Page({
                 }
               });
             })
-           
+
           }
         }
       })
-    }else{
+    } else {
       //没有实名
       wx.showModal({
         title: '实名认证',
@@ -132,7 +131,7 @@ Page({
         }
       })
     }
-    
+
 
   },
 
@@ -149,29 +148,12 @@ Page({
     db.collection("daijiadingdan").doc(informationid).get().then(res => {
       console.log("--------------详细信息获取完成---------");
       information = res.data;
-      db.collection("user").where({
-        _openid: _.eq(res.data._openid).or(_.eq(app.globalDataOpenid.openid_)),
-
-      }).get().then(ress => {
-        //关闭加载...
-        wx.hideLoading()
-        //判断是发布用户还是接单用户
-        if(ress.data[0]._openid==app.globalDataOpenid.openid_){
-            //相等，接单用户
-            jiedanyonghuxinxi = ress.data[0];
-            fabuyonghuxinxi = ress.data[1];
-        }else{
-          fabuyonghuxinxi = ress.data[0];
-          jiedanyonghuxinxi = ress.data[1];
-        }
-       
-        that.setData({
-          fabuyonghuxinxi: fabuyonghuxinxi,
-          jiedanyonghuxinxi:jiedanyonghuxinxi,
-          information: information,
-        })
-
+      wx.hideLoading()
+      that.setData({
+        jiedanyonghuxinxi: jiedanyonghuxinxi,
+        information: information,
       })
+
     });
   },
 
@@ -180,9 +162,9 @@ Page({
    * 打开起始位置地图
    * @param  e 
    */
-  dakaiqishiweizhiditu(e){
-    let latitude=parseFloat(e.currentTarget.dataset.latitude);
-   let longitude = parseFloat(e.currentTarget.dataset.longitude);
+  dakaiqishiweizhiditu(e) {
+    let latitude = parseFloat(e.currentTarget.dataset.latitude);
+    let longitude = parseFloat(e.currentTarget.dataset.longitude);
     wx.openLocation({
       latitude,
       longitude,
@@ -193,11 +175,11 @@ Page({
   /**
    * 拨号
    */
-  dial(e){
-     console.log(e);
-     //拨打电话
+  dial(e) {
+    console.log(e);
+    //拨打电话
     wx.makePhoneCall({
-      phoneNumber:e.currentTarget.dataset.phone,
+      phoneNumber: e.currentTarget.dataset.phone,
     })
   },
 
@@ -206,7 +188,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-//根据信息id查询信息
+    //根据信息id查询信息
     //显示加载
     wx.showLoading({
       title: '加载中',
