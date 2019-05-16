@@ -2,6 +2,8 @@
 const db = wx.cloud.database();
 const app = getApp();
 let dateYear, dateMonth, dateDay, dateHour, dateMinute; //全是变量   年，月，日，小时，分钟。
+var xiazaiportraitTup;   //下载头像
+var portraitTup;  //保存的头像路径
 Page({
   /**
    * 页面的初始数据
@@ -190,25 +192,13 @@ Page({
       success(res) {
         if (res.statusCode === 200) {
           console.log(res.tempFilePath);
-          //保存缓存路径
-          that.setData({
-            portraitTup: res.tempFilePath
-          })
-          //下载成功，保存到云存储
-          // wx.cloud.uploadFile({
-          //   // 指定上传到的云路径
-          //   cloudPath: 'portrait/' + app.globalDataOpenid.openid_ + res.tempFilePath.substring((res.tempFilePath.length) - 5, (res.tempFilePath.length)),
-          //   filePath: res.tempFilePath,
-          //   // 成功回调
-          //   success: res => {
-          //     console.log('上传成功', res.fileID)
-          //     //保存云路径
-          //     that.setData({
-          //       portrait: res.fileID,
-          //      });
-          //   },
-          // })
+          portraitTup = res.tempFilePath;
         }
+      },
+      fail(){
+        wx.showToast({
+          title:'下载失败',
+        })
       }
     })
   },
@@ -348,22 +338,12 @@ Page({
       }
     }).then(add_res => {
       console.log("------------add_res",add_res)
-      //上传头像
       wx.cloud.uploadFile({
         // 指定上传到的云路径
-        cloudPath: 'portrait/' + new Date().getTime() + this.data.portraitTup.substring((this.data.portraitTup.length) - 5, (this.data.portraitTup.length)),
-        filePath: this.data.portraitTup,
-        fail(res) {
-          //关闭加载...
-          wx.hideLoading();
-          console.log("下单失败", res)
-          wx.showToast({
-            title: "下单失败！",
-            icon: "none",
-            duration: 2000
-          });
-        }, success(uploadFile_res) {
-          console.log('上传成功', uploadFile_res.fileID)
+        cloudPath: 'portrait/' + portraitTup.substring(15, (portraitTup.length)),
+        filePath: portraitTup,
+      }).then(uploadFile_res => {
+        console.log('上传成功', uploadFile_res.fileID)
           db.collection("daijiadingdan").doc(add_res._id).update({
             //更新
             data: {
@@ -389,7 +369,15 @@ Page({
               });
             }
           })
-        }
+      }).catch(error => {
+        //关闭加载...
+        wx.hideLoading();
+        console.log("下单失败", res)
+        wx.showToast({
+          title: "下单失败！",
+          icon: "none",
+          duration: 2000
+        });
       })
     })
   },
@@ -549,6 +537,9 @@ Page({
           wx.getUserInfo({
             success(res) {
               //执行成功  下载头像
+              wx.showModal({
+                content: ''+res.userInfo.avatarUrl,
+              })
               that.xiazaitouxiang(res.userInfo.avatarUrl);
               that.setData({
                 avatarUrl: res.userInfo.avatarUrl,
