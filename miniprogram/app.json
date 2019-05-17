@@ -3,6 +3,7 @@
     
     "pages/index/index",
     "pages/add/add",
+    "pages/add/addYourOwnDriver",
     "pages/user/user",
     "pages/user/redact/alterSpei/alterSpei",
     "pages/user/redact/alterJiashi/alterJiashi",
