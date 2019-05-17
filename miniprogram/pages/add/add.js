@@ -556,11 +556,30 @@ Page({
       multiIndex: [(dateYear == 2019 ? 0 : (dateYear == 2020) ? 1 : 2), (dateMonth - 1), (dateDay - 1), dateHour, dateMinute],
     })
   },
-
   /**
-   * 生命周期函数--监听页面隐藏
+   * 自己添加司机按钮，
+   * 需求：自己挑选，同意，不在首页显示，不可以被接单，发送信息给特定司机，
+   * 司机是否同意，同意，接单完成，不同意，发布到首页，其他司机接单。
    */
-  onHide: function () {
+  AddYourOwnDriver(){
+    wx.showModal({
+      title: '确认自己挑选司机',
+      content: '自己挑选司机将会发送信息给司机，不会在首页显示，若司机不同意接单，将为你代驾信息在首页显示',
+      confirmText: '确定',
+      cancelText: '取消',
+      success(res) {
+        console.log(res)
+        //表示点击了取消
+        if (res.confirm == false) {
+         return;
+        } else {
+          wx.navigateTo({
+            url:'addYourOwnDriver'
+          })
+        }
+      }
+    })
 
-  },
+  }
+
 })
