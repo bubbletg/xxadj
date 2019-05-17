@@ -26,8 +26,6 @@ Page({
       })
       app.globalDataOpenid.openid_ = e.target.dataset.openid;
     }
-    //执行成功  下载头像
-    this.xiazaitouxiang(e.detail.userInfo.avatarUrl);
     //插入用户信息
     this.adduser(e);
   },
@@ -37,7 +35,6 @@ Page({
    */
 
    adduser(e){
-    //登录成功后，向数据库里面添加一个表，表示用户信息
     db.collection('user').add({
       // data 字段表示需新增的 JSON 数据
       data: {
@@ -58,6 +55,31 @@ Page({
         console.log("插入成功", res)
       }
     })
+    //插入用户测试
+    //  for(let i = 100;i<1000;i++){
+    // //登录成功后，向数据库里面添加一个表，表示用户信息
+    // db.collection('user').add({
+    //   // data 字段表示需新增的 JSON 数据
+    //   data: {
+    //     _id: '' + e.target.dataset.openid+'______'+i,
+    //     name: '' + this.data.userInfo.nickName+'______'+i, //默认
+    //     username: '' + this.data.userInfo.nickName+'______'+i, //默认
+    //     phone: '17863273072', //电话
+    //     age: '0', //年龄
+    //     jialing: '0', //驾龄
+    //     suozaidi: '北京', //所在地
+    //     spe_i: '未实名认证', //实名认证
+    //     jiashi: '未驾驶认证', //驾驶认证
+    //     region: ['山东省', '枣庄市', '市中区'],
+    //     showData:false,
+    //   },
+    //   success(res) {
+    //     // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+    //     console.log("插入成功", res)
+    //   }
+    // })
+    //  }
+
    },
   // 点击设置
   setting: function () {
