@@ -47,7 +47,6 @@
         </view>
     </view>
 </block>
- <view wx:if="{{!isLoad}}" class="cu-load bg-white {{!isLoad?'loading':'over'}}"></view>
 <block wx:if="{{xianshi=='shouye'}}"> 
     <!-- 首页显示模块 -->
     <view class='card-list-box'>
@@ -145,3 +144,4 @@
         </view>
     </view>
 </view>
+ <view class="cu-load bg-white {{!isLoad?'loading':'over'}}"></view>

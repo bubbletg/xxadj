@@ -1,6 +1,9 @@
 //获得数据库引用
 const db = wx.cloud.database();
 const app = getApp();
+var target_quan_wei = 0, target_quan = 0, target_ = 0;//用于分页查询起始位置,分别是 获得位置成功全局，获取位置失败全局，位置
+var count_quan_wei = 0, count_quan = 0, count_ = 0; //查询的记录总数
+var shouyefujin = [], shouyequanju = []; //附近，全局
 // 引用百度地图微信小程序JSAPI模块 
 var bmap = require('../../libs/bmap-wx.min.js');
 let fujinmeiyou = false; //表示第一次获取位置成功却没有数据给一次提示
@@ -42,7 +45,7 @@ Page({
     let lat = latitude;
     let dlng = 2 * Math.asin(Math.sin(distince / (2 * r)) / Math.cos(lat * Math.PI / 180));
     // 角度转为弧度
-    dlng = dlng * 180 / Math.PI;       
+    dlng = dlng * 180 / Math.PI;
     let dlat = distince / r;
     dlat = dlat * 180 / Math.PI;
     let minlat = lat - dlat;
@@ -159,8 +162,8 @@ Page({
           //按附近位置查询信息
           console.log("---获取经纬度成功--开始按附近查找------！");
           that.weizhichaxundaijia();
-          console.log("---获取经纬度成功--开始按照获取位置成功时执行的全局查找！");
-          that.chaxundaijia();
+          // console.log("---获取经纬度成功--开始按照获取位置成功时执行的全局查找！");
+          // that.chaxundaijia();
         }
       },
 
@@ -173,48 +176,69 @@ Page({
    * 查询发布的代驾信息
    */
   weizhichaxundaijia() {
+        //查询数据库   起始位置
+        const _ = db.command;
+    let that = this;
+    db.collection('daijiadingdan').where({
+      ifFinish: false, //表示是否完成
+      isaccept: false, //表示是否被接单
+      qishiweizhilongitude: _.gt(this.data.MaxMinLongitudeLatitude[0]).and(_.lt(this.data.MaxMinLongitudeLatitude[1])),
+      qishiweizhilatitude: _.gt(this.data.MaxMinLongitudeLatitude[2]).and(_.lt(this.data.MaxMinLongitudeLatitude[3])),
+
+    }).count().then(res => {
+      count_ = res.total;
+    })
     //用于保存首页查询到的代驾信息
-    let shouyefujin;
-    //查询数据库   起始位置
-    const _ = db.command;
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
       qishiweizhilongitude: _.gt(this.data.MaxMinLongitudeLatitude[0]).and(_.lt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.gt(this.data.MaxMinLongitudeLatitude[2]).and(_.lt(this.data.MaxMinLongitudeLatitude[3])),
 
-    }).get().then(res => {
-      shouyefujin = res.data;
-      //判断按附近查找到了吗？没有则按照全部查找
-      if (shouyefujin.length <= 0) {
-        console.log("-----按附近查找没有找到！-------------");
-        if(!fujinmeiyou){
-          fujinmeiyou = true;
-          wx.showModal({
-            title: '当前位置没有代驾信息',
-            content: '你当前位置没有代驾信息，以为你加载其他地区的信息。是否自己发布代驾信息？',
-            confirmText: '确定',
-            cancelText: '取消',
-            success(ress) {
-              //表示点击了取消
-              if (ress.confirm == false) {
-                return;
-              } else {
-                //切换到添加代驾
-                wx.switchTab({
-                  url: '../add/add'
-                })
-              }
-            }
-          })
-        }
-        return;
-      }
-      this.setData({
-        shouyefujin: shouyefujin,
-        isLoad:true,
-      })
     })
+      .skip(target_) // 跳过结果集中的前 10 条，从第 11 条开始返回
+      .limit(10) // 限制返回数量为 10 条
+      .get().then(res => {
+        target_ += 10;
+        //判断按附近查找到了吗？没有则按照全部查找
+        if (res.data.length <= 0) {
+          console.log("-----按附近查找没有找到！-------------");
+          if (!fujinmeiyou) {
+            fujinmeiyou = true;
+            wx.showModal({
+              title: '当前位置没有代驾信息',
+              content: '你当前位置没有代驾信息，以为你加载其他地区的信息。是否自己发布代驾信息？',
+              confirmText: '确定',
+              cancelText: '取消',
+              success(ress) {
+                //表示点击了取消
+                if (ress.confirm == false) {
+                 return;
+                } else {
+                  //切换到添加代驾
+                  wx.switchTab({
+                    url: '../add/add'
+                  })
+                }
+              }
+            })
+          }
+        }
+        for (let i = 0; i < res.data.length; i++) {
+          shouyefujin.push(res.data[i]);
+        }
+        that.setData({
+          shouyefujin: shouyefujin,
+        })
+        //加载完成后
+        if (target_ >= count_) {
+          that.setData({
+            weizhichaxundaijia_: true,//表示附近获取完了
+          })
+          //这里表示附近加载完了，我们现在加载全局
+          that.chaxundaijia();
+        }
+      })
   },
 
   /**
@@ -223,10 +247,19 @@ Page({
    * 获取位置成功时执行的全局查找
    */
   chaxundaijia: function (fujin) {
-    //用于保存首页查询到的代驾信息
-    let shouyequanju;
-    //查询数据库   起始位置
-    const _ = db.command;
+        //查询数据库   起始位置
+        const _ = db.command;
+    let that = this;
+    db.collection('daijiadingdan').where({
+      ifFinish: false, //表示是否完成
+      isaccept: false, //表示是否被接单
+      //全局查找，不再显示附近的
+      qishiweizhilongitude: _.lt(this.data.MaxMinLongitudeLatitude[0]).or(_.gt(this.data.MaxMinLongitudeLatitude[1])),
+      qishiweizhilatitude: _.lt(this.data.MaxMinLongitudeLatitude[2]).or(_.gt(this.data.MaxMinLongitudeLatitude[3])),
+    }).count().then(res => {
+      count_quan_wei = res.total;
+    })
+
     console.log("-----开始获取位置成功时执行的全局查找！！！-------------------");
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
@@ -234,35 +267,62 @@ Page({
       //全局查找，不再显示附近的
       qishiweizhilongitude: _.lt(this.data.MaxMinLongitudeLatitude[0]).or(_.gt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.lt(this.data.MaxMinLongitudeLatitude[2]).or(_.gt(this.data.MaxMinLongitudeLatitude[3])),
-    }).get().then(res => {
-      shouyequanju = res.data;
-      this.setData({
-        shouyequanju: shouyequanju,
-        isLoad:true,
-      })
     })
+      .skip(target_quan_wei) // 跳过结果集中的前 10 条，从第 11 条开始返回
+      .limit(10) // 限制返回数量为 10 条
+      .get()
+      .then(res => {
+        target_quan_wei += 10;
+        for (let i = 0; i < res.data.length; i++) {
+          shouyequanju.push(res.data[i]);
+        }
+        this.setData({
+          shouyequanju: shouyequanju,
+        })
+        //加载完成后
+        if (target_quan_wei >= count_quan_wei) {
+          that.setData({
+            isLoad: true,
+          })
+        }
+      })
   },
-    /**
-   * 
-   * 查询发布的代驾信息
-   * 获取位置失败时执行的全局查找
-   */
+  /**
+ * 
+ * 查询发布的代驾信息
+ * 获取位置失败时执行的全局查找
+ */
   chaxundaijiaquan: function (fujin) {
-    //用于保存首页查询到的代驾信息
-    let shouyequanju;
-    //查询数据库   起始位置
+    let that = this;
     const _ = db.command;
-    console.log("-----开始获取位置失败时执行的全局查找！！！-------------------");
+    db.collection('daijiadingdan').where({
+      ifFinish: false, //表示是否完成
+      isaccept: false, //表示是否被接单
+    }).count().then(res => {
+      count_quan = res.total;
+    })
+    console.log("-----开始获取位置失败时执行的全局查找！！！-----target_quan=-"+target_quan+"------count_quan="+count_quan+"-------");
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
-    }).get().then(res => {
-      shouyequanju = res.data;
-      this.setData({
-        shouyequanju: shouyequanju,
-        isLoad:true,
-      })
     })
+      .skip(target_quan) // 跳过结果集中的前 10 条，从第 11 条开始返回
+      .limit(10) // 限制返回数量为 10 条
+      .get().then(res => {
+        target_quan += 10;
+        for (let i = 0; i < res.data.length; i++) {
+          shouyequanju.push(res.data[i]);
+        }
+        this.setData({
+          shouyequanju: shouyequanju,
+        })
+        //加载完成后
+        if (target_quan >= count_quan) {
+          that.setData({
+            isLoad: true,
+          })
+        }
+      })
   },
 
   /**
@@ -331,27 +391,19 @@ Page({
         app.globalDataOpenid.openid_ = res.result.openid;
       }
     })
+    /**
+ * 查询代驾信息，先查询位置
+ * 再在位置里面查询信息
+ * 获得当前位置, 参数为空表示不是点击切换附近
+ */
+    this.weizhi('');
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    /**
-     * 把开始获得的数据清空，防止数据重复。
-     * 如：当用户获得位置后获得附近数据，又在设置里面关闭了权限，重新返回首页时导致了附近位置数据还在。
-     */
-    this.setData({
-      shouyefujin:[],
-      shouyequanju:[],
-      isLoad:false,
-    })
-    /**
-     * 查询代驾信息，先查询位置
-     * 再在位置里面查询信息
-     * 获得当前位置, 参数为空表示不是点击切换附近
-     */
-   this.weizhi('');
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -369,7 +421,30 @@ Page({
       }
     })
   },
-
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    target_quan_wei = 0;
+    target_quan = 0; target_ = 0;//用于分页查询起始位置,分别是 获得位置成功全局，获取位置失败全局，位置
+    count_quan_wei = 0; count_quan = 0; count_ = 0; //查询的记录总数
+    shouyefujin = []; shouyequanju = [];
+    /**
+ * 把开始获得的数据清空，防止数据重复。
+ * 如：当用户获得位置后获得附近数据，又在设置里面关闭了权限，重新返回首页时导致了附近位置数据还在。
+ */
+    this.setData({
+      shouyefujin: [],
+      shouyequanju: [],
+      isLoad: false,
+    })
+    /**
+ * 查询代驾信息，先查询位置
+ * 再在位置里面查询信息
+ * 获得当前位置, 参数为空表示不是点击切换附近
+ */
+    this.weizhi('');
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -410,8 +485,8 @@ Page({
             }
           })
         } else {
-           //跳转编辑信息页面
-           wx.navigateTo({
+          //跳转编辑信息页面
+          wx.navigateTo({
             url: '../user/redact/redact?openid=' + app.globalDataOpenid.openid_,
           })
         }
