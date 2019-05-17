@@ -77,7 +77,7 @@
           </view>
         </view>
       </picker>
-      <view class="tiaosijijiedan">自己挑司机接单</view>
+      <view class="tiaosijijiedan" catch:tap="AddYourOwnDriver">自己挑司机接单</view>
       <view class="doc-main">
         <view class='flex flex-direction'>
           <!-- 包时服务下的按钮 -->
