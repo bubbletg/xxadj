@@ -121,6 +121,7 @@
             </view>
         </view>
     </view>
+     <view class="cu-load bg-white {{!isLoad?'loading':'over'}}"></view>
 </block>
 <view class="leirong">
     <!-- 定位侧边栏 -->
@@ -144,4 +145,3 @@
         </view>
     </view>
 </view>
- <view class="cu-load bg-white {{!isLoad?'loading':'over'}}"></view>

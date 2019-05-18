@@ -301,7 +301,7 @@ Page({
     }).count().then(res => {
       count_quan = res.total;
     })
-    console.log("-----开始获取位置失败时执行的全局查找！！！-----target_quan=-"+target_quan+"------count_quan="+count_quan+"-------");
+    console.log("-----开始获取位置失败时执行的全局查找！！！------");
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
@@ -425,6 +425,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    //下拉刷新，相当于重新加载页面，全部数据恢复默认
+    fujinmeiyou = false;
     target_quan_wei = 0;
     target_quan = 0; target_ = 0;//用于分页查询起始位置,分别是 获得位置成功全局，获取位置失败全局，位置
     count_quan_wei = 0; count_quan = 0; count_ = 0; //查询的记录总数
@@ -443,6 +445,14 @@ Page({
  * 再在位置里面查询信息
  * 获得当前位置, 参数为空表示不是点击切换附近
  */
+    this.weizhi('');
+  },
+      /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    //上拉刷新，表示前面已经加载过了，设置为true
+    fujinmeiyou = true;
     this.weizhi('');
   },
   /**
