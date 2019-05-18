@@ -60,13 +60,13 @@
         </view>
       </picker>
       <picker mode="multiSelector" bindchange="baochePickerChange" value="{{baocheIndex}}" range="{{baocheArray}}">
-      <view class='form-item' wx:if='{{baochefuwu=="cur"}}'>
-        <view class='form-title cur'>包车服务</view>
-        <input name='baochefuwu' type="text" disabled='true' placeholder="选择包车的类型" value='{{baocheArray[0][baocheIndex]}}' class='form-input'></input>
-        <view class='form-input-btn'>
-          <view class="iconfont icon-tianjiarenyuan moren-text"></view>
+        <view class='form-item' wx:if='{{baochefuwu=="cur"}}'>
+          <view class='form-title cur'>包车服务</view>
+          <input name='baochefuwu' type="text" disabled='true' placeholder="选择包车的类型" value='{{baocheArray[0][baocheIndex]}}' class='form-input'></input>
+          <view class='form-input-btn'>
+            <view class="iconfont icon-tianjiarenyuan moren-text"></view>
+          </view>
         </view>
-      </view>
       </picker>
       <picker mode="multiSelector" bindchange="baoshiPickerChange" value="{{baoshiIndex}}" range="{{baoshiArray}}">
         <view class='form-item' wx:if='{{baoshidaijia=="cur"}}'>
@@ -87,22 +87,45 @@
     </view>
   </form>
   <view class="cu-modal {{modalName=='DialogModal2'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content">完成预约</view>
-      <view class="action" catchtap="hideModal" data-hideModal='close'>
-        <text class="cuIcon-close text-red"></text>
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">完成预约</view>
+        <view class="action" catchtap="hideModal" data-hideModal='close'>
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">你已经成功预约代驾！你还可以进行如下操作。</view>
+      <view class="cu-bar bg-white">
+        <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='this'>
+          再次添加预约
+        </view>
+        <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='index'>
+          去首页
+        </view>
+        <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='orderForm'>
+          去订单管理
+        </view>
       </view>
     </view>
-    <view class="padding-xl">
-     你已经成功预约代驾！你还可以进行如下操作。
-    </view>
-    <view class="cu-bar bg-white">
-      <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='this'>
-        再次添加预约</view>
-      <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='index'>去首页</view>
-      <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='orderForm'>去订单管理</view>
-    </view>
+   
   </view>
-</view>
+   <view class="cu-modal {{modalName=='DialogModal3'?'show':''}}">
+      <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+          <view class="content">确认代驾司机人数</view>
+          <view class="action" catchtap="hideModal" data-hideModal='close'>
+            <text class="cuIcon-close text-red"></text>
+          </view>
+        </view>
+        <view class="padding-xl">司机太少了！!</view>
+        <view class="cu-bar bg-white">
+          <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='zidongfenpei'>
+            系统自动分配司机
+          </view>
+          <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='chong'>
+            重新选择司机
+          </view>
+        </view>
+      </view>
+    </view>
 </view>

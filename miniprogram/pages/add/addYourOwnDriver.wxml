@@ -1,4 +1,5 @@
 <view>
+ <checkbox-group bindchange="checkboxChange">
     <view class="cu-card case" wx:for="{{userCard}}" wx:key="index" wx:for-item="item">
         <view class="cu-item shadow">
             <view class="cu-form-group">
@@ -6,7 +7,7 @@
                展开卡片  <text class="cuIcon-unfold text-orange "></text></view>
                 <view class="title" wx:if="{{userCardUnfold[index]==true}}" catch:tap="userCardUnfoldTap" data-index='{{index}}'>
                隐藏卡片 <text class="cuIcon-fold text-orange "></text></view>
-                <checkbox class="round yellow"></checkbox>
+                <checkbox value="{{item._id}}" class="round yellow"></checkbox>
             </view>
             <view class="image">
                 <view class="grid col-1">
@@ -46,5 +47,6 @@
             </view>
         </view>
     </view>
+    </checkbox-group>
 </view>
 <view class="cu-load bg-white {{!isLoad?'loading':'over'}}"></view>

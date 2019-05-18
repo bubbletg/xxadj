@@ -407,9 +407,25 @@ Page({
         url: '../user/orderForm/orderForm?openid=' + app.globalDataOpenid.openid_,
       });
       this.closeModal();
+    }else if (operation == "chong") {
+      //重新选择代驾人
+      let daijiaren = (parseInt(this.data.daijiarenIndex)+1);
+      wx.navigateTo({
+        //参数代驾多少人
+        url:'addYourOwnDriver?daijiaren='+daijiaren,
+      })
+      this.closeModal();
+    }
+    else if (operation == "zidongfenpei") {
+      //系统自动分配
+      this.setData({
+        xuandingren:[],
+      })
+      this.closeModal();
     }
 
   },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -562,6 +578,7 @@ Page({
    * 司机是否同意，同意，接单完成，不同意，发布到首页，其他司机接单。
    */
   AddYourOwnDriver(){
+    let that = this;
     wx.showModal({
       title: '确认自己挑选司机',
       content: '自己挑选司机将会发送信息给司机，不会在首页显示，若司机不同意接单，将为你代驾信息在首页显示',
@@ -573,8 +590,10 @@ Page({
         if (res.confirm == false) {
          return;
         } else {
+          let daijiaren = (parseInt(that.data.daijiarenIndex)+1);
           wx.navigateTo({
-            url:'addYourOwnDriver'
+            //参数代驾多少人
+            url:'addYourOwnDriver?daijiaren='+daijiaren,
           })
         }
       }

@@ -4,6 +4,8 @@ var target = 0;//用于分页查询起始位置
 var count_ = 0; //查询的记录总数
 var userCard = [];// 用户信息卡片
 var userCardUnfold = []; //卡片是否显示
+
+
 Page({
 
   /**
@@ -11,6 +13,7 @@ Page({
    */
   data: {
     userCardUnfold: [],// 用户卡片展示 
+    xuandingren:0,
   },
 
   /**
@@ -23,6 +26,32 @@ Page({
     this.setData({
       userCardUnfold: userCardUnfold,
     })
+  },
+  /**
+   * 选择是触发
+   */
+  checkboxChange(e){
+    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+    //把选择有多少个保存起来
+    this.setData({
+      xuandingren: e.detail.value.length,
+    })
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({
+      xuandingren:  e.detail.value
+    })
+    //判断是否多选
+    //选定人卡片数不等于代驾人数
+    if(this.data.daijiaren < this.data.xuandingren){
+      wx.showModal({
+        title: '确认代驾司机人数',
+        content: '你选择的代驾人数('+ this.data.daijiaren+')与选择代驾司机人数( '+this.data.xuandingren+' )不符合，多个司机不可能代驾一个',
+        confirmText: '确定',
+        cancelText: '取消',
+      })  
+    }
   },
 
   /**
@@ -66,7 +95,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      daijiaren:options.daijiaren, //代驾多少人
+    })
     this.acquisition(); //获得数据
 
   },
@@ -97,6 +128,19 @@ Page({
       userCard: []
     })
     this.acquisition(); //获得数据
-
   },
+  /**
+   * 页面卸载触发
+   */
+  onUnload(){
+   //选定人卡片数不等于代驾人数
+   if(this.data.daijiaren > this.data.xuandingren){
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({
+      modalName:  'DialogModal3',
+    })
+  }
+  }
 })
