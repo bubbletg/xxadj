@@ -1,26 +1,45 @@
-<view class="cu-card case" wx:for="{{userCard}}" wx:key="index" wx:for-item="item">
-    <view class="cu-item shadow">
-        <view class="image">
-            <image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" mode="widthFix"></image>
-            <view class="cu-tag bg-blue">史诗</view>
-            <view class="cu-bar bg-shadeBottom">
-                <text class="text-cut">我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。</text>
+<view>
+    <view class="cu-card case" wx:for="{{userCard}}" wx:key="index" wx:for-item="item">
+        <view class="cu-item shadow">
+            <view class="cu-form-group">
+                <view class="title" wx:if="{{userCardUnfold[index]!=true}}" catch:tap="userCardUnfoldTap" data-index='{{index}}'>
+               展开卡片  <text class="cuIcon-unfold text-orange "></text></view>
+                <view class="title" wx:if="{{userCardUnfold[index]==true}}" catch:tap="userCardUnfoldTap" data-index='{{index}}'>
+               隐藏卡片 <text class="cuIcon-fold text-orange "></text></view>
+                <checkbox class="round yellow"></checkbox>
             </view>
-        </view>
-        <view class="cu-list menu-avatar">
-            <view class="cu-item">
-                <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
-                <view class="content flex-sub">
-                    <view class="text-grey">正义天使 凯尔</view>
-                    <view class="text-gray text-sm flex justify-between">
-                        十天前
-                        <view class="text-gray text-sm">
-                            <text class="cuIcon-attentionfill margin-lr-xs"></text>
-                            10
-                            <text class="cuIcon-appreciatefill margin-lr-xs"></text>
-                            20
-                            <text class="cuIcon-messagefill margin-lr-xs"></text>
-                            30
+            <view class="image">
+                <view class="grid col-1">
+                    <view class="bg-yellow  radius  light">
+                        <view class="padding text-center">
+                            <view wx:if="{{userCardUnfold[index]==true}}">
+                                所在地：{{item.region[0]}},{{item.region[1]}},{{item.region[2]}}
+                            </view>
+                            <view class="solid-top padding-xs" wx:if="{{userCardUnfold[index]==true}}">年龄：{{item.age}}</view>
+                            <view class="solid-top padding-xs" wx:if="{{userCardUnfold[index]==true}}">驾龄：{{item.jialing}}</view>
+                            <view class="solid-top padding-xs" wx:if="{{userCardUnfold[index]==true}}">{{item.jiashi}}</view>
+                            <view class="solid-top padding-xs" wx:if="{{userCardUnfold[index]==true}}">{{item.spe_i}}</view>
+                            <view class="solid-top padding-xs" wx:if="{{userCardUnfold[index]==true}}">手机：{{item.phone}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="cu-list menu-avatar">
+                <view class="cu-item">
+                    <view class="cu-avatar round lg" style="background-image:url({{item.portrait}});"></view>
+                    <view class="content flex-sub">
+                        <view class="text-grey">{{item.username}}
+                        <text space="nbsp" wx:if="{{userCardUnfold[index]!=true}}">  驾龄：{{item.jialing}}</text></view>
+                        <view class="text-gray text-sm flex justify-between">
+                            {{item.jialing}} 加入
+                            <view class="text-gray text-sm">
+                                <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                                10
+                                <text class="cuIcon-appreciatefill margin-lr-xs"></text>
+                                20
+                                <text class="cuIcon-messagefill margin-lr-xs"></text>
+                                30
+                            </view>
                         </view>
                     </view>
                 </view>

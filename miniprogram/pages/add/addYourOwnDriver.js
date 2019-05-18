@@ -2,18 +2,32 @@ const db = wx.cloud.database();
 const app = getApp();
 var target = 0;//用于分页查询起始位置
 var count_ = 0; //查询的记录总数
-var userCard =[];// 用户信息卡片
+var userCard = [];// 用户信息卡片
+var userCardUnfold = []; //卡片是否显示
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    userCardUnfold: [],// 用户卡片展示 
   },
 
-/**
- * 获得数据，获得全局数据
- */
+  /**
+   * 展开用户卡片切换
+   */
+  userCardUnfoldTap(e) {
+    console.log(e)
+    let index = e.currentTarget.dataset.index;
+    userCardUnfold[index] = !userCardUnfold[index];
+    this.setData({
+      userCardUnfold: userCardUnfold,
+    })
+  },
+
+  /**
+   * 获得数据，获得全局数据
+   */
   acquisition() {
     db.collection('user').where({
       showData: true,
@@ -31,9 +45,11 @@ Page({
         target += 10; //查询完成，分页目标查询加10，表示
         for (let i = 0; i < user_res.data.length; i++) {
           userCard.push(user_res.data[i]);
+          userCardUnfold.push(false);
         }
         that.setData({
           userCard: userCard,
+          userCardUnfold: userCardUnfold,
         })
         //加载完成后
         if (target >= count_) {
@@ -50,7 +66,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
     this.acquisition(); //获得数据
 
   },
@@ -61,13 +77,13 @@ Page({
   onShow: function () {
     target = 0; //全局变量
     this.setData({
-      userCard:[]
+      userCard: []
     })
   },
 
-    /**
-   * 页面上拉触底事件的处理函数
-   */
+  /**
+ * 页面上拉触底事件的处理函数
+ */
   onReachBottom: function () {
     this.acquisition(); //获得数据
   },
@@ -78,7 +94,7 @@ Page({
   onPullDownRefresh: function () {
     target = 0; //全局变量
     this.setData({
-      userCard:[]
+      userCard: []
     })
     this.acquisition(); //获得数据
 
