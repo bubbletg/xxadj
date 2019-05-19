@@ -77,7 +77,41 @@
           </view>
         </view>
       </picker>
-      <view class="tiaosijijiedan" catch:tap="AddYourOwnDriver">自己挑司机接单</view>
+      
+      <scroll-view wx:if="{{tianjiasiji_length!=0}}" scroll-y='true' scroll-top='0' scroll-with-animation='true' class="tiaosijijiedan-litem">
+        <view class="cu-card case" wx:for="{{tianjiasiji}}" wx:key wx:for-item="tianjiasiji_">
+          <view class="cu-item shadow">
+            <view class="cu-list menu-avatar">
+              <view class="cu-item">
+                <view class="cu-avatar round lg" style="background-image:url({{tianjiasiji_.portrait}});"></view>
+                <view class="content flex-sub">
+                  <view class="text-grey">
+                    {{tianjiasiji_.username}}
+                    <text space="nbsp">驾龄：{{tianjiasiji_.jialing}}</text>
+                  </view>
+                  <view class="text-gray text-sm flex justify-between">
+                    {{tianjiasiji_.jialing}} 加入
+                    <view class="text-gray text-sm">
+                      <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                      10
+                      <text class="cuIcon-appreciatefill margin-lr-xs"></text>
+                      20
+                      <text class="cuIcon-messagefill margin-lr-xs"></text>
+                      30
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="tiaosijijiedan" catch:tap="AddYourOwnDriver" wx:if="{{tianjiasiji_length==0}}">
+        自己挑司机接单
+      </view>
+      <view class="tiaosijijiedan" catch:tap="AddYourOwnDriver" wx:if="{{tianjiasiji_length!=0}}">
+        重新挑司机接单
+      </view>
       <view class="doc-main">
         <view class='flex flex-direction'>
           <!-- 包时服务下的按钮 -->
@@ -107,25 +141,24 @@
         </view>
       </view>
     </view>
-   
   </view>
-   <view class="cu-modal {{modalName=='DialogModal3'?'show':''}}">
-      <view class="cu-dialog">
-        <view class="cu-bar bg-white justify-end">
-          <view class="content">确认代驾司机人数</view>
-          <view class="action" catchtap="hideModal" data-hideModal='close'>
-            <text class="cuIcon-close text-red"></text>
-          </view>
+  <view class="cu-modal {{modalName=='DialogModal3'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">确认代驾司机人数</view>
+        <view class="action" catchtap="hideModal" data-hideModal='close'>
+          <text class="cuIcon-close text-red"></text>
         </view>
-        <view class="padding-xl">司机太少了！!</view>
-        <view class="cu-bar bg-white">
-          <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='zidongfenpei'>
-            系统自动分配司机
-          </view>
-          <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='chong'>
-            重新选择司机
-          </view>
+      </view>
+      <view class="padding-xl">司机太少了！!</view>
+      <view class="cu-bar bg-white">
+        <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='zidongfenpei'>
+          系统自动分配司机
+        </view>
+        <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='chong'>
+          重新选择司机
         </view>
       </view>
     </view>
+  </view>
 </view>

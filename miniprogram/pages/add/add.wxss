@@ -15,6 +15,9 @@
   width: 200rpx;
   border-color: #FCE35F;
 }
+.tiaosijijiedan-litem{
+  height: 200rpx;
+}
 .primary {
   background: #FCE35F;
   color: #fff;

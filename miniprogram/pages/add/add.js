@@ -39,6 +39,9 @@ Page({
     //包车服务
     baocheArray: [['选择包车的类型', '经济型小轿车', '舒适型小轿车', '豪华型小轿车', '商务车', '婚礼用车']],
     baocheIndex: 0,
+    xuandingren:[],
+    tianjiasiji:[],
+    tianjiasiji_length:0,
 
   },
 
@@ -88,6 +91,8 @@ Page({
       richangdaijia: richangdaijia,
       baoshidaijia: baoshidaijia,
       baochefuwu: baochefuwu,
+      tianjiasiji:[],  //清空
+      xuandingren:[], //清空
     })
   },
 
@@ -333,6 +338,7 @@ Page({
         isaccept: false, //表示是否被接单
         jiedanren: '', //表示此订单被谁接单
         daijiajiedan_id: '', //接单表的id
+        zhidingsij: this.data.xuandingren, //指定司机信息id
         chuangjianshijian: [t.getFullYear() + '/' + (t.getMonth() + 1) +
           '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
       }
@@ -417,9 +423,11 @@ Page({
       this.closeModal();
     }
     else if (operation == "zidongfenpei") {
-      //系统自动分配
+      //系统自动分配,全部获取的归零
       this.setData({
         xuandingren:[],
+        tianjiasiji:[],
+        tianjiasiji_length:0,
       })
       this.closeModal();
     }
@@ -518,6 +526,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log(this.data.xuandingren,+'=xuandingren')
     let that = this;
     console.log("----------add页面--onShow生命周期函数")
     /**
@@ -571,6 +580,12 @@ Page({
     this.setData({
       multiIndex: [(dateYear == 2019 ? 0 : (dateYear == 2020) ? 1 : 2), (dateMonth - 1), (dateDay - 1), dateHour, dateMinute],
     })
+
+    // 判断是否子页面（自己挑选时司机页面）返回,大于0 ，表示挑选了司机
+    if((this.data.xuandingren).length > 0){
+      //初始化调用，默认为空，0
+      this.tianjiasiji([],0);
+    }
   },
   /**
    * 自己添加司机按钮，
@@ -599,6 +614,26 @@ Page({
       }
     })
 
-  }
+  },
 
+  /**
+   * 自己选的司机
+   * tianjiasiji_  暂时保存数据数组，
+   * i 递归调用自己下标，作用，获得xuandingren里数据，判断何时停止调用自己
+   */
+  tianjiasiji(tianjiasiji_,i){
+    db.collection('user').doc(this.data.xuandingren[i]).get().then(res=>{
+      tianjiasiji_.push(res.data)
+      //i = (this.data.xuandingren).length 表示要获取的用户卡片信息查询完成。
+      if(i<(this.data.xuandingren).length){
+        console.log("----------调用自己---------i="+i)
+        i++;
+        this.tianjiasiji(tianjiasiji_,i); //调用自己
+      }
+    })
+    this.setData({
+      tianjiasiji:tianjiasiji_,
+      tianjiasiji_length:tianjiasiji_.length,
+    })
+  }
 })
