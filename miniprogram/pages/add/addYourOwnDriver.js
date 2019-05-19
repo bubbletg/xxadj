@@ -140,7 +140,7 @@ Page({
     this.setData({
       daijiaren:options.daijiaren, //代驾多少人
     })
-    this.acquisition(); //获得数据
+  
 
   },
 
@@ -149,8 +149,7 @@ Page({
    */
   onShow: function () {
     target = 0;//用于分页查询起始位置
-    count_ = 0; //查询的记录总数
-    userCard = [];// 用户信息卡片
+   userCard = [];// 用户信息卡片
     userCardUnfold = []; //卡片是否显示
     cheUserCard = []; //卡片是否选中
     this.setData({
@@ -158,6 +157,7 @@ Page({
       userCardUnfold: userCardUnfold,//卡片是否显示
       cheUserCard: cheUserCard, //卡片是否选中
     })
+    this.acquisition(); //获得数据
   },
 
   /**
@@ -172,7 +172,6 @@ Page({
    */
   onPullDownRefresh: function () {
     target = 0;//用于分页查询起始位置
-    count_ = 0; //查询的记录总数
     userCard = [];// 用户信息卡片
     userCardUnfold = []; //卡片是否显示
     cheUserCard = []; //卡片是否选中

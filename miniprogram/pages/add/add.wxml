@@ -87,10 +87,10 @@
                 <view class="content flex-sub">
                   <view class="text-grey">
                     {{tianjiasiji_.username}}
-                    <text space="nbsp">驾龄：{{tianjiasiji_.jialing}}</text>
+                    <text space="nbsp">  驾龄：{{tianjiasiji_.jialing}}</text>
                   </view>
                   <view class="text-gray text-sm flex justify-between">
-                    {{tianjiasiji_.jialing}} 加入
+                    {{tianjiasiji_.addDate}} 加入
                     <view class="text-gray text-sm">
                       <text class="cuIcon-attentionfill margin-lr-xs"></text>
                       10

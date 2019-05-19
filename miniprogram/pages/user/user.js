@@ -61,6 +61,7 @@ updatePortrait(){
    */
 
    adduser(e){
+    let currentDate = new Date();
     db.collection('user').add({
       // data 字段表示需新增的 JSON 数据
       data: {
@@ -76,6 +77,7 @@ updatePortrait(){
         jiashi: '未驾驶认证', //驾驶认证
         region: ['山东省', '枣庄市', '市中区'],
         showData:false,
+        addDate:currentDate.getFullYear()+'/'+(currentDate.getMonth() + 1)+'/'+currentDate.getDate(),//加入时间
       },
       success(res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id

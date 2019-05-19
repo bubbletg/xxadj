@@ -33,7 +33,7 @@
                         <view class="text-grey">{{item.username}}
                         <text space="nbsp" wx:if="{{userCardUnfold[index]!=true}}">  驾龄：{{item.jialing}}</text></view>
                         <view class="text-gray text-sm flex justify-between">
-                            {{item.jialing}} 加入
+                            {{item.addDate}} 加入
                             <view class="text-gray text-sm">
                                 <text class="cuIcon-attentionfill margin-lr-xs"></text>
                                 10
