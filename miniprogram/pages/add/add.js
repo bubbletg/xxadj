@@ -44,6 +44,28 @@ Page({
     tianjiasiji_length:0,
 
   },
+    /**
+   * 下单成功，清除所有输入
+   */
+  qingchuinput(){
+    //获取当前时间
+    this.getCurrentDate();
+    //设置默认下单时间
+    this.setData({
+      multiIndex: [(dateYear == 2019 ? 0 : (dateYear == 2020) ? 1 : 2), (dateMonth - 1), (dateDay - 1), dateHour, dateMinute],
+    })
+    this.setData({
+      qishiweizhisuozaidi:'',
+      zhongdianweizhisuozaidi:'',
+      phone:'', 
+      daijiarenIndex: 0,
+      baoshiIndex: 0,
+      baocheIndex: 0,
+      xuandingren:[],
+      tianjiasiji:[],
+      tianjiasiji_length:0,
+    })
+  },
 
   //预约时间 切换调用
   bindMultiPickerChange: function (e) {
@@ -360,6 +382,8 @@ Page({
                wx.hideLoading();
               //表示下单成功，把id保存到
               console.log("下单成功", res_)
+              //下单成功，清空所有输入
+              that.qingchuinput();
               that.setData({
                 modalName: 'DialogModal2',
               })
@@ -433,6 +457,7 @@ Page({
     }
 
   },
+
 
 
   /**
@@ -574,17 +599,20 @@ Page({
       }
     })
 
+   
+
+
+    // 判断是否子页面（自己挑选时司机页面）返回,大于0 ，表示挑选了司机
+    if((this.data.xuandingren).length > 0){
+      //初始化调用，默认为空，0
+      this.tianjiasiji([],0);
+    }else{
     //获取当前时间
     this.getCurrentDate();
     //设置默认下单时间
     this.setData({
       multiIndex: [(dateYear == 2019 ? 0 : (dateYear == 2020) ? 1 : 2), (dateMonth - 1), (dateDay - 1), dateHour, dateMinute],
     })
-
-    // 判断是否子页面（自己挑选时司机页面）返回,大于0 ，表示挑选了司机
-    if((this.data.xuandingren).length > 0){
-      //初始化调用，默认为空，0
-      this.tianjiasiji([],0);
     }
   },
   /**
