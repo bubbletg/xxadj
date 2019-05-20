@@ -465,6 +465,29 @@ Page({
    */
   onLoad: function (options) {
     console.log("----------add页面--onLoad生命周期函数-this.data")
+      //判断账号是否存在
+      db.collection('user').doc(app.globalDataOpenid.openid_).get({
+        success(){
+          app.globalDataAndLogin.login = true;
+        },
+        fail(){
+          app.globalDataAndLogin.login = false;
+          //失败不存在，提示登录
+          wx.showModal({
+            title: '登录过期',
+            content: '登录过期，请重新登录',
+            confirmText: '确定',
+            cancelText: '取消',
+            success(ress) {
+              //表示点击了取消
+                //切换到添加代驾
+                wx.switchTab({
+                  url: '../user/user'
+                })        
+            }
+          })
+        }
+      })
   },
 
   /**

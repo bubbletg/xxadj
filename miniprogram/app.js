@@ -20,6 +20,10 @@ App({
     this.globalDataOpenid = {
       openid_: openid_,
     }
-  },
+    //默认没有登录
+    this.globalDataAndLogin={
+      login:false,
+    }
+  }
  
 })

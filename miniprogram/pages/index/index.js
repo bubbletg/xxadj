@@ -389,6 +389,29 @@ Page({
       name: 'login',
       complete: (res) => {
         app.globalDataOpenid.openid_ = res.result.openid;
+        //判断账号是否存在
+        db.collection('user').doc(res.result.openid).get({
+          success(){
+            app.globalDataAndLogin.login = true;
+          },
+          fail(){
+            app.globalDataAndLogin.login = false;
+            //失败不存在，提示登录
+            wx.showModal({
+              title: '登录过期',
+              content: '登录过期，请重新登录',
+              confirmText: '确定',
+              cancelText: '取消',
+              success(ress) {
+                //表示点击了取消
+                  //切换到添加代驾
+                  wx.switchTab({
+                    url: '../user/user'
+                  })        
+              }
+            })
+          }
+        })
       }
     })
     /**
@@ -404,22 +427,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
-            }
-          })
+    if (app.globalDataAndLogin.login) {
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wx.getUserInfo({
+              success: res => {
+                this.setData({
+                  avatarUrl: res.userInfo.avatarUrl,
+                  userInfo: res.userInfo
+                })
+              }
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作

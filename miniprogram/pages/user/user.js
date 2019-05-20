@@ -76,6 +76,9 @@ updatePortrait(){
         spe_i: '未实名认证', //实名认证
         jiashi: '未驾驶认证', //驾驶认证
         region: ['山东省', '枣庄市', '市中区'],
+        shoucangshu:0,    //收藏数
+        chakanshu:0,   //查看数
+        pinglunshu:0,  //评论数
         showData:false,
         addDate:currentDate.getFullYear()+'/'+(currentDate.getMonth() + 1)+'/'+currentDate.getDate(),//加入时间
       },
@@ -145,30 +148,36 @@ updatePortrait(){
    */
   onShow: function () { 
     let that = this;
-    //判断是否登录
-    wx.getSetting({
-      success(res) {
-        console.log(res.authSetting)
-        //没有授权
-        if(!res.authSetting['scope.userInfo']){
-          that.setData({
-      
-            avatarUrl: '../../images/user-unlogin.png',
-            userInfo: '',
-          })
-        }else{
-          wx.getUserInfo({
-            success(res) {
+    if(app.globalDataAndLogin.login){
+        //判断是否登录
+        wx.getSetting({
+          success(res) {
+            console.log(res.authSetting)
+            //没有授权
+            if(!res.authSetting['scope.userInfo']){
               that.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo,
-              });
-              that.updatePortrait();
+                avatarUrl: '../../images/user-unlogin.png',
+                userInfo: '',
+              })
+            }else{
+              wx.getUserInfo({
+                success(res) {
+                  that.setData({
+                    avatarUrl: res.userInfo.avatarUrl,
+                    userInfo: res.userInfo,
+                  });
+                  that.updatePortrait();
+                }
+              })
             }
-          })
-        }
-      }
-    })
+          }
+        })
+    }else{
+      that.setData({
+        userInfo: '',
+      })
+    }
+   
   },
 
   /**
