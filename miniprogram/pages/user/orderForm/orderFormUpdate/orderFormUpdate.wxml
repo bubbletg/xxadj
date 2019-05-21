@@ -82,7 +82,9 @@
           </view>
         </view>
       </picker>
-      <view class="tiaosijijiedan">重新挑选司机</view>
+      <view class="tiaosijijiedan" >
+        订单确定后，司机不可修改，如需修改，请删除订单，重新添加
+      </view>
       <view class="doc-main">
         <view class='flex flex-direction'>
           <!-- 包时服务下的按钮 -->
