@@ -1,7 +1,7 @@
 //获得数据库引用
 const db = wx.cloud.database();
 var informationid; //信息id
-var jiedanyonghuxinxi; //发布用户信息 
+var jiedanyonghuxinxi; //接单用户信息 
 const app = getApp();
 Page({
 
@@ -138,6 +138,29 @@ Page({
   /**
    * 查询详细信息
    *  */
+  // getinformation() {
+  //   let that = this;
+  //   //用于保存首页查询到的代驾信息
+  //   let information;
+  //   //查询数据库   起始位置
+  //   const _ = db.command;
+  //   console.log("-----getinformation---------执行----------");
+  //   db.collection("daijiadingdan").doc(informationid).get().then(res => {
+  //     console.log("--------------详细信息获取完成---------");
+  //     information = res.data;
+  //     wx.hideLoading()
+  //     that.setData({
+  //       jiedanyonghuxinxi: jiedanyonghuxinxi,
+  //       information: information,
+  //     })
+
+  //   });
+  // },
+  
+  /**
+   * 查询详细信息
+   *  */
+
   getinformation() {
     let that = this;
     //用于保存首页查询到的代驾信息
@@ -148,13 +171,20 @@ Page({
     db.collection("daijiadingdan").doc(informationid).get().then(res => {
       console.log("--------------详细信息获取完成---------");
       information = res.data;
-      wx.hideLoading()
-      that.setData({
-        jiedanyonghuxinxi: jiedanyonghuxinxi,
-        information: information,
+      db.collection("user").where({
+        _openid: app.globalDataOpenid.openid_,
+      }).get().then(ress => {
+        //关闭加载...
+        wx.hideLoading()
+        jiedanyonghuxinxi = ress.data;
+        that.setData({
+          jiedanyonghuxinxi: jiedanyonghuxinxi,
+          information: information,
+        })
       })
 
     });
+
   },
 
   /**
@@ -194,6 +224,7 @@ Page({
       title: '加载中',
       icon: 'loading',
     })
+    //查询详细信息
     this.getinformation();
   },
 
