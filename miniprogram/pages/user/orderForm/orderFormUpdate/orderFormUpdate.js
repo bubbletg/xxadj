@@ -289,6 +289,10 @@ Page({
     })
   },
 
+  /**
+   * 
+   * 获得数据 
+   */
   huodeshuju: function (e) {
     console.log("----------addthis.data.openid", this.data.isopenid)
     var thiss = this;
