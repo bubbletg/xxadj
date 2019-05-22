@@ -28,6 +28,7 @@
                             <view class="padding-xs" wx:if="{{daijiajiedanDetail.baoshidaijia=='undefined'&&daijiajiedanDetail.baochefuwu!='undefined'}}">
                                 {{daijiajiedanDetail.baochefuwu}}
                             </view>
+
                             <view class="flex solid-bottom padding justify-between">
                                 <view>
                                     <bottom class="cu-btn line-mauve lg margin-tb-sm shadow" catchtap="orderReceivingUpdate" data-id='{{daijiajiedanDetail._id}}' wx:if="{{daijiajiedanDetail.ifFinish==false}}">
@@ -50,16 +51,16 @@
                     </view>
                 </view>
                 <!-- 点赞 收藏 -->
-                <view class="text-gray text-sm text-right padding">
+                <!-- <view class="text-gray text-sm text-right padding">
                     <text class="cuIcon-attentionfill margin-lr-xs"></text>
                     10
                     <text class="cuIcon-appreciatefill margin-lr-xs"></text>
                     20
                     <text class="cuIcon-messagefill margin-lr-xs"></text>
                     30
-                </view>
+                </view> -->
                 <!-- 评论 -->
-                <view class="cu-list menu-avatar comment solids-top">
+                <!-- <view class="cu-list menu-avatar comment solids-top">
                     <view class="cu-item" wx:for="{{[1,2,3,4]}}" wx:key="index">
                         <image src='{{yonghuxinxi[0].portrait}}' class='cu-avatar round'></image>
                         <view class="content">
@@ -80,7 +81,7 @@
                             </view>
                         </view>
                     </view>
-                </view>
+                </view> -->
             </view>
         </view>
     </view>

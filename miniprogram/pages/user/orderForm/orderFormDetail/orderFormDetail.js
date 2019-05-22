@@ -18,10 +18,36 @@ Page({
         daijiadingdanDetail: res.data,
       })
       this.tianjiasiji([],0);
+      this.jiedanzhe();
       //得到数据，关闭加载
       wx.hideLoading();
     })
   },
+
+  /**
+   * 获取接单者信息
+   */
+  jiedanzhe:function(){
+    // 查询数据库
+    db.collection('user').doc(this.data.daijiadingdanDetail.jiedanren).get().then(res => {
+      this.setData({
+        jiedanzhexinxi:res.data,
+        jiedanren_length:1,
+      })
+    });
+  },
+
+  /**
+   * 点击查看详细接单人
+   */
+  jiedanrenxiangxi:function(){
+    this.jiedanzhe();
+    this.setData({
+      sijitanchuang:true,
+      jiedanrenxiangxi_an:true,
+    })
+  },
+
   /**
    * 自己选的司机
    * tianjiasiji_  暂时保存数据数组，
@@ -148,6 +174,7 @@ Page({
     this.setData({
       pinglunTapFaView:false,
       sijitanchuang:false,
+      jiedanrenxiangxi_an:false,
       userid:'', //当前订单用户id
     xuanzhedeyonghu:'点击上面用户信息进行评论',  //提示
     }) 

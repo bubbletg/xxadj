@@ -40,6 +40,13 @@
                             <view class="padding-xs" wx:if="{{daijiadingdanDetail.baoshidaijia=='undefined'&&daijiadingdanDetail.baochefuwu!='undefined'}}">
                                 {{daijiadingdanDetail.baochefuwu}}
                             </view>
+                               <!-- 包时代驾 -->
+                            <view class="padding-xs" wx:if="{{jiedanren_length==1}}" catch:tap="jiedanrenxiangxi">
+                                <text>
+                                    {{jiedanzhexinxi.username}}
+                                    <text class="text-gray">(点击查看详细)</text>
+                                </text>
+                            </view>
                             <view class="flex solid-bottom padding justify-between">
                                 <view>
                                     <bottom class="cu-btn line-mauve lg margin-tb-sm shadow" catchtap="orderFormUpdate" data-id='{{daijiadingdanDetail._id}}' wx:if="{{daijiadingdanDetail.ifFinish==false}}">
@@ -99,12 +106,12 @@
     <view class="cu-modal show" wx:if='{{sijitanchuang==true}}'>
         <view class="cu-dialog">
             <view class="cu-bar bg-white justify-end">
-                <view class="content">代驾司机</view>
+                <view class="content"><text wx:if="{{jiedanrenxiangxi_an!=true}}">代驾司机</text><text wx:if="{{jiedanrenxiangxi_an==true}}">接单司机</text></view>
                 <view class="action" catchtap="chankaidaijguanbi">
                     <text class="cuIcon-close text-red"></text>
                 </view>
             </view>
-           
+            <view wx:if="{{jiedanrenxiangxi_an!=true}}">
             <scroll-view wx:if="{{tianjiasiji_length!=0}}" scroll-y='true' scroll-top='0' scroll-with-animation='true' class="tiaosijijiedan-litem">
                 <view class="cu-card case" >
                     <view class="cu-item shadow" wx:for="{{tianjiasiji}}" wx:key wx:for-item="tianjiasiji_">
@@ -133,6 +140,46 @@
                     </view>
                 </view>
             </scroll-view>
+            </view>
+            <view wx:if="{{jiedanrenxiangxi_an==true}}">
+                <view class="image">
+                    <view class="grid col-1">
+                        <view class="bg-yellow  radius  light">
+                            <view class="padding text-center">
+                                <view>
+                                    所在地：{{jiedanzhexinxi.region[0]}},{{jiedanzhexinxi.region[1]}},{{jiedanzhexinxi.region[2]}}
+                                </view>
+                                <view class="solid-top padding-xs">年龄：{{jiedanzhexinxi.age}}</view>
+                                <view class="solid-top padding-xs">驾龄：{{jiedanzhexinxi.jialing}}</view>
+                                <view class="solid-top padding-xs">{{jiedanzhexinxi.jiashi}}</view>
+                                <view class="solid-top padding-xs">{{jiedanzhexinxi.spe_i}}</view>
+                                <view class="solid-top padding-xs">手机：{{jiedanzhexinxi.phone}}</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="cu-list menu-avatar">
+                    <view class="cu-item">
+                        <view class="cu-avatar round lg" style="background-image:url({{jiedanzhexinxi.portrait}});"></view>
+                        <view class="content flex-sub">
+                            <view class="text-grey">{{jiedanzhexinxi.username}}
+                            </view>
+                            <view class="text-gray text-sm flex justify-between">
+                                {{jiedanzhexinxi.addDate}} 加入
+                                <view class="text-gray text-sm">
+                                    <text class="cuIcon-attentionfill margin-lr-xs"></text>
+                                   {{jiedanzhexinxi.chakanshu}}
+                                    <text class="cuIcon-appreciatefill margin-lr-xs"></text>
+                                    {{jiedanzhexinxi.shoucangshu}}
+                                    <text class="cuIcon-messagefill margin-lr-xs"></text>
+                                    {{jiedanzhexinxi.pinglunshu}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+       
+            </view>
             <view wx:if="{{pinglunTapFaView == true}}">   
             <form bindsubmit="pinglunTapFa">
                <view > {{xuanzhedeyonghu}}</view>

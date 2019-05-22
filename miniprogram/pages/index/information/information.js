@@ -178,7 +178,7 @@ Page({
         wx.hideLoading()
         jiedanyonghuxinxi = ress.data;
         that.setData({
-          jiedanyonghuxinxi: jiedanyonghuxinxi,
+          jiedanyonghuxinxi: jiedanyonghuxinxi[0],
           information: information,
         })
       })
