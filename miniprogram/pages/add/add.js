@@ -343,7 +343,7 @@ Page({
       // data 字段表示需新增的 JSON 数据
       data: {
         _id: t,
-        portrait: '',// 默认头像
+        portrait: '' + this.data.portrait,// 默认头像
         username: '' + this.data.userInfo.nickName, //默认
         qishiweizhi: e.detail.value.qishiweizhi, //起始位置
         zhongdianweizhi: e.detail.value.zhongdianweizhi, //终点位置
@@ -379,69 +379,46 @@ Page({
       //   }).then(console.log)
       //   console.log('---e.detail.formId-----',e)
       // }
-      for(let i = 0;i<this.data.xuandingren.length;i++){
-      db.collection("news").add({
-        data:{
-          fadanren:app.globalDataOpenid.openid_, //下单者id
-          gaunlianId:add_res._id, //订单号 ,当是点赞时，表示点赞表id
-          jiedanren:this.data.xuandingren[i],  //接单人
-          newsName: this.data.userInfo.nickName+'让你代驾了', //信息标题
-          newsNameP:this.data.userInfo.avatarUrl,//头像
-          newsContent:'起始位置：'+e.detail.value.qishiweizhi,//信息内容,
-          chuangjianshijian: t.getFullYear() + '/' + (t.getMonth() + 1) +
-          '/' + t.getDate()+' '+  t.getHours() + ':' + t.getMinutes(),//创建时间
-          ifdakai: false,//标记是否打开
-          if_and:add, //值为add 表示代驾,
-        }
-
-      }).then(add_ress=>{
-        console.log("------------add_ress",add_ress)
+      for (let i = 0; i < this.data.xuandingren.length; i++) {
+        db.collection("news").add({
+          data: {
+            fadanren: app.globalDataOpenid.openid_, //下单者id
+            gaunlianId: add_res._id, //订单号 ,当是点赞时，表示点赞表id
+            jiedanren: this.data.xuandingren[i],  //接单人
+            newsName: this.data.userInfo.nickName + '让你代驾了', //信息标题
+            newsNameP: this.data.userInfo.avatarUrl,//头像
+            newsContent: '起始位置：' + e.detail.value.qishiweizhi,//信息内容,
+            chuangjianshijian: t.getFullYear() + '/' + (t.getMonth() + 1) +
+              '/' + t.getDate() + ' ' + t.getHours() + ':' + t.getMinutes(),//创建时间
+            ifdakai: false,//标记是否打开
+            if_and: "add", //值为add 表示代驾,
+          }
+        }).then(res => {
+          console.log("-----消息发送成功！！！")
+        }).catch(res => {
+          console.log("-----消息发送成功！！！")
+        })
+      }
+    }).then(add_ress => {
+      console.log("------------add_ress", add_ress)
+      //关闭加载...
+      wx.hideLoading();
+      //表示下单成功，把id保存到
+      console.log("下单成功", add_ress)
+      //下单成功，清空所有输入
+      that.qingchuinput();
+      that.setData({
+        modalName: 'DialogModal2',
       })
-    }
-      console.log("------------add_res",add_res)
-      wx.cloud.uploadFile({
-        // 指定上传到的云路径
-        cloudPath: 'portrait/' + portraitTup.substring(15, (portraitTup.length)),
-        filePath: portraitTup,
-      }).then(uploadFile_res => {
-        console.log('上传成功', uploadFile_res.fileID)
-          db.collection("daijiadingdan").doc(add_res._id).update({
-            //更新
-            data: {
-              portrait: uploadFile_res.fileID,
-            },
-            success: res_ => {
-               //关闭加载...
-               wx.hideLoading();
-              //表示下单成功，把id保存到
-              console.log("下单成功", res_)
-              //下单成功，清空所有输入
-              that.qingchuinput();
-              that.setData({
-                modalName: 'DialogModal2',
-              })
-            },
-            fail(res_) {
-              //关闭加载...
-              wx.hideLoading();
-              console.log("下单失败", res_)
-              wx.showToast({
-                title: "下单失败！",
-                icon: "none",
-                duration: 2000
-              });
-            }
-          })
-      }).catch(error => {
-        //关闭加载...
-        wx.hideLoading();
-        console.log("下单失败", res)
-        wx.showToast({
-          title: "下单失败！",
-          icon: "none",
-          duration: 2000
-        });
-      })
+    }).catch(error => {
+      //关闭加载...
+      wx.hideLoading();
+      console.log("下单失败", error)
+      wx.showToast({
+        title: "下单失败！",
+        icon: "none",
+        duration: 2000
+      });
     })
   },
   closeModal() {
@@ -544,6 +521,7 @@ Page({
           spe_i: res.data.spe_i, //实名认证
           jiashi: res.data.jiashi, //驾驶认证
           region: res.data.region, //所在地
+          portrait:res.data.portrait, //头像
         })
       },
       fail() {
