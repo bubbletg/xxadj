@@ -1,6 +1,6 @@
 <!-- catchtouchstart='touchStart' catchtouchend="touchEnd" -->
 <view>
-  <form bindsubmit="lijixiadan" bindreset="formReset">
+  <form report-submit='true' bindsubmit="lijixiadan" bindreset="formReset" name='' >
     <view class="nav center-nav success-nav">
       <view class="nav-item-box">
         <view class="nav-item {{richangdaijia}}" catchtap='daohangqiehuan' data-daohangqiehuan='richangdaijia'>

@@ -1,4 +1,6 @@
-// pages/user/news/news.js
+const db = wx.cloud.database();
+const app = getApp();
+var target_ = 0;
 Page({
 
   /**
@@ -8,10 +10,46 @@ Page({
 
   },
 
+/**
+ * 信息详细
+ */
+  newsDetail:function(e){
+    console.log("-----newsDetail---",e)
+    // 判断是什么信息，订单，评论，还是点赞
+    if(e.currentTarget.dataset.ifand =='add'){
+      //表示代驾
+      //跳转编辑信息页面
+    wx.navigateTo({
+      url: '../../index/information/information?informationid=' + e.currentTarget.dataset.gaunlianid,
+    })
+
+    }else if(e.currentTarget.dataset.ifand =='dianzan'){
+      //表示点赞
+    }else if(e.currentTarget.dataset.ifand =='pinglun'){
+      //表示评论
+    }
+
+
+  },
+
+  huodeshuju:function(){
+    db.collection('news').where({
+      jiedanren:app.globalDataOpenid.openid_,
+    }).skip(target_) // 跳过结果集中的前 10 条，从第 11 条开始返回
+    .limit(10) // 限制返回数量为 10 条
+    .get().then(res=>{
+      target_+=10;
+      this.setData({
+        news:res.data,
+      })
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.huodeshuju();
 
   },
 
@@ -28,7 +66,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    target_ = 0;
+    this.huodeshuju();
+  },
+        /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    this.huodeshuju();
   },
 
 

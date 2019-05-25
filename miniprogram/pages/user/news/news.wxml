@@ -1,18 +1,18 @@
 <view class="cu-list menu-avatar">
-    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{20}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-      <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big2100{{index+1}}.jpg);"></view>
-      <view class="content">
-        <view class="text-grey">文晓港</view>
-        <view class="text-gray text-sm">
-          <text class="cuIcon-infofill text-red"></text> 消息未送达</view>
-      </view>
-      <view class="action">
-        <view class="text-grey text-xs">22:20</view>
-        <view class="cu-tag round bg-grey sm">5</view>
-      </view>
-      <view class="move">
-        <view class="bg-grey">置顶</view>
-        <view class="bg-red">删除</view>
-      </view>
+  <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{news}}" wx:key wx:for-item="item" 
+  bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" catch:tap="newsDetail" bindtouchend="ListTouchEnd"
+   data-target="move-box-{{index}}" data-gaunlianid='{{item.gaunlianId}}' data-ifand='{{item.if_and}}'>
+    <view class="cu-avatar round lg" style="background-image:url({{item.newsNameP}});"></view>
+    <view class="content">
+      <view class="text-grey">{{item.newsName}}</view>
+      <view class="text-gray text-sm">{{item.newsContent}}</view>
+    </view>
+    <view class="action">
+      <view class="text-grey text-xs">{{item.chuangjianshijian}}</view>
+    </view>
+    <view class="move">
+      <view class="bg-grey" catch:tap="yidunews">已读</view>
+      <view class="bg-red" catch:tap="deletenews">删除</view>
     </view>
   </view>
+</view>

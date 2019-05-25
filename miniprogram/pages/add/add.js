@@ -365,6 +365,39 @@ Page({
           '/' + t.getDate(), t.getHours() + ':' + t.getMinutes()],//创建时间
       }
     }).then(add_res => {
+      // //发送模块信息
+      //   for(let i = 0;i<this.data.xuandingren.length;i++){
+      //   wx.cloud.callFunction({
+      //     name: 'mobanxiaoxi_zijitiaoxuanshiji',
+      //     data: {
+      //       touser: this.data.xuandingren[i],  //接受者id
+      //       dingdanhao : add_res._id, //订单号
+      //        xiadanyonghu :this.data.userInfo.nickName,//下单用户
+      //        formId :''+e.detail.formId,
+      //     }
+
+      //   }).then(console.log)
+      //   console.log('---e.detail.formId-----',e)
+      // }
+      for(let i = 0;i<this.data.xuandingren.length;i++){
+      db.collection("news").add({
+        data:{
+          fadanren:app.globalDataOpenid.openid_, //下单者id
+          gaunlianId:add_res._id, //订单号 ,当是点赞时，表示点赞表id
+          jiedanren:this.data.xuandingren[i],  //接单人
+          newsName: this.data.userInfo.nickName+'让你代驾了', //信息标题
+          newsNameP:this.data.userInfo.avatarUrl,//头像
+          newsContent:'起始位置：'+e.detail.value.qishiweizhi,//信息内容,
+          chuangjianshijian: t.getFullYear() + '/' + (t.getMonth() + 1) +
+          '/' + t.getDate()+' '+  t.getHours() + ':' + t.getMinutes(),//创建时间
+          ifdakai: false,//标记是否打开
+          if_and:add, //值为add 表示代驾,
+        }
+
+      }).then(add_ress=>{
+        console.log("------------add_ress",add_ress)
+      })
+    }
       console.log("------------add_res",add_res)
       wx.cloud.uploadFile({
         // 指定上传到的云路径
