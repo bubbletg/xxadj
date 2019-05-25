@@ -379,11 +379,6 @@ Page({
       //   }).then(console.log)
       //   console.log('---e.detail.formId-----',e)
       // }
-      var ifdakai={};
-      for(var i in this.data.xuandingren){
-          ifdakai[this.data.xuandingren[i]]=false; //键值对
-      }
-      console.log("-----------------",ifdakai)
       for (let i = 0; i < this.data.xuandingren.length; i++) {
         db.collection("news").add({
           data: {
@@ -395,7 +390,7 @@ Page({
             newsContent: '起始位置：' + e.detail.value.qishiweizhi,//信息内容,
             chuangjianshijian: t.getFullYear() + '/' + (t.getMonth() + 1) +
               '/' + t.getDate() + ' ' + t.getHours() + ':' + t.getMinutes(),//创建时间
-            ifdakai: ifdakai,//标记是否打开,每一个用户有不同的标签
+            ifdakai: false,//标记是否打开,每一个用户有不同的标签
             if_and: "add", //值为add 表示代驾,
           }
         }).then(res => {

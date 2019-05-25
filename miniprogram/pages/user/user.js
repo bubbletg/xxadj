@@ -174,7 +174,7 @@ Page({
        //消息查询，消息是否全部已读
     wx.cloud.database().collection('news').where({
       jiedanren: app.globalDataOpenid.openid_,
-      ifdakai: { [app.globalDataOpenid.openid_]: false },
+      ifdakai: false
     })
       .get().then(res => {
         console.log('------评论查询', res, '长度:' + res.data.length)

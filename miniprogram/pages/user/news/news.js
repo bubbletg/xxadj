@@ -16,16 +16,29 @@ Page({
   newsDetail:function(e){
     //修改标签，表表示已经读了
 
-    db.collection('news').doc(this.data.news._id).update({
-      data:{
-        ifdakai:{[app.globalDataOpenid.openid_]:true},
-      }
-    })
-    .then(res=>{
-        console.log('-更新成功------------')
-    }).catch(res=>{
-      console.log('-更新失败------------')
-    })
+    // db.collection('news').doc(e.currentTarget.dataset.andid).update({
+    //   data:{
+    //     ifdakai:true
+    //   }
+    // })
+    // .then(res=>{
+    //     console.log('-更新成功------------',e.currentTarget.dataset.andid)
+    // }).catch(res=>{
+    //   console.log('-更新失败------------')
+    // })
+    //用云函数更新
+        //通过云函数更新驾驶dingdan表，因为不同用户更新一个表不可能，只有通过云函数
+        wx.cloud.callFunction({
+          name: 'xiaoxicaozuo_gengxin',
+          data: {
+            _id: e.currentTarget.dataset.andid,
+          },
+          complete: res => { 
+            console.log('---更新成功')
+          }
+        });
+
+  
     console.log("-----newsDetail---",e)
     // 判断是什么信息，订单，评论，还是点赞
     if(e.currentTarget.dataset.ifand =='add'){
@@ -53,7 +66,6 @@ Page({
       target_+=10;
       this.setData({
         news:res.data,
-        myopenid:app.globalDataOpenid.openid_,
       })
     })
   },

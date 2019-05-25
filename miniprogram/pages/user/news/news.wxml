@@ -1,8 +1,8 @@
 <view class="cu-list menu-avatar">
   <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{news}}" wx:key wx:for-item="item" 
   bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" catch:tap="newsDetail" bindtouchend="ListTouchEnd"
-   data-target="move-box-{{index}}" data-gaunlianid='{{item.gaunlianId}}' data-ifand='{{item.if_and}}'>
-    <view class="cu-tag badge" wx:if="{{item.ifdakai[myopenid]==false}}"></view>
+   data-target="move-box-{{index}}" data-gaunlianid='{{item.gaunlianId}}' data-ifand='{{item.if_and}}' data-andid='{{item._id}}'>
+    <view class="cu-tag badge" wx:if="{{item.ifdakai==false}}"></view>
     <view class="cu-avatar round lg" style="background-image:url({{item.newsNameP}});"></view>
     <view class="content">
       <view class="text-grey">{{item.newsName}}</view>
