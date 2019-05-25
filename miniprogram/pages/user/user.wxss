@@ -30,3 +30,12 @@
   font-size:40rpx;
   width:320rpx;
 }
+.cu-tag:empty:not([class*="cuIcon-"]) {
+    padding:0rpx;
+    width:16rpx;
+    height:16rpx;
+    top:40rpx;
+    right:30rpx;
+    
+    }
+    

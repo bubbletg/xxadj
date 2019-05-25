@@ -34,6 +34,7 @@
     </view>
     
      <view class="list-li list-arrow" catchtap='cutInterface' data-interface='news' data-openid='{{isopenid}}'>
+      <view class="cu-tag badge" wx:if="{{huodexiaoxiifdakai==true}}"></view>
       <view class="list-text">
         <view class="iconfont icon-xiaoxi moren-text"></view>
         消息

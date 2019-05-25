@@ -142,6 +142,23 @@ updatePortrait(){
       }
     })
 
+    //消息查询，消息是否全部已读
+    wx.cloud.database().collection('news').where({
+      jiedanren:app.globalDataOpenid.openid_,
+      ifdakai:{[app.globalDataOpenid.openid_]:false},
+    })
+    .get().then(res=>{
+      console.log('------评论查询',res,'长度:'+res.data.length)
+      if(res.data.length > 0){
+        this.setData({
+          huodexiaoxiifdakai:true,
+        })
+      }
+      
+        
+    })
+    
+
   },
   /**
    * 生命周期函数--监听页面显示
