@@ -14,13 +14,25 @@ Page({
  * 信息详细
  */
   newsDetail:function(e){
+    //修改标签，表表示已经读了
+
+    db.collection('news').doc(this.data.news._id).update({
+      data:{
+        ifdakai:{[app.globalDataOpenid.openid_]:true},
+      }
+    })
+    .then(res=>{
+        console.log('-更新成功------------')
+    }).catch(res=>{
+      console.log('-更新失败------------')
+    })
     console.log("-----newsDetail---",e)
     // 判断是什么信息，订单，评论，还是点赞
     if(e.currentTarget.dataset.ifand =='add'){
       //表示代驾
       //跳转编辑信息页面
     wx.navigateTo({
-      url: '../../index/information/information?informationid=' + e.currentTarget.dataset.gaunlianid,
+      url: '../../index/information/information?pages=news&informationid=' + e.currentTarget.dataset.gaunlianid,
     })
 
     }else if(e.currentTarget.dataset.ifand =='dianzan'){
@@ -41,6 +53,7 @@ Page({
       target_+=10;
       this.setData({
         news:res.data,
+        myopenid:app.globalDataOpenid.openid_,
       })
     })
   },
@@ -49,8 +62,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.huodeshuju();
-
   },
 
 
@@ -58,7 +69,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.huodeshuju();
   },
 
 

@@ -48,6 +48,8 @@
                         <view class="flex flex-direction">
                          <bottom class="cu-btn line-yellow lg margin-tb-sm shadow"  wx:if="{{information.isaccept==false}}"
                          catch:tap="informationJieDan" data-informationid="{{information._id}}">接单</bottom>
+                         <bottom class="cu-btn block line-red margin-tb-sm lg" 
+                        wx:if="{{pages=='news'}}" catch:tap="fangqicidan">放弃此单</bottom>
                          <bottom class="cu-btn block line-blue margin-tb-sm lg" 
                          wx:if="{{information.isaccept==true}}">已接单</bottom>
                          </view>

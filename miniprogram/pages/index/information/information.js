@@ -1,6 +1,7 @@
 //获得数据库引用
 const db = wx.cloud.database();
 var informationid; //信息id
+var pages;  //表示上一个页面
 var jiedanyonghuxinxi; //接单用户信息 
 const app = getApp();
 Page({
@@ -12,6 +13,15 @@ Page({
 
   },
 
+  /**
+   * 放弃此单
+   */
+  fangqicidan:function(){
+    /**
+     * 
+     */
+
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -19,6 +29,10 @@ Page({
   onLoad: function (options) {
     console.log("-----information 页面----------onLoad（）---------");
     informationid = options.informationid;
+    pages =options.pages;
+    this.setData({
+      pages:pages, 
+    })
 
   },
   /**
