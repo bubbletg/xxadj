@@ -2,7 +2,7 @@
 //获得数据库引用
 const db = wx.cloud.database();
 const app = getApp();
-var updatePortrait_=false;//防止多次执行更新头像
+var updatePortrait_ = false;//防止多次执行更新头像
 Page({
 
   /**
@@ -15,28 +15,28 @@ Page({
   /**
    * 更新头像
    */
-updatePortrait(){
-  if(!updatePortrait_){
-    updatePortrait_=true;//防止多次执行更新头像
-    console.log("---------执行一次")
-    //先查询当前用户
-    db.collection('user').doc(app.globalDataOpenid.openid_).get().then(res=>{
-      if(res.data.portrait == this.data.avatarUrl){
-        return;
-      }else{
-        db.collection('user').doc(app.globalDataOpenid.openid_).update({
-          data:{
-            portrait:this.data.avatarUrl,
-          }
-        }).then(update_res=>{
+  updatePortrait() {
+    if (!updatePortrait_) {
+      updatePortrait_ = true;//防止多次执行更新头像
+      console.log("---------执行一次")
+      //先查询当前用户
+      db.collection('user').doc(app.globalDataOpenid.openid_).get().then(res => {
+        if (res.data.portrait == this.data.avatarUrl) {
+          return;
+        } else {
+          db.collection('user').doc(app.globalDataOpenid.openid_).update({
+            data: {
+              portrait: this.data.avatarUrl,
+            }
+          }).then(update_res => {
             console.log("----头像更新成功");
-        })
-      }
-    })
-  
-  }
+          })
+        }
+      })
 
-},
+    }
+
+  },
   //登录授权
   onGetUserInfo: function (e) {
     console.log("---点击登录授权---", e)
@@ -47,7 +47,7 @@ updatePortrait(){
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo,
         openid: e.target.dataset.openid,
-        
+
       })
       app.globalDataOpenid.openid_ = e.target.dataset.openid;
     }
@@ -60,7 +60,7 @@ updatePortrait(){
    * 
    */
 
-   adduser(e){
+  adduser(e) {
     let currentDate = new Date();
     db.collection('user').add({
       // data 字段表示需新增的 JSON 数据
@@ -68,7 +68,7 @@ updatePortrait(){
         _id: '' + e.target.dataset.openid,
         name: '' + this.data.userInfo.nickName, //默认
         username: '' + this.data.userInfo.nickName, //默认
-        portrait:''+this.data.userInfo.avatarUrl, //头像地址
+        portrait: '' + this.data.userInfo.avatarUrl, //头像地址
         phone: '17863273072', //电话
         age: '0', //年龄
         jialing: '0', //驾龄
@@ -76,11 +76,11 @@ updatePortrait(){
         spe_i: '未实名认证', //实名认证
         jiashi: '未驾驶认证', //驾驶认证
         region: ['山东省', '枣庄市', '市中区'],
-        shoucangshu:0,    //收藏数
-        chakanshu:0,   //查看数
-        pinglunshu:0,  //评论数
-        showData:false,
-        addDate:currentDate.getFullYear()+'/'+(currentDate.getMonth() + 1)+'/'+currentDate.getDate(),//加入时间
+        shoucangshu: 0,    //收藏数
+        chakanshu: 0,   //查看数
+        pinglunshu: 0,  //评论数
+        showData: false,
+        addDate: currentDate.getFullYear() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getDate(),//加入时间
       },
       success(res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
@@ -88,7 +88,7 @@ updatePortrait(){
       }
     })
 
-   },
+  },
   // 点击设置
   setting: function () {
     console.log("---------------setting")
@@ -128,9 +128,9 @@ updatePortrait(){
       return;
     }
   },
-    /**
-   * 生命周期函数--监听页面加载
-   */
+  /**
+ * 生命周期函数--监听页面加载
+ */
   onLoad: function (options) {
     //执行云涵数，获得openid作为id
     wx.cloud.callFunction({
@@ -141,60 +141,59 @@ updatePortrait(){
         })
       }
     })
-
-    //消息查询，消息是否全部已读
-    wx.cloud.database().collection('news').where({
-      jiedanren:app.globalDataOpenid.openid_,
-      ifdakai:{[app.globalDataOpenid.openid_]:false},
-    })
-    .get().then(res=>{
-      console.log('------评论查询',res,'长度:'+res.data.length)
-      if(res.data.length > 0){
-        this.setData({
-          huodexiaoxiifdakai:true,
-        })
-      }
-      
-        
-    })
-    
-
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () { 
+  onShow: function () {
     let that = this;
-    if(app.globalDataAndLogin.login){
-        //判断是否登录
-        wx.getSetting({
-          success(res) {
-            console.log(res.authSetting)
-            //没有授权
-            if(!res.authSetting['scope.userInfo']){
-              that.setData({
-                avatarUrl: '../../images/user-unlogin.png',
-                userInfo: '',
-              })
-            }else{
-              wx.getUserInfo({
-                success(res) {
-                  that.setData({
-                    avatarUrl: res.userInfo.avatarUrl,
-                    userInfo: res.userInfo,
-                  });
-                  that.updatePortrait();
-                }
-              })
-            }
+    if (app.globalDataAndLogin.login) {
+      //判断是否登录
+      wx.getSetting({
+        success(res) {
+          console.log(res.authSetting)
+          //没有授权
+          if (!res.authSetting['scope.userInfo']) {
+            that.setData({
+              avatarUrl: '../../images/user-unlogin.png',
+              userInfo: '',
+            })
+          } else {
+            wx.getUserInfo({
+              success(res) {
+                that.setData({
+                  avatarUrl: res.userInfo.avatarUrl,
+                  userInfo: res.userInfo,
+                });
+                that.updatePortrait();
+              }
+            })
           }
-        })
-    }else{
+        }
+      })
+       //消息查询，消息是否全部已读
+    wx.cloud.database().collection('news').where({
+      jiedanren: app.globalDataOpenid.openid_,
+      ifdakai: { [app.globalDataOpenid.openid_]: false },
+    })
+      .get().then(res => {
+        console.log('------评论查询', res, '长度:' + res.data.length)
+        if (res.data.length > 0) {
+          this.setData({
+            huodexiaoxiifdakai: true,
+          })
+        }else{
+          this.setData({
+            huodexiaoxiifdakai: false,
+          })
+        }
+      })
+    } else {
       that.setData({
         userInfo: '',
       })
     }
-   
+
   },
 
   /**
