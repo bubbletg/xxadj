@@ -172,7 +172,7 @@ Page({
             wx.getUserInfo({
               success(res) {
                 //关闭加载...
-        wx.hideLoading()
+                wx.hideLoading()
                 that.setData({
                   avatarUrl: res.userInfo.avatarUrl,
                   userInfo: res.userInfo,
@@ -203,9 +203,6 @@ Page({
     } else {
       //关闭加载...
       wx.hideLoading()
-      that.setData({
-        userInfo: '',
-      })
     }
 
   },
