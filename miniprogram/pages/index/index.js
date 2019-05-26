@@ -182,6 +182,7 @@ Page({
     db.collection('daijiadingdan').where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      zhidingsij:[], //表示没有被指定
       qishiweizhilongitude: _.gt(this.data.MaxMinLongitudeLatitude[0]).and(_.lt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.gt(this.data.MaxMinLongitudeLatitude[2]).and(_.lt(this.data.MaxMinLongitudeLatitude[3])),
 
@@ -192,6 +193,7 @@ Page({
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      zhidingsij:[], //表示没有被指定
       qishiweizhilongitude: _.gt(this.data.MaxMinLongitudeLatitude[0]).and(_.lt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.gt(this.data.MaxMinLongitudeLatitude[2]).and(_.lt(this.data.MaxMinLongitudeLatitude[3])),
 
@@ -253,6 +255,7 @@ Page({
     db.collection('daijiadingdan').where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      zhidingsij:[], //表示没有被指定
       //全局查找，不再显示附近的
       qishiweizhilongitude: _.lt(this.data.MaxMinLongitudeLatitude[0]).or(_.gt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.lt(this.data.MaxMinLongitudeLatitude[2]).or(_.gt(this.data.MaxMinLongitudeLatitude[3])),
@@ -264,6 +267,7 @@ Page({
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      zhidingsij:[], //表示没有被指定
       //全局查找，不再显示附近的
       qishiweizhilongitude: _.lt(this.data.MaxMinLongitudeLatitude[0]).or(_.gt(this.data.MaxMinLongitudeLatitude[1])),
       qishiweizhilatitude: _.lt(this.data.MaxMinLongitudeLatitude[2]).or(_.gt(this.data.MaxMinLongitudeLatitude[3])),
@@ -298,6 +302,7 @@ Page({
     db.collection('daijiadingdan').where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      zhidingsij:[], //表示没有被指定
     }).count().then(res => {
       count_quan = res.total;
     })
@@ -305,6 +310,7 @@ Page({
     db.collection("daijiadingdan").where({
       ifFinish: false, //表示是否完成
       isaccept: false, //表示是否被接单
+      zhidingsij:[], //表示没有被指定
     })
       .skip(target_quan) // 跳过结果集中的前 10 条，从第 11 条开始返回
       .limit(10) // 限制返回数量为 10 条
