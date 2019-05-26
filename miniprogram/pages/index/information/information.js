@@ -14,12 +14,60 @@ Page({
   },
 
   /**
-   * 放弃此单
+   * 放弃此单，原理，当有人放弃此订单时，发送信息给接单人，然后删除此订单，并给出建议
+   * 
+   * 此为v1.0.0版本不足之处，后期在2.0版本上改正
    */
-  fangqicidan:function(){
-    /**
-     * 
-     */
+  fangqicidan:function(e){
+    let that = this;
+    //给出提示，是否放弃此单
+     wx.showModal({
+      title: '放弃此单',
+      content: '放弃此单后不可恢复，是否放弃？',
+      confirmText: '放弃',
+      cancelText: '取消',
+      success(ress_) {
+        //表示点击了取消
+        if (ress_.confirm == false) {
+          getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+        } else {
+          let t = new Date();
+          //插入要发送的信息
+          db.collection("news").add({
+            data: {
+              fadanren: app.globalDataOpenid.openid_, //下单者id
+              gaunlianId: informationid, //订单号 ,当是点赞时，表示点赞表id
+              jiedanren: that.data.information._openid,  //接单人   ,这里表示接收信息者
+              newsName: that.data.userInfo.nickName + '放弃接单了', //信息标题
+              newsNameP: that.data.userInfo.avatarUrl,//头像
+              newsContent: '您指定的接单人：' + that.data.userInfo.nickName+' 放弃接单了',//信息内容,  ，该订单自动自动完成，出于安全考虑，建议您指定的代驾司机一个一个指定！
+              chuangjianshijian: t.getFullYear() + '/' + (t.getMonth() + 1) +
+                '/' + t.getDate() + ' ' + t.getHours() + ':' + t.getMinutes(),//创建时间
+              ifdakai: false,//标记是否打开,每一个用户有不同的标签
+              if_and: "fangqi", //值为add 表示代驾,
+            }
+          }).then(res => {
+            //让订单自动完成，云函数操作
+            wx.cloud.callFunction({
+              name: 'xiaoxicaozuo_gengxin',
+              data: {
+                _id: informationid,
+                and:'fangqijiedan', //表示已读
+              },
+              complete: res => { 
+                console.log('---更新成功')
+                wx.navigateBack();
+              }
+            });
+
+            console.log("-----消息发送成功！！！")
+          }).catch(res => {
+            console.log("-----消息发送成功！！！")
+          })
+        }
+      }
+    })
+
 
   },
 
@@ -148,28 +196,6 @@ Page({
 
 
   },
-
-  /**
-   * 查询详细信息
-   *  */
-  // getinformation() {
-  //   let that = this;
-  //   //用于保存首页查询到的代驾信息
-  //   let information;
-  //   //查询数据库   起始位置
-  //   const _ = db.command;
-  //   console.log("-----getinformation---------执行----------");
-  //   db.collection("daijiadingdan").doc(informationid).get().then(res => {
-  //     console.log("--------------详细信息获取完成---------");
-  //     information = res.data;
-  //     wx.hideLoading()
-  //     that.setData({
-  //       jiedanyonghuxinxi: jiedanyonghuxinxi,
-  //       information: information,
-  //     })
-
-  //   });
-  // },
   
   /**
    * 查询详细信息
@@ -232,6 +258,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
     //根据信息id查询信息
     //显示加载
     wx.showLoading({
@@ -240,6 +267,13 @@ Page({
     })
     //查询详细信息
     this.getinformation();
+    wx.getUserInfo({
+      success(res) {
+        that.setData({
+          userInfo: res.userInfo,
+        });
+      }
+    })
   },
 
   /**
