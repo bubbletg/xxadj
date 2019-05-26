@@ -9,13 +9,72 @@ Page({
   data: {
   },
   deletenews:function(e){
+    let that = this;
+    //给出提示，是否放弃此单
+     wx.showModal({
+      title: '删除此单',
+      content: '删除此单后不可恢复，是否删除？',
+      confirmText: '删除',
+      cancelText: '取消',
+      success(ress_) {
+        //表示点击了取消
+        if (ress_.confirm == false) {
+          getCurrentPages()[getCurrentPages().length - 1].onShow(); //重新页面显示
+        } else {
+          console.log("-----------",e)
+        //删除
+        wx.cloud.callFunction({
+          name: 'xiaoxicaozuo_gengxin',
+          data: {
+            _id: e.currentTarget.dataset.andid,
+            and:'shanchu', 
+          },
+          complete: res => { 
+            console.log('---删除成功')
+            getCurrentPages()[getCurrentPages().length-1].onShow(); //重新页面显示
+            //判断是否未放弃，放弃就再发了
+            if(e.currentTarget.dataset.ifand == 'fangqi'){
+              let t = new Date();
+              //插入要发送的信息
+              db.collection("news").add({
+                data: {
+                  fadanren: app.globalDataOpenid.openid_, //下单者id
+                  gaunlianId: e.currentTarget.dataset.gaunlianid, //订单号 ,当是点赞时，表示点赞表id
+                  jiedanren: e.currentTarget.dataset.jiedanren,  //接单人   ,这里表示接收信息者，也就是发单人
+                  newsName: that.data.userInfo.nickName + '放弃接单了', //信息标题
+                  newsNameP: that.data.userInfo.avatarUrl,//头像
+                  newsContent: '您指定的接单人：' + that.data.userInfo.nickName+' 放弃接单了',//信息内容,
+                  chuangjianshijian: t.getFullYear() + '/' + (t.getMonth() + 1) +
+                    '/' + t.getDate() + ' ' + t.getHours() + ':' + t.getMinutes(),//创建时间
+                  ifdakai: false,//标记是否打开,每一个用户有不同的标签
+                  if_and: "fangqi", //值为add 表示代驾,
+                }
+              }).then(res => {
+                //让订单自动完成，云函数操作
+                wx.cloud.callFunction({
+                  name: 'xiaoxicaozuo_gengxin',
+                  data: {
+                    _id: e.currentTarget.dataset.gaunlianid,
+                    and:'fangqijiedan', //表示已读
+                  },
+                  complete: res => { 
+                    console.log('---更新成功')
+                    getCurrentPages()[getCurrentPages().length-1].onShow(); //重新页面显示
+                  }
+                });
+                console.log("-----消息发送成功！！！")
+              }).catch(res => {
+                console.log("-----消息发送成功！！！")
+              })
+            }
 
-    db.collection('news').doc(e.currentTarget.dataset.andid,).remove({
-      success(res) {
-        console.log('----删除成功')
-          getCurrentPages()[getCurrentPages().length-1].onShow(); //重新页面显示
+          }
+        });
+        }
       }
     })
+
+
   },
 
   /**
@@ -29,6 +88,7 @@ Page({
       name: 'xiaoxicaozuo_gengxin',
       data: {
         _id: e.currentTarget.dataset.andid,
+        and:'ifdakai', //表示已读
       },
       complete: res => { 
         console.log('---更新成功')
@@ -58,6 +118,7 @@ Page({
           name: 'xiaoxicaozuo_gengxin',
           data: {
             _id: e.currentTarget.dataset.andid,
+            and:'ifdakai',
           },
           complete: res => { 
             console.log('---更新成功')
@@ -78,9 +139,21 @@ Page({
       //表示点赞
     }else if(e.currentTarget.dataset.ifand =='pinglun'){
       //表示评论
+    }else if(e.currentTarget.dataset.ifand == 'fangqi'){
+      //表示放弃
+      this.setData({
+        fangqi:true,
+        fangqiconten:e.currentTarget.dataset.fangqiconten,
+      })
     }
 
 
+  },
+  hideModal(){
+ //表示放弃
+ this.setData({
+  fangqi:false,
+})
   },
 
   huodeshuju:function(){
@@ -107,8 +180,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
     target_ = 0;
     this.huodeshuju();
+    wx.getUserInfo({
+      success(res) {
+        that.setData({
+          userInfo: res.userInfo,
+        });
+      }
+    })
   },
 
 

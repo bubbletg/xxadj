@@ -1,7 +1,8 @@
+<view  wx:for="{{news}}" wx:key wx:for-item="item" class="botton-padding">
 <view class="cu-list menu-avatar">
-  <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{news}}" wx:key wx:for-item="item" 
+  <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" 
   bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" catch:tap="newsDetail" bindtouchend="ListTouchEnd"
-   data-target="move-box-{{index}}" data-gaunlianid='{{item.gaunlianId}}' data-ifand='{{item.if_and}}' data-andid='{{item._id}}'>
+   data-target="move-box-{{index}}" data-gaunlianid='{{item.gaunlianId}}' data-ifand='{{item.if_and}}' data-andid='{{item._id}}' data-fangqiconten='{{item.newsContent}}'>
     <view class="cu-tag badge" wx:if="{{item.ifdakai==false}}"></view>
     <view class="cu-avatar round lg" style="background-image:url({{item.newsNameP}});"></view>
     <view class="content">
@@ -13,7 +14,28 @@
     </view>
     <view class="move">
       <view class="bg-grey" catch:tap="yidunews" data-andid='{{item._id}}'>已读</view>
-      <view class="bg-red" catch:tap="deletenews" data-andid='{{item._id}}'>删除</view>
+      <view class="bg-red" catch:tap="deletenews"  data-gaunlianid='{{item.gaunlianId}}' data-jiedanren='{{item.jiedanren}}' data-ifand='{{item.if_and}}' data-andid='{{item._id}}' data-fangqiconten='{{item.newsContent}}'>删除</view>
     </view>
   </view>
 </view>
+</view>
+  <!-- 弹出信息提示框-->
+  <view class="cu-modal show" wx:if="{{fangqi == true}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">放弃接单</view>
+        <view class="action" catchtap="hideModal" data-hideModal='close'>
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl"> {{fangqiconten}}，该订单自动自动完成，出于安全考虑，建议您指定的代驾司机一个一个指定！</view>
+      <view class="cu-bar bg-white">
+        <!-- <view class="action margin-0 flex-sub text-green " catchtap="hideModal" data-hideModal='zidongfenpei'>
+         查看订单
+        </view> -->
+        <view class="action margin-0 flex-sub text-green" catchtap="hideModal" data-hideModal='chong'>
+          确定
+        </view>
+      </view>
+    </view>
+  </view>
