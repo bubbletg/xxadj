@@ -32,6 +32,8 @@ Page({
           complete: res => { 
             console.log('---删除成功')
             getCurrentPages()[getCurrentPages().length-1].onShow(); //重新页面显示
+            //判断是否自己，自己就不发了
+            if(app.globalDataOpenid.openid_ != e.currentTarget.dataset.jiedanren){
             //判断是否未放弃，放弃就再发了
             if(e.currentTarget.dataset.ifand == 'fangqi'){
               let t = new Date();
@@ -67,6 +69,8 @@ Page({
                 console.log("-----消息发送成功！！！")
               })
             }
+            }
+           
 
           }
         });
