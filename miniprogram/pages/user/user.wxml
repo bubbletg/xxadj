@@ -46,16 +46,16 @@
         评论
       </view>
     </view>
-    <view class="list-li list-arrow" catchtap='setting' data-openid='{{isopenid}}'>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='setting' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-settings moren-text"></view>
         设置
       </view>
     </view>
-    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='regard' data-openid='{{isopenid}}'>
+    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='FAQ' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-guanyu moren-text"></view>
-        关于我们
+        关于心系爱代驾
       </view>
     </view>
   </view>

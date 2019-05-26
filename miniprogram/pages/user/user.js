@@ -89,11 +89,7 @@ Page({
     })
 
   },
-  // 点击设置
-  setting: function () {
-    console.log("---------------setting")
-    wx.openSetting()
-  },
+
 
   //判断是否登录
   ifLongin: function (e) {
@@ -111,9 +107,12 @@ Page({
     console.log(interfaceZ)
     //先判断是否登录，当是设置，或者关于我们时，则不用判断
     if (interfaceZ == 'setting') {
-      return;
-    } else if (interfaceZ == 'regard') {
-      return;
+      wx.openSetting()
+    } else if (interfaceZ == 'FAQ') {
+       //跳转编辑信息页面
+       wx.navigateTo({
+        url: interfaceZ + '/' + interfaceZ + '?openid=' + openidZ,
+      })
     } else if (this.ifLongin(e)) {
       //跳转编辑信息页面
       wx.navigateTo({
