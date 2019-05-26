@@ -20,7 +20,7 @@
     
   ],
   "tabBar": {
-    "selectedColor": "#FCE35F",
+    "selectedColor": "#479DE6",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -43,9 +43,9 @@
     ]
   },
   "window": {
-    "backgroundColor": "#FCE35F",
+    "backgroundColor": "#479DE6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FCE35F",
+    "navigationBarBackgroundColor": "#479DE6",
     "navigationBarTitleText": "心系爱代驾",
     "navigationBarTextStyle": "black"
   },

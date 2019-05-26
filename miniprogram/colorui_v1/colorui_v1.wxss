@@ -2511,8 +2511,8 @@ overflow: hidden;
 }
 
 .goods-list-price text::before, .goods-list-price::before {
-  content: "¥ ";
-  font-size: 120%;
+  content: "";
+  font-size: 100%;
 }
 
 .goods-list-price text {
@@ -2684,7 +2684,7 @@ rich-text .wx-p {
 }
 
 .success {
-  background: #FCE35F;
+  background: #479DE6;
   color: #fff;
 }
 

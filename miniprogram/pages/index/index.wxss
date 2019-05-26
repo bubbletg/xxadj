@@ -6,7 +6,7 @@
 .bar-success-tuo{
     position: fixed;
     width: 100%;
-    background-color:#FCE35F;
+    background-color:#479DE6;
 }
 .bar-success-zhan{
     height: 90rpx;
@@ -15,16 +15,16 @@
     border-radius:5pt/5pt;
     margin-top:-5px;
     margin-left:13rpx;
-    background-color:#FCE35F;
+    background-color:#479DE6;
     padding:20rpx;
     font-size:35rpx;
     width:730rpx;
 }
 .nav{
-    box-shadow:0 0 3px #FCE35F;
+    box-shadow:0 0 3px #479DE6;
 }
 .success-nav {
-    background:#FCE35F;
+    background:#479DE6;
     color:#fff;
    
 }

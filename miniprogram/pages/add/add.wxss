@@ -1,5 +1,5 @@
 .success-nav {
-  background: #FCE35F;
+  background: #479DE6;
   color: #fff;
 }
 .form-input-btn>.iconfont {
@@ -13,13 +13,13 @@
   border-bottom: solid;
   text-align: center;
   width: 200rpx;
-  border-color: #FCE35F;
+  border-color: #479DE6;
 }
 .tiaosijijiedan-litem{
   height: 200rpx;
 }
 .primary {
-  background: #FCE35F;
+  background: #479DE6;
   color: #fff;
 }
 .lg.btn {

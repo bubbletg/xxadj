@@ -5,7 +5,7 @@
     <button open-type="getUserInfo" wx:if="{{userInfo==''}}" bindgetuserinfo="onGetUserInfo" data-openid='{{isopenid}}'>
       登录授权
     </button>
-    <view class="geren-view-name" wx:if="{{userInfo!=false}}">{{userInfo.nickName}}</view>
+    <view class="geren-view-name" wx:if="{{userInfo!=''}}">{{userInfo.nickName}}</view>
   </view>
   <view class="list-box">
     <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>

@@ -7,7 +7,34 @@ Page({
    * 页面的初始数据
    */
   data: {
+  },
+  deletenews:function(e){
 
+    db.collection('news').doc(e.currentTarget.dataset.andid,).remove({
+      success(res) {
+        console.log('----删除成功')
+          getCurrentPages()[getCurrentPages().length-1].onShow(); //重新页面显示
+      }
+    })
+  },
+
+  /**
+   * 
+   * 已读操作
+   * @param {} e 
+   */
+  yidunews:function(e){
+
+    wx.cloud.callFunction({
+      name: 'xiaoxicaozuo_gengxin',
+      data: {
+        _id: e.currentTarget.dataset.andid,
+      },
+      complete: res => { 
+        console.log('---更新成功')
+        getCurrentPages()[getCurrentPages().length-1].onShow(); //重新页面显示
+      }
+    });
   },
 
 /**
@@ -27,7 +54,6 @@ Page({
     //   console.log('-更新失败------------')
     // })
     //用云函数更新
-        //通过云函数更新驾驶dingdan表，因为不同用户更新一个表不可能，只有通过云函数
         wx.cloud.callFunction({
           name: 'xiaoxicaozuo_gengxin',
           data: {

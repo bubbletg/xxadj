@@ -1,5 +1,5 @@
 .cu-form-group {
-	background-color: var(--yellowLight);
+	background-color: var(--blueLight);
 	padding: 1rpx 30rpx;
 	display: flex;
 	align-items: center;

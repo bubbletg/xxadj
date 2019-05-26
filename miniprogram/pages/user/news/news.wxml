@@ -12,8 +12,8 @@
       <view class="text-grey text-xs">{{item.chuangjianshijian}}</view>
     </view>
     <view class="move">
-      <view class="bg-grey" catch:tap="yidunews">已读</view>
-      <view class="bg-red" catch:tap="deletenews">删除</view>
+      <view class="bg-grey" catch:tap="yidunews" data-andid='{{item._id}}'>已读</view>
+      <view class="bg-red" catch:tap="deletenews" data-andid='{{item._id}}'>删除</view>
     </view>
   </view>
 </view>

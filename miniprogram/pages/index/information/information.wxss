@@ -3,7 +3,7 @@
 	display: flex;
 	padding-right: 10rpx;
 	height: 140rpx;
-  background-color:var(--yellowLight);
+  background-color:var(--blueLight);
 	justify-content: flex-end;
 	align-items: center
 }

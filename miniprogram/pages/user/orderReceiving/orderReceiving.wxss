@@ -7,7 +7,7 @@
     }
     
   .success-nav {
-      background: #FCE35F;
+      background: #479DE6;
       color: #fff;
     }
     .form-input-btn>.iconfont {
@@ -31,7 +31,7 @@
     /* 订单样式 */
     .orderReceiving-proceed-finish{
       display: block;
-      background-color: #FCE35F;
+      background-color: #479DE6;
       margin: 20rpx;
       padding: 20rpx;
       padding-left:25rpx;
