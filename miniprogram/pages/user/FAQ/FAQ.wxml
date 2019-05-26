@@ -1,32 +1,52 @@
-<view wx:if="{{changjianwenti=='订单常见问题1。。。。。。。。。'}}">
-    <view class="bar solid-bottom">
-        <view class='ml-sm'>
-            <text class='iconfont icon-wenhao success-text'></text>
-            <text class='text-lg ml-xs'>{{changjianwenti}}？</text>
+  <scroll-view scroll-y class="scrollPage">
+    <view class="UCenter-bg">
+      <image src="/images/logo.jpg" class="png" mode="widthFix"></image>
+      <view class="text-xl">心系爱代驾</view>
+      <view class="margin-top-sm">
+        <text>v:1.6.0</text>
+      </view>
+      <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+    </view>
+    <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+      <view class="cu-item arrow"  bindtap="CopyLink"  data-link="https://github.com/bubbletg/xxadj">
+        <view class="content">
+          <text class="cuIcon-github text-grey"></text>
+          <text class="text-grey">GitHub</text>
         </view>
-    </view>
-    <view class='faq-changjianwenti'>回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！
-回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！
-回答！！！！！！！！！！！！！！！！！回答！！！！！！！！！！！！！！！！！
-    </view>
-</view>
-<view wx:if="{{changjianwenti=='常见问题2'}}">
-    <view class="bar solid-bottom">
-        <view class='ml-sm'>
-            <text class='iconfont icon-wenhao success-text'></text>
-            <text class='text-lg ml-xs'>{{changjianwenti}}？</text>
+         <text class="text-grey text-sm">https://github.com/bubbletg/xxadj</text>
+      </view>
+      <view class="cu-item arrow"  bindtap="CopyLink"  data-link="tiangui_">
+        <view class="content">
+          <text class="cuIcon-weixin text-green"></text>
+          <text class="text-grey">官方微信</text>
         </view>
-    </view>
-    <view class='faq-changjianwenti'>常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2常见问题2
-    </view>
-</view>
-<view wx:if="{{changjianwenti=='常见问题3'}}">
-    <view class="bar solid-bottom">
-        <view class='ml-sm'>
-            <text class='iconfont icon-wenhao success-text'></text>
-            <text class='text-lg ml-xs'>{{changjianwenti}}？</text>
+         <text class="text-green text-sm">tiangui_</text>
+      </view>
+       <view class="cu-item arrow"  bindtap="CopyLink" data-link="https://xxadj.bubbletg.cn/">
+        <view class="content" >
+          <text class="cuIcon-discover text-blue"></text>
+          <text class="text-grey">官方网站</text> 
         </view>
+        <text class="text-blue text-sm">https://xxadj.bubbletg.cn</text>
+      </view>
+      <!-- <view class="cu-item arrow" bindtap="showQrcode">
+        <view class="content" >
+          <text class="cuIcon-appreciatefill text-red"></text>
+          <text class="text-grey">赞赏支持</text>
+        </view>
+      </view> -->
+       <view class="cu-item arrow" bindtap="CopyLink" data-link="https://github.com/weilanwl/ColorUI">
+        <view class="content" >
+          <text class="cuIcon-selection text-red"></text>
+          <text class="text-grey">感谢支持</text>
+        </view>
+          <text class="text-red text-sm">https://github.com/weilanwl/ColorUI</text>
+      </view>
+      <button class="cu-item arrow"  open-type="feedback" >
+        <button class="cu-btn content">
+          <text class="cuIcon-writefill text-cyan"></text>
+          <text class="text-grey">意见反馈</text>
+        </button>
+      </button>
     </view>
-    <view class='faq-changjianwenti'>常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3常见问题3
-    </view>
-</view>
+  </scroll-view>

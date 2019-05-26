@@ -7,15 +7,28 @@ Page({
   data: {
 
   },
-
+  CopyLink(e) {
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.link,
+      success: res => {
+        wx.showToast({
+          title: '已复制',
+          duration: 1000,
+        })
+      }
+    })
+  },
+  showQrcode() {
+    wx.previewImage({
+      urls: ['https://xxadj.bubbletg.cn/images/fankui.png'],
+      current: 'https://xxadj.bubbletg.cn/images/fankui.png', // 当前显示图片的http链接
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //保存常见问题
-    this.setData({
-      changjianwenti:options.changjianwenti,
-    })
+
   },
 
   /**
