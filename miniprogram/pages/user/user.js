@@ -132,6 +132,10 @@ Page({
  * 生命周期函数--监听页面加载
  */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '登录中',
+      icon: 'loading',
+    })
     //执行云涵数，获得openid作为id
     wx.cloud.callFunction({
       name: 'login',
@@ -146,6 +150,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: '刷新中',
+      icon: 'loading',
+    })
     let that = this;
     if (app.globalDataAndLogin.login) {
       //判断是否登录
@@ -154,6 +162,8 @@ Page({
           console.log(res.authSetting)
           //没有授权
           if (!res.authSetting['scope.userInfo']) {
+            //关闭加载...
+        wx.hideLoading()
             that.setData({
               avatarUrl: '../../images/user-unlogin.png',
               userInfo: '',
@@ -161,6 +171,8 @@ Page({
           } else {
             wx.getUserInfo({
               success(res) {
+                //关闭加载...
+        wx.hideLoading()
                 that.setData({
                   avatarUrl: res.userInfo.avatarUrl,
                   userInfo: res.userInfo,
@@ -189,6 +201,8 @@ Page({
         }
       })
     } else {
+      //关闭加载...
+      wx.hideLoading()
       that.setData({
         userInfo: '',
       })

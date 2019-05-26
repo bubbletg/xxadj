@@ -2505,7 +2505,7 @@ overflow: hidden;
 }
 
 .goods-list-price {
-  color: #dd514c;
+  color: #4c73dd;
   font-size: 36rpx;
   flex: 1;
 }
