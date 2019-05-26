@@ -45,13 +45,16 @@
                         <view class="padding-xs" wx:if="{{information.baoshidaijia=='undefined'&&information.baochefuwu!='undefined'}}">
                             {{information.baochefuwu}}
                         </view>
-                        <view class="flex flex-direction">
+                        <view class="flex flex-direction" wx:if="{{information.ifFinish==false}}" >
                          <bottom class="cu-btn line-yellow lg margin-tb-sm shadow"  wx:if="{{information.isaccept==false}}"
                          catch:tap="informationJieDan" data-informationid="{{information._id}}">接单</bottom>
                          <bottom class="cu-btn block line-red margin-tb-sm lg" 
                         wx:if="{{pages=='news'}}" catch:tap="fangqicidan">放弃此单</bottom>
                          <bottom class="cu-btn block line-blue margin-tb-sm lg" 
                          wx:if="{{information.isaccept==true}}">已接单</bottom>
+                         </view>
+                         <view class="flex flex-direction" wx:if="{{information.ifFinish==true}}" >
+                         <bottom class="cu-btn block line-blue margin-tb-sm lg" >已完成</bottom>
                          </view>
                     </view>
                 </view>
