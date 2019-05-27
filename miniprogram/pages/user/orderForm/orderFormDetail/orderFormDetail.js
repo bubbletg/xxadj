@@ -128,26 +128,44 @@ Page({
           content:pinglun_content, //评论内容
           pinglunDate: currentDate.getFullYear()+'/'+(currentDate.getMonth() + 1)+'/'+currentDate.getDate()+' '+currentDate.getHours() + ':' + currentDate.getMinutes(),//评论时间
           pinglunzhe:app.globalDataOpenid.openid_,//评论着 openid
+          pinglunzheC:this.data.userInfo,
+
       }
     })
     .then(add_res => {
+      //这里进行的是云操作
         //查询
       db.collection('user').doc(userid).get().then(getuserres => {
+
+        wx.cloud.callFunction({
+          name: 'pingluncaozuo_gengxin',
+          data: {
+            userid:userid,
+            pinglunshu:getuserres.data.pinglunshu, 
+          },
+          complete: res => {
+            wx.showToast({
+              title: "评论成功",
+              icon: "none",
+              duration: 2000
+            });
+          }
+        });
        //修改用户表 更新数据库，更新被评价的用户被评价的数量
-       db.collection('user').doc(userid).update({
-         data:{
-          pinglunshu: (getuserres.data.pinglunshu+1), //原来评论数加1
-         }
-       }).then(updateuserres => {
-          //关闭加载...
-        wx.hideLoading();
-        console.log("评论成功", updateuserres)
-        wx.showToast({
-          title: "评论成功",
-          icon: "none",
-          duration: 2000
-        });     
-       })
+      //  db.collection('user').doc(userid).update({
+      //    data:{
+      //     pinglunshu: (getuserres.data.pinglunshu+1), //原来评论数加1
+      //    }
+      //  }).then(updateuserres => {
+      //     //关闭加载...
+      //   wx.hideLoading();
+      //   console.log("评论成功", updateuserres)
+      //   wx.showToast({
+      //     title: "评论成功",
+      //     icon: "none",
+      //     duration: 2000
+      //   });     
+      //  })
       }) 
     })
     .catch(error => {
@@ -201,6 +219,15 @@ Page({
    */
   onShow: function () {
     this.daijiadingdan();
+    let that = this;
+    //获得当前用户信息
+    wx.getUserInfo({
+      success(res) {
+        that.setData({
+          userInfo: res.userInfo,
+        })
+      }
+    })
   },
 
 
