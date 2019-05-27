@@ -3,7 +3,7 @@
       <image src="/images/logo.jpg" class="png" mode="widthFix"></image>
       <view class="text-xl">心系爱代驾</view>
       <view class="margin-top-sm">
-        <text>v:1.6.0</text>
+        <text>v:1.6.20</text>
       </view>
       <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
     </view>

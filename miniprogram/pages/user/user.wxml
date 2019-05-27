@@ -26,12 +26,12 @@
         接单管理
       </view>
     </view>
-    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='collect' data-openid='{{isopenid}}'>
+    <!-- <view class="list-li list-arrow" catchtap='cutInterface' data-interface='collect' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-unie601 moren-text"></view>
         收藏
       </view>
-    </view>
+    </view> -->
     
      <view class="list-li list-arrow" catchtap='cutInterface' data-interface='news' data-openid='{{isopenid}}'>
       <view class="cu-tag badge" wx:if="{{huodexiaoxiifdakai==true}}"></view>
@@ -40,12 +40,12 @@
         消息
       </view>
     </view>
-    <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>
+    <!-- <view class="list-li list-arrow" catchtap='cutInterface' data-interface='redact' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-pinglun moren-text"></view>
         评论
       </view>
-    </view>
+    </view> -->
     <view class="list-li list-arrow" catchtap='cutInterface' data-interface='setting' data-openid='{{isopenid}}'>
       <view class="list-text">
         <view class="iconfont icon-settings moren-text"></view>
