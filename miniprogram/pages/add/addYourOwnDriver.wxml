@@ -26,6 +26,7 @@
                     </view>
                 </view>
             </view>
+            <!-- 用户简要信息 -->
             <view class="cu-list menu-avatar">
                 <view class="cu-item">
                     <view class="cu-avatar round lg" style="background-image:url({{item.portrait}});"></view>
@@ -35,17 +36,37 @@
                         <view class="text-gray text-sm flex justify-between">
                             {{item.addDate}} 加入
                             <view class="text-gray text-sm">
-                                <text class="cuIcon-attentionfill margin-lr-xs"></text>
-                                10
-                                <text class="cuIcon-appreciatefill margin-lr-xs"></text>
-                                20
-                                <text class="cuIcon-messagefill margin-lr-xs"></text>
-                                30
+                                <text class="cuIcon-attentionfill margin-lr-xs" data-index='{{index}}' data-userid='{{item._id}}'></text>
+                               {{item.chakanshu}}
+                                <text class="cuIcon-appreciatefill margin-lr-xs" data-index='{{index}}' data-userid='{{item._id}}'></text>
+                                 {{item.shoucangshu}}
+                                <text class="cuIcon-messagefill margin-lr-xs" catch:tap="pinglunTap" data-index='{{index}}' data-userid='{{item._id}}'></text>
+                                 {{item.pinglunshu}}
                             </view>
                         </view>
                     </view>
                 </view>
             </view>
+
+            <!-- 评论 -->
+             <scroll-view scroll-y="{{true}}" wx:if="{{pinglun[index]==true}}">
+              <view class="cu-list menu-avatar comment solids-top" wx:for="{{pinglunneirong}}" wx:key wx:for-item="pingluntem">
+                 <view class="cu-item">
+                     <view class="cu-avatar round" style="background-image:url({{pingluntem.pinglunzheC.avatarUrl}});"></view>
+                     <view class="content">
+                         <view class="text-grey">{{pingluntem.pinglunzheC.nickName}}</view>
+                         <view class="text-gray text-content text-df">{{pingluntem.content}}</view>
+                         <view class="margin-top-sm flex justify-between">
+                             <view class="text-gray text-df">{{pingluntem.pinglunDate}}</view>
+                             <view>
+                                <text class="cuIcon-attentionfill margin-lr-xs" data-index='{{index}}' data-userid='{{item._id}}'></text>
+                                 <text class="cuIcon-appreciatefill"></text>
+                             </view>
+                         </view>
+                     </view>
+                 </view>
+                 </view>
+             </scroll-view>
         </view>
     </view>
     </checkbox-group>

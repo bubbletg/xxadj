@@ -1,11 +1,12 @@
 const db = wx.cloud.database();
 const app = getApp();
-var target = 0;//用于分页查询起始位置
+var target = 0,pingluntarget = 0;//用于分页查询起始位置
 var count_ = 0; //查询的记录总数
 var userCard = [];// 用户信息卡片
 var userCardUnfold = []; //卡片是否显示
 var cheUserCard = []; //卡片是否选中
-
+var pinglun = []; //评论是否展开
+var pinglunneirong = []; //评论内容
 Page({
 
   /**
@@ -14,16 +15,58 @@ Page({
   data: {
     cheUserCard:[], //卡片是否选中
     userCardUnfold: [],// 用户卡片展示 
+    pinglun:[],
     xuandingren:0,
   },
+  /**
+   * 点击评论触发
+   */
+  pinglunTap: function (e) {
 
+    let index = e.currentTarget.dataset.index;
+    pinglunneirong = [];
+    this.setData({
+      pinglunneirong: pinglunneirong,
+    })
+    //当评论是关闭时候，执行查询，
+    if (pinglun[index] == false) {
+      //查询评论
+      db.collection('pinglun_user').where({
+        user_id: e.currentTarget.dataset.userid,
+      })
+        .get().then(getres => {
+          for (let i = 0; i < getres.data.length; i++) {
+            pinglunneirong.push(getres.data[i]);
+            this.setData({
+              pinglunneirong: pinglunneirong,
+            })
+          }
+        });
+    }else{
+      pinglunneirong = [];
+    }
+    //把其他打开的评论关闭
+    for(let i = 0;i<pinglun.length; i++){
+      if(i == index){
+         //打开，关闭当前评论
+        pinglun[index] = !pinglun[index];
+      }else{
+        pinglun[i] = false;
+      }
+     
+    }
+    this.setData({
+      pinglun: pinglun,  //显示评论
+    })
+
+  },
   /**
    * 展开用户卡片切换
    */
   userCardUnfoldTap(e) {
     console.log(e)
     let index = e.currentTarget.dataset.index;
-    userCardUnfold[index] = !userCardUnfold[index];
+    userCardUnfold[index] = !userCardUnfold[index];  //把要展示的卡片设为true
     this.setData({
       userCardUnfold: userCardUnfold,
     })
@@ -116,10 +159,12 @@ Page({
           userCard.push(user_res.data[i]);
           userCardUnfold.push(false);  //用于卡片是否展示
           cheUserCard.push(false);  //用于卡片是否选中
+          pinglun.push(false);  //用于评论展开与否
         }
         that.setData({
           userCard: userCard,
           userCardUnfold: userCardUnfold,
+          pinglun:pinglun,
           cheUserCard:cheUserCard,
         })
         //加载完成后
@@ -151,10 +196,12 @@ Page({
     target = 0;//用于分页查询起始位置
    userCard = [];// 用户信息卡片
     userCardUnfold = []; //卡片是否显示
+    pinglun = [];  //评论是否展开
     cheUserCard = []; //卡片是否选中
     this.setData({
       userCard: userCard,
       userCardUnfold: userCardUnfold,//卡片是否显示
+      pinglun:pinglun,
       cheUserCard: cheUserCard, //卡片是否选中
     })
     this.acquisition(); //获得数据
@@ -174,9 +221,11 @@ Page({
     target = 0;//用于分页查询起始位置
     userCard = [];// 用户信息卡片
     userCardUnfold = []; //卡片是否显示
+    pinglun =[];
     cheUserCard = []; //卡片是否选中
     this.setData({
       userCard: userCard,
+      pinglun:pinglun,
       userCardUnfold: userCardUnfold,//卡片是否显示
       cheUserCard: cheUserCard, //卡片是否选中
     })
@@ -195,5 +244,6 @@ Page({
       modalName:  'DialogModal3',
     });
   }
-  }
+  },
+
 })
